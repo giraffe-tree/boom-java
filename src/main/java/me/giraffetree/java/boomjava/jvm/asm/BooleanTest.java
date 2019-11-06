@@ -19,7 +19,7 @@ public class BooleanTest {
         A a = new A();
 
         Field boolValueField = A.class.getDeclaredField("flag");
-        unsafe.putInt(a, unsafe.objectFieldOffset(boolValueField),  1);
+        unsafe.putInt(a, unsafe.objectFieldOffset(boolValueField), 3);
 
         if (a.flag) {
             System.out.println("Hello, Java!");
@@ -29,9 +29,9 @@ public class BooleanTest {
         }
     }
 
+    private static class A {
+        boolean flag;
+    }
 
 }
 
-class A {
-    boolean flag;
-}
