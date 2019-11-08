@@ -4,13 +4,14 @@ package me.giraffetree.java.boomjava.jvm.lock.biased;
  * -XX:+PrintBiasedLockingStatistics 来打印各类锁的个数
  * Run with -XX:+UnlockDiagnosticVMOptions -XX:+PrintBiasedLockingStatistics -XX:TieredStopAtLevel=1
  * -XX:BiasedLockingStartupDelay=0 Hotspot虚拟机在开机启动后有个延迟（4s），经过延迟后才会对每个创建的对象开启偏向锁。
+ * -XX:+TraceBiasedLocking  https://stackoverflow.com/questions/46312817/does-java-ever-rebias-an-individual-lock
  * -XX:+UseBiasedLocking 使用偏向锁
  * <p>
  * <p>
  * 测试结果: 依次累加条件
  * 不是用偏向锁 380ms
  * 使用偏向锁 240ms
- * 调用 Object.hashCode 420ms 使用了偏向锁?
+ * 调用 Object.hashCode 420ms
  * 重写 hashCode 方法  240ms
  * 调用 System.identityHashCode  420ms
  */
