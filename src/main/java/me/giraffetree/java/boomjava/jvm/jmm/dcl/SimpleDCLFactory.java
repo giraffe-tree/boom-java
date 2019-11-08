@@ -12,7 +12,7 @@ public class SimpleDCLFactory {
     /**
      * specifically non-volatile
      */
-    private volatile ObjectField2 instance;
+    private ObjectField2 instance;
 
     public ObjectField2 getInstance() {
         if (instance == null) {

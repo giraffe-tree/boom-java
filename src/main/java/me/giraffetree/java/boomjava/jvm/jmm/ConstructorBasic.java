@@ -12,9 +12,10 @@ import static org.openjdk.jcstress.annotations.Expect.ACCEPTABLE_INTERESTING;
 @JCStressTest
 @Outcome(id = "-1", expect = ACCEPTABLE, desc = "Object has not been seen")
 @Outcome(id = {"4", "5"}, expect = ACCEPTABLE_INTERESTING, desc = "Object only partially initialized")
-@Outcome(id = "9", expect = ACCEPTABLE,  desc = "Object fully initialized")
+@Outcome(id = "9", expect = ACCEPTABLE, desc = "Object fully initialized")
 @State
 public class ConstructorBasic {
+    
     private SimpleClass value;
 
     @Actor
@@ -49,4 +50,5 @@ public class ConstructorBasic {
             return y;
         }
     }
+
 }
