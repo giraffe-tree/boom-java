@@ -39,6 +39,8 @@
         <!--异步日志会自动批量刷新，所以将immediateFlush属性设置为false-->
         <Routing name="BoyRoutingAppender">
             <Routes pattern="${ctx:logFileName}">
+                <!-- logFileName=null 时可能会产生异常, 这时候需要指定一个默认的 log 文件名 -->
+                <!-- 参考: http://logging.apache.org/log4j/2.x/faq.html#separate_log_files 新增一个 Route 指定固定默认文件名,  即可解决 -->
                 <Route>
                     <RollingRandomAccessFile name="RollingRandomAccessFileInfo2"
                                              fileName="${LOG_HOME}/${date:yyyy}/${date:MM}/${date:dd}/boy/${ctx:logFileName}-info.log"
@@ -150,7 +152,6 @@
                 <Route ref="STDOUT" key="${ctx:logFileName}"/>
             </Routes>
         </Routing>
-
 
         <!--只记录error级别以上的日志，与info级别的日志分不同的文件保存-->
         <RollingRandomAccessFile name="RollingRandomAccessFileError"
