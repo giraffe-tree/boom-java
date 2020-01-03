@@ -20,7 +20,7 @@ public class Log4j2Test {
 
     public static void main(String[] args) {
 
-        testRouting(100, 200);
+        testRouting(100_000, 3);
 
     }
 

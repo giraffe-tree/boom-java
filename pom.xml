@@ -60,5 +60,29 @@
             <version>2.12.1</version>
         </dependency>
 
+        <!-- pdf -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.15</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/fontbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>fontbox</artifactId>
+            <version>2.0.15</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/jempbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>jempbox</artifactId>
+            <version>1.8.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
     </dependencies>
 </project>
