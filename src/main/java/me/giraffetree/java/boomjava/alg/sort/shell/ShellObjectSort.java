@@ -19,6 +19,8 @@ import static me.giraffetree.java.boomjava.alg.sort.SortUtils.*;
  * <p>
  * 易错点:
  * less 应该放在 第二个 for 循环中, 深层次的原因是这个数组的前面部分其实已经排序好了, 不需要再排序下去了
+ * 优点:
+ * 不需要递归, 能减少栈空间的占用
  *
  * @author GiraffeTree
  * @date 2020/1/3
@@ -44,7 +46,6 @@ public class ShellObjectSort {
             for (int i = h; i < a.length; i++) {
                 for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
                     swap(a, j, j - h);
-                    System.out.println(Arrays.toString(a));
                 }
             }
             h = h / 3;
