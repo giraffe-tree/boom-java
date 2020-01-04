@@ -9,8 +9,15 @@ import static me.giraffetree.java.boomjava.alg.sort.SortUtils.*;
 /**
  * Divide and Conquer 分而治之
  * Merge 归并: 所谓的归并就是讲两个有序的数组合并成一个更大的有序数组
- * 时间复杂度:   nlogn
+ * 时间复杂度:   nlogn 最坏和最好都是 nlogn
+ * <p>
  * 空间复杂度:   n
+ * 本节方法是: 自顶向下的归并排序
+ * 相当于从左到右依次归并
+ * 所以比较适合链表类组织的数据
+ * <p>
+ * 时间复杂度 nlogn 是基于比较的排序算法的上限
+ * 但从空间复杂度上来讲 merge sort 并不是最优的
  *
  * @author GiraffeTree
  * @date 2020/1/3
@@ -33,7 +40,7 @@ public class MergeObjectSort {
     }
 
 
-    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
+    public static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
 
         int i = lo;
         int j = mid + 1;
