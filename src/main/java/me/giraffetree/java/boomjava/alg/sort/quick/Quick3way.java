@@ -12,6 +12,7 @@ import static me.giraffetree.java.boomjava.alg.sort.SortUtils.*;
  * 比如: 使用基准 c
  * a...........lt[c].......[i]...........gt[c].......f
  * 小于               相等      未确定         大于
+ *
  * <p>
  * 这种方法, 在对于处理大量重复的元素时, 效率比标准的快速排序算法高得多
  *
@@ -43,8 +44,10 @@ public class Quick3way {
             int cmp = a[i].compareTo(v);
             if (cmp < 0) {
                 swap(a, lt++, i++);
+                System.out.println(Arrays.toString(a));
             } else if (cmp > 0) {
                 swap(a, i, gt--);
+                System.out.println(Arrays.toString(a));
             } else {
                 i++;
             }

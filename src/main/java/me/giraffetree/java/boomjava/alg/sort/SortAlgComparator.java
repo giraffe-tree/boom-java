@@ -1,7 +1,10 @@
 package me.giraffetree.java.boomjava.alg.sort;
 
 import me.giraffetree.java.boomjava.alg.sort.bubble.BubbleObjectSort;
+import me.giraffetree.java.boomjava.alg.sort.heap.HeapObjectSort;
 import me.giraffetree.java.boomjava.alg.sort.insertion.InsertionObjectSort;
+import me.giraffetree.java.boomjava.alg.sort.merge.MergeObjectSort;
+import me.giraffetree.java.boomjava.alg.sort.quick.QuickObjectSort;
 import me.giraffetree.java.boomjava.alg.sort.selection.SelectionObjectSort;
 import me.giraffetree.java.boomjava.alg.sort.shell.ShellObjectSort;
 
@@ -42,15 +45,29 @@ public class SortAlgComparator {
 
     public static void main(String[] args) {
 
-        double insertAvgTime = averageTime(3, 10000, x -> InsertionObjectSort.sort(x, false));
-        double bubbleAvgTime = averageTime(3, 10000, x -> BubbleObjectSort.sort(x, false));
-        double selectionAvgTime = averageTime(3, 10000, x -> SelectionObjectSort.sort(x, false));
-        double shellAvgTime = averageTime(3, 10000, x -> ShellObjectSort.sort(x, false));
+        int tryCount = 3;
+        int arrayLength = 10000;
 
+        double insertAvgTime = averageTime(tryCount, arrayLength, x -> InsertionObjectSort.sort(x, true));
         System.out.println(String.format("insertAvgTime: %.2fms", insertAvgTime));
+
+        double bubbleAvgTime = averageTime(tryCount, arrayLength, x -> BubbleObjectSort.sort(x, true));
         System.out.println(String.format("bubbleAvgTime: %.2fms", bubbleAvgTime));
+
+        double selectionAvgTime = averageTime(tryCount, arrayLength, x -> SelectionObjectSort.sort(x, true));
         System.out.println(String.format("selectionAvgTime: %.2fms", selectionAvgTime));
+
+        double shellAvgTime = averageTime(tryCount, arrayLength, x -> ShellObjectSort.sort(x, true));
         System.out.println(String.format("shellAvgTime: %.2fms", shellAvgTime));
+
+        double heapAvgTime = averageTime(tryCount, arrayLength, x -> HeapObjectSort.sort(x));
+        System.out.println(String.format("heapAvgTime: %.2fms", heapAvgTime));
+
+        double quickAvgTime = averageTime(tryCount, arrayLength, x -> QuickObjectSort.sort(x));
+        System.out.println(String.format("quickAvgTime: %.2fms", quickAvgTime));
+
+        double mergeAvgTime = averageTime(tryCount, arrayLength, x -> MergeObjectSort.sort(x));
+        System.out.println(String.format("mergeAvgTime: %.2fms", mergeAvgTime));
 
     }
 
