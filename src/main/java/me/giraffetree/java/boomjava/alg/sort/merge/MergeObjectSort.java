@@ -18,6 +18,9 @@ import static me.giraffetree.java.boomjava.alg.sort.SortUtils.*;
  * <p>
  * 时间复杂度 nlogn 是基于比较的排序算法的上限
  * 但从空间复杂度上来讲 merge sort 并不是最优的
+ * <p>
+ * 归并排序的比较次数是 1/2NlogN ~ NlogN 次
+ * 归并排序最多需要访问数组6NlogN 次
  *
  * @author GiraffeTree
  * @date 2020/1/3
