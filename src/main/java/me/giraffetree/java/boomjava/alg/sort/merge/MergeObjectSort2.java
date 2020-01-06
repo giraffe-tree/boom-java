@@ -7,7 +7,7 @@ import java.util.Arrays;
 import static me.giraffetree.java.boomjava.alg.sort.SortUtils.generateObj;
 
 /**
- * 自顶向上的归并排序
+ * 自底向上的归并排序
  *
  * @author GiraffeTree
  * @date 2020-01-04
@@ -25,7 +25,7 @@ public class MergeObjectSort2 {
     }
 
     public static void main(String[] args) {
-        
+
         Element[] elements = generateObj();
         System.out.println(Arrays.toString(elements));
         sort(elements);

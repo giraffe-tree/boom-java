@@ -29,7 +29,7 @@ public class InsertionObjectSort {
 
     }
 
-    private static void sortAsc(Comparable[] a) {
+     private static void sortAsc(Comparable[] a) {
         for (int i = 1; i < a.length; i++) {
             for (int j = i; j > 0 && SortUtils.less(a[j], a[j - 1]); j--) {
                 SortUtils.swap(a, j, j - 1);
@@ -44,8 +44,6 @@ public class InsertionObjectSort {
             }
         }
     }
-
-
 
     public static void main(String[] args) {
         Element[] elements = SortUtils.generateObj();

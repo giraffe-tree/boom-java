@@ -10,6 +10,19 @@ import static me.giraffetree.java.boomjava.alg.sort.SortUtils.*;
  */
 public class MergeSort {
 
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3, 4};
+        int[] b = {0, 0, 0, 0, 0, 0};
+        System.arraycopy(a, 2, b, 1, 2);
+        System.out.println(Arrays.toString(b));
+
+        int[] generate = generate();
+        System.out.println(Arrays.toString(generate));
+        sort(generate);
+        System.out.println(Arrays.toString(generate));
+
+    }
+
     public static void sort(int[] a) {
         int[] aux = new int[a.length];
         sort(a, aux, 0, a.length - 1);
@@ -49,17 +62,6 @@ public class MergeSort {
         System.arraycopy(aux, lo, a, lo, hi - lo + 1);
     }
 
-    public static void main(String[] args) {
-        int[] a = {1, 2, 3, 4};
-        int[] b = {0, 0, 0, 0, 0, 0};
-        System.arraycopy(a, 2, b, 1, 2);
-        System.out.println(Arrays.toString(b));
 
-        int[] generate = generate();
-        System.out.println(Arrays.toString(generate));
-        sort(generate);
-        System.out.println(Arrays.toString(generate));
-
-    }
 
 }

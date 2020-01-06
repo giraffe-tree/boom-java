@@ -36,13 +36,17 @@ public class MergeObjectSort {
         if (hi <= lo) {
             return;
         }
-        int mid = lo + (hi - lo) / 2;
+        int mid = (hi + lo) >> 1;
         sort(a, aux, lo, mid);
         sort(a, aux, mid + 1, hi);
         merge(a, aux, lo, mid, hi);
     }
 
 
+    /**
+     * 将 a 数组 lo ~ mid 和 mid+1 ~ hi 合并
+     * aux 为辅助数组, 减少一直进行新建数组
+     */
     public static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
 
         int i = lo;
