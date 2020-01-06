@@ -33,6 +33,10 @@ import java.util.Map;
  */
 public class Intersect {
 
+    /**
+     * 思路:
+     * 直接使用 map 记录 count 值即可, 已经被包含的就是 交集
+     */
     public int[] intersect(int[] nums1, int[] nums2) {
 
         if (nums1.length > nums2.length) {
