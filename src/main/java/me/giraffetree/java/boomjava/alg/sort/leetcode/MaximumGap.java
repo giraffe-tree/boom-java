@@ -32,8 +32,12 @@ import java.util.Arrays;
 public class MaximumGap {
 
     public static void main(String[] args) {
+        System.out.println(1 / 3);
+        System.out.println((int) Math.ceil(1.1));
+        System.out.println((int) Math.ceil(1.6));
+        System.out.println((int) Math.ceil(1.5));
         int[] a;
-        a = new int[]{6,6,6,7,6};
+        a = new int[]{6, 6, 6, 7, 6};
         System.out.println(maximumGap(a));
 
         a = new int[]{1, 1, 1, 1};
@@ -41,11 +45,12 @@ public class MaximumGap {
 
         a = new int[]{3, 6, 9, 1};
         System.out.println(maximumGap(a));
+
     }
 
     /**
-     * 还有问题!!!!!!! 未通过测试!!!!!
-     *
+     * 还有问题!!!!!!! 没有想明白!!!! bucket 的 size, range
+     * <p>
      * 这题刚刚开始看的时候, 感觉非常奇怪, 既要求排序, 又要求线性复杂度 ???
      * 看了下题解才明白过来
      * 时间复杂度为 O(n) 的排序算法有一下三种
@@ -82,13 +87,28 @@ public class MaximumGap {
                 min = nums[i];
             }
         }
-        // 2. 计算每个桶的容量
-        int size = (max - min) / (nums.length);
-        if (size == 0) {
-            size = 1;
+        // 关于桶的容量, 数量的计算, 要达到的目标只有一个: 至少有一个桶是空的
+        // 其实要满足这个条件很容易, 取 nums.length + 1 个桶就可以, 每个数字对应桶的序号为 (int) Math.floor((double) (cur - min) / (max - min) * num)  这里
+        // 但是为了节省空间, 我们需要一定量的计算
+        // 2. 计算每个桶的容量 这里需要向下取整
+        if (max - min == 0) {
+            return 0;
         }
-        // 3. 桶的数量
+
+//        int size = (int) Math.floor((double) (max - min) / (nums.length - 1));
+        int size = Math.max(1, (max - min) / (nums.length - 1));
+
+        // 3. 桶的数量  桶的数量越多, 占用空间越多
+        // 桶之间的最小间距是 1
         int num = (max - min) / size + 1;
+
+//        int num;
+//        if (size == 0) {
+//            num = max - min + 2;
+//        } else {
+//            num = Math.min(max - min + 2, (max - min) / size + 2);
+//        }
+
         // 4. 将 nums 中的数据放入桶中 鸽笼原理, 至少有一个桶是空的?
         int[] binMin = new int[num];
         Arrays.fill(binMin, 0, binMin.length, Integer.MAX_VALUE);
@@ -98,10 +118,7 @@ public class MaximumGap {
 
         for (int i = 0; i < nums.length; i++) {
             int cur = nums[i];
-            int binIndex = cur / size;
-            if (binIndex >= num) {
-                binIndex = num - 1;
-            }
+            int binIndex = (int) Math.floor((double) (cur - min) / (max - min) * (num - 1));
             if (binMax[binIndex] < cur) {
                 binMax[binIndex] = cur;
             }
