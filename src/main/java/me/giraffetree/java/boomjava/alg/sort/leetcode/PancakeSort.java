@@ -1,5 +1,6 @@
-package me.giraffetree.java.boomjava.alg.sort.leetcode.notcomplete;
+package me.giraffetree.java.boomjava.alg.sort.leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,20 +45,57 @@ import java.util.List;
 public class PancakeSort {
 
     public static void main(String[] args) {
-        int[] a = {1, 2, 3, 4, 5};
-        flip(a, 4);
-        System.out.println(Arrays.toString(a));
 
+        int[] a = {3, 2, 4, 1};
+        List<Integer> steps = pancakeSort(a);
+        steps.forEach(System.out::println);
+        System.out.println(Arrays.toString(a));
 
     }
 
     /**
+     * 第一次提交 -> 超时
+     * 看了下其他题解, 思路都是一样...为啥我的超时了, 没弄明白
+     * 后来看到 max==k 上有个bug , 要 k--
+     * <p>
+     * 原理:
+     * 选择排序
+     * 假设 c 最大, 为了排序, 我想把 c 放到最后
+     * c > d > b > a
+     * 第一步: a b c d -2>  c b a d -4>  d a b c
+     * 第二步: d a b c -2>  b a d c
+     * 第三步: b a d c -1>  a b d c
      * 思路:
-     * 两次
+     * 选择排序
      */
-    public List<Integer> pancakeSort(int[] A) {
+    public static List<Integer> pancakeSort(int[] a) {
+        ArrayList<Integer> list = new ArrayList<>(a.length << 1);
 
-        return null;
+        int k = a.length - 1;
+
+        while (k > 0) {
+            int max = k;
+
+            for (int i = 0; i < k; i++) {
+                if (a[i] > a[max]) {
+                    max = i;
+                }
+            }
+            if (max == k) {
+                k--;
+                continue;
+            }
+
+            if (max > 0) {
+                list.add(max + 1);
+                flip(a, max + 1);
+            }
+            list.add(k + 1);
+            flip(a, k + 1);
+            k--;
+        }
+
+        return list;
     }
 
     /**
