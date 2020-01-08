@@ -12,5 +12,9 @@ public interface Tree<Key extends Comparable<Key>, Value> {
 
     void put(Key key, Value value);
 
+    void delete(Key key);
 
+    void deleteMin(Key key);
+
+    void deleteMax(Key key);
 }

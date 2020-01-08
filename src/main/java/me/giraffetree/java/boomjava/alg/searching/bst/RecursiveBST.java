@@ -6,7 +6,7 @@ package me.giraffetree.java.boomjava.alg.searching.bst;
  * @author GiraffeTree
  * @date 2020-01-08
  */
-public class RecursiveBST<Key extends Comparable<Key>, Value> implements Tree<Key, Value> {
+public class RecursiveBST<Key extends Comparable<Key>, Value> implements OrderedTree<Key, Value> {
 
     private Node root;
 
@@ -51,6 +51,21 @@ public class RecursiveBST<Key extends Comparable<Key>, Value> implements Tree<Ke
         root = put(root, key, value);
     }
 
+    @Override
+    public void delete(Key key) {
+
+    }
+
+    @Override
+    public void deleteMin(Key key) {
+
+    }
+
+    @Override
+    public void deleteMax(Key key) {
+
+    }
+
     /**
      * 不要忘记更新 N
      */
@@ -69,6 +84,46 @@ public class RecursiveBST<Key extends Comparable<Key>, Value> implements Tree<Ke
         }
         node.N = size(node.left) + size(node.right) + 1;
         return node;
+    }
+
+    @Override
+    public Key max() {
+        return null;
+    }
+
+    @Override
+    public Key min() {
+        return null;
+    }
+
+    @Override
+    public Key floor(Key key) {
+        return null;
+    }
+
+    @Override
+    public Key ceiling(Key key) {
+        return null;
+    }
+
+    @Override
+    public Key select(int k) {
+        return null;
+    }
+
+    @Override
+    public int rank(Key key) {
+        return 0;
+    }
+
+    @Override
+    public Iterable<Key> keys() {
+        return null;
+    }
+
+    @Override
+    public Iterable<Key> keys(Key lo, Key hi) {
+        return null;
     }
 
     private class Node {
