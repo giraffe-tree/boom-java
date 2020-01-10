@@ -6,13 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 递归版 二叉查找树
+ * 标准 递归版
+ * 二叉查找树
+ * <p>
+ * 源码来自于 alg 第四版
+ * <p>
  * recursive binary search tree
+ * <p>
+ * 相比于我自己的实现, 有以下方法做了修改:
+ * 1. floor, ceiling 使用了递归的实现
+ * 2. delete 方法统一了 N 的计算
+ * 3. keys 方法变得更加简洁了, 但说实话, 有点看不懂了, 原理和我实现的差不多
  *
  * @author GiraffeTree
  * @date 2020-01-08
  */
-public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements OrderedTree<Key, Value> {
+public class StandardRecursiveBST<Key extends Comparable<? super Key>, Value> implements OrderedTree<Key, Value> {
 
     /**
      * 为了方便包内访问, 这里没有将 root 定义成 private
@@ -123,11 +132,9 @@ public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements
         int compare = key.compareTo(node.key);
         if (compare > 0) {
             node.right = delete(node.right, key);
-            node.N = size(node.right) + size(node.left) + 1;
             return node;
         } else if (compare < 0) {
             node.left = delete(node.left, key);
-            node.N = size(node.right) + size(node.left) + 1;
             return node;
         } else {
             // 相等的时候
@@ -135,13 +142,15 @@ public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements
                 // 右子树为空时, 将它的左子树作为 node 返回
                 return node.left;
             }
-            // 如果右子树不为空, 找出 max() 替换到当前 node 的位置
-            Node<Key, Value> minNode = min(node.right);
-            minNode.right = deleteMin(node.right);
-            minNode.left = node.left;
-            minNode.N = size(minNode.right) + size(minNode.left) + 1;
-            return minNode;
+            // 如果右子树不为空, 找出 min() 替换到当前 node 的位置
+            Node<Key, Value> maxNode = min(node.right);
+            maxNode.left = node.left;
+            maxNode.right = deleteMax(node.right);
+            node = maxNode;
         }
+
+        node.N = size(node.right) + size(node.left) + 1;
+        return node;
     }
 
 
@@ -180,29 +189,30 @@ public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements
 
     @Override
     public Key floor(Key key) {
-        return floor(root, key);
+        Node<Key, Value> node = floor(root, key);
+        if (node == null) {
+            return null;
+        }
+        return node.key;
     }
 
-    private Key floor(Node<Key, Value> node, Key key) {
-        Node<Key, Value> tmp = node;
-        Key floorKey = null;
-        while (true) {
-            if (tmp == null) {
-                return floorKey;
-            }
-            int compare = key.compareTo(tmp.key);
-            if (compare > 0) {
-                if (floorKey == null || tmp.key.compareTo(floorKey) > 0) {
-                    floorKey = tmp.key;
-                }
-                tmp = tmp.right;
-            } else if (compare < 0) {
-                tmp = tmp.left;
-            } else {
-                return key;
-            }
-
+    private Node<Key, Value> floor(Node<Key, Value> node, Key key) {
+        if (node == null) {
+            return null;
         }
+        int compare = key.compareTo(node.key);
+        if (compare == 0) {
+            return node;
+        } else if (compare < 0) {
+            return floor(node.left, key);
+        }
+        Node<Key, Value> t = floor(node.right, key);
+        if (t != null) {
+            return t;
+        } else {
+            return node;
+        }
+
     }
 
     @Override
@@ -234,8 +244,6 @@ public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements
                 return key;
             }
         }
-
-
     }
 
 
@@ -284,7 +292,7 @@ public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements
 
     @Override
     public Iterable<Key> keys(Key lo, Key hi) {
-        List<Key> list = new ArrayList<>(size(root));
+        ArrayList<Key> list = new ArrayList<>(size(root));
         keys(root, list, lo, hi);
         return list;
     }
@@ -293,23 +301,15 @@ public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements
         if (node == null) {
             return;
         }
-        // 中序遍历
-        int compareHi = node.key.compareTo(hi);
-        if (compareHi > 0) {
+        int cmplo = lo.compareTo(node.key);
+        int cmphi = hi.compareTo(node.key);
+        if (cmplo < 0) {
             keys(node.left, list, lo, hi);
-            return;
         }
-        int compareLo = node.key.compareTo(lo);
-        if (compareLo < 0) {
-            keys(node.right, list, lo, hi);
-            return;
+        if (cmplo <= 0 && cmphi >= 0) {
+            list.add(node.key);
         }
-        if (node.left == null) {
-            list.add(node.key);
-            keys(node.right, list, lo, hi);
-        } else {
-            keys(node.left, list, lo, hi);
-            list.add(node.key);
+        if (cmphi > 0) {
             keys(node.right, list, lo, hi);
         }
 

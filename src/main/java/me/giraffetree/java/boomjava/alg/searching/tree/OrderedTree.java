@@ -1,7 +1,5 @@
 package me.giraffetree.java.boomjava.alg.searching.tree;
 
-import me.giraffetree.java.boomjava.alg.searching.tree.Tree;
-
 /**
  * @author GiraffeTree
  * @date 2020-01-08

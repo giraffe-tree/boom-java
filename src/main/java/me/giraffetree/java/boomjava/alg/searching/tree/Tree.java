@@ -14,14 +14,18 @@ public interface Tree<Key extends Comparable<? super Key>, Value> {
 
     void delete(Key key);
 
-    void deleteMin(Key key);
+    void deleteMin();
 
-    void deleteMax(Key key);
+    void deleteMax();
 
     /**
      * 普通树节点
      */
     class Node<Key extends Comparable<? super Key>, Value> {
+
+        /**
+         * 为了进行通用的访问, 我这里使用 public
+         */
         public Key key;
         public Value value;
         public Node<Key, Value> left, right;
@@ -34,7 +38,6 @@ public interface Tree<Key extends Comparable<? super Key>, Value> {
             this.N = n;
         }
     }
-
     /**
      * 红黑树节点
      */

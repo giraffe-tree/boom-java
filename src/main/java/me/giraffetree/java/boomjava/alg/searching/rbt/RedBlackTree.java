@@ -12,7 +12,38 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
 
     private final static boolean RED = true;
     private final static boolean BLACK = false;
-    ColoredNode<Key, Value> root ;
+
+    ColoredNode<Key, Value> root;
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public Value get(Key key) {
+        return null;
+    }
+
+    @Override
+    public void put(Key key, Value value) {
+
+    }
+
+    @Override
+    public void delete(Key key) {
+
+    }
+
+    @Override
+    public void deleteMin() {
+
+    }
+
+    @Override
+    public void deleteMax() {
+
+    }
 
     @Override
     public Key max() {
@@ -49,42 +80,9 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
         return null;
     }
 
-    @Override
-    public int size() {
-        return 0;
-    }
+    private ColoredNode<Key, Value> rotateLeft(ColoredNode<Key, Value> h) {
 
-    /**
-     * 红黑树也是二叉搜索树
-     * 可以和 BST 使用相同原理的 get 方法
-     */
-    @Override
-    public Value get(Key key) {
         return null;
-    }
-
-    @Override
-    public void put(Key key, Value value) {
-
-    }
-
-    @Override
-    public void delete(Key key) {
-
-    }
-
-    @Override
-    public void deleteMin(Key key) {
-
-    }
-
-    @Override
-    public void deleteMax(Key key) {
-
-    }
-
-    private Node<Key, Value> rotateLeft(ColoredNode<Key, Value> h) {
-
     }
 
     private boolean isRed(ColoredNode node) {
