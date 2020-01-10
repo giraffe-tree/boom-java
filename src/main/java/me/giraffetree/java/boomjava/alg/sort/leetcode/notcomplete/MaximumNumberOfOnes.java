@@ -7,8 +7,6 @@ package me.giraffetree.java.boomjava.alg.sort.leetcode.notcomplete;
  *
  * 请你设计一个算法，计算矩阵中最多可以有多少个 1。
  *
- *  
- *
  * 示例 1：
  *
  * 输入：width = 3, height = 3, sideLength = 2, maxOnes = 1
@@ -43,7 +41,13 @@ package me.giraffetree.java.boomjava.alg.sort.leetcode.notcomplete;
  */
 public class MaximumNumberOfOnes {
 
+    /**
+     * 思路:
+     *
+     */
     public int maximumNumberOfOnes(int width, int height, int sideLength, int maxOnes) {
+
+
         return 0;
     }
 }
