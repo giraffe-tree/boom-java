@@ -1,10 +1,12 @@
-package me.giraffetree.java.boomjava.alg.searching.bst;
+package me.giraffetree.java.boomjava.alg.searching.tree;
+
+import me.giraffetree.java.boomjava.alg.searching.tree.Tree;
 
 /**
  * @author GiraffeTree
  * @date 2020-01-08
  */
-public interface OrderedTree<Key extends Comparable<Key>, Value> extends Tree<Key, Value> {
+public interface OrderedTree<Key extends Comparable<? super Key>, Value> extends Tree<Key, Value> {
 
     Key max();
 

@@ -1,5 +1,7 @@
 package me.giraffetree.java.boomjava.alg.searching.bst;
 
+import me.giraffetree.java.boomjava.alg.searching.tree.OrderedTree;
+
 /**
  * 递归版 二叉查找树
  *
@@ -8,7 +10,7 @@ package me.giraffetree.java.boomjava.alg.searching.bst;
  */
 public class RecursiveBST<Key extends Comparable<Key>, Value> implements OrderedTree<Key, Value> {
 
-    private Node root;
+    private Node<Key, Value> root;
 
     @Override
     public int size() {
@@ -28,7 +30,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value> implements Ordered
     }
 
 
-    private Value get(Node node, Key key) {
+    private Value get(Node<Key, Value> node, Key key) {
         if (node == null) {
             return null;
         }
@@ -124,20 +126,6 @@ public class RecursiveBST<Key extends Comparable<Key>, Value> implements Ordered
     @Override
     public Iterable<Key> keys(Key lo, Key hi) {
         return null;
-    }
-
-    private class Node {
-        private Key key;
-        private Value value;
-        private Node left, right;
-
-        private int N;
-
-        public Node(Key key, Value value, int n) {
-            this.key = key;
-            this.value = value;
-            this.N = n;
-        }
     }
 
 }
