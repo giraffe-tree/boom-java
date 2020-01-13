@@ -27,14 +27,10 @@ package me.giraffetree.java.boomjava.alg.sort.leetcode.notcomplete;
  */
 public class ReversePairs {
 
-    private final static int MAX = Integer.MAX_VALUE >> 1;
-    private final static int MIN = Integer.MIN_VALUE >> 1;
-
     /**
      * 思路
      */
     public int reversePairs(int[] nums) {
-
 
         return 0;
     }
@@ -48,7 +44,7 @@ public class ReversePairs {
         int count = 0;
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
-                if ((long) nums[i] > 2 * (long) nums[j]) {
+                if (check(nums, i, j)) {
                     count++;
                 }
             }
@@ -56,5 +52,8 @@ public class ReversePairs {
         return count;
     }
 
+    private boolean check(int[] nums, int i, int j) {
+        return (long) nums[i] > 2 * (long) nums[j];
+    }
 
 }

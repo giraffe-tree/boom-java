@@ -38,20 +38,24 @@ public interface Tree<Key extends Comparable<? super Key>, Value> {
             this.N = n;
         }
     }
+
     /**
      * 红黑树节点
      */
-    class ColoredNode<Key extends Comparable<? super Key>, Value> extends Node<Key, Value> {
+    class RedBlackNode<Key extends Comparable<? super Key>, Value> {
+        public Key key;
+        public Value value;
         public boolean color;
+        public RedBlackNode<Key, Value> left, right;
+        public int N;
 
-        public ColoredNode(Key key, Value value, int n) {
-            super(key, value, n);
-            this.color = false;
-        }
-
-        public ColoredNode(Key key, Value value, int n, boolean color) {
-            super(key, value, n);
+        public RedBlackNode(Key key, Value value, boolean color, RedBlackNode<Key, Value> left, RedBlackNode<Key, Value> right, int n) {
+            this.key = key;
+            this.value = value;
             this.color = color;
+            this.left = left;
+            this.right = right;
+            N = n;
         }
     }
 
