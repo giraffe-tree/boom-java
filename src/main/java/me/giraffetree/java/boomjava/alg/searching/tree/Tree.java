@@ -106,7 +106,7 @@ public interface Tree<Key extends Comparable<? super Key>, Value> {
 
         @Override
         public String toString() {
-            return key.toString() + ":" + (this.color ? "R" : "B");
+            return key.toString() + (this.color ? ":R:" + N : ":" + N);
         }
 
     }

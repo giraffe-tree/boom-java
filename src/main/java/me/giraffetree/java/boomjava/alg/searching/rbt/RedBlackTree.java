@@ -84,6 +84,8 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
         if (isRed(node.left) && isRed(node.right)) {
             flipColors(node);
         }
+        // 别忘了更新 node.N
+        node.N = size(node.right) + size(node.left) + 1;
         return node;
     }
 
@@ -92,9 +94,75 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
 
     }
 
+    /**
+     * 把要删除的结点在不破坏平衡的前提下先染红，再删除。
+     * 代码中delete与deleteMin函数其实有一个隐形的不变量(invariant)：
+     * h为红或者h.left为红。
+     * 这个invariant保证我们最终删除的结点一定是红色的，不用担心黑高平衡的破坏。
+     * 参考: https://www.zhihu.com/question/340879955
+     */
     @Override
     public void deleteMin() {
+        // 为什么要染红呢, 为了整棵树的叶子节点到 root 的路径上, 经过的 黑链接数量 都相等
+        if (!isRed(root.left)) {
+            // assert !isRed(root.right);
+            root.color = RED;
+        }
+        root = deleteMin(root);
+        if (!isEmpty()) {
+            root.color = BLACK;
+        }
+    }
 
+    /**
+     * 只允许删除 红色节点(3-节点)
+     *
+     * <p>
+     * 1. 如果当前节点的左子节点不是 2-节点, 则进入左子节点
+     * 2. 如果当前节点的左子节点是 2-节点, 且它的右子节点不是 2-节点, 则借一个节点到左子节点中
+     * 3. 如果当前节点的左右子节点均为 2-节点, 则将当前节点/其左子节点/其右子节点合并成一个 4-节点(即一个黑色节点的左右子节点均为红色)
+     */
+    private RedBlackNode<Key, Value> deleteMin(RedBlackNode<Key, Value> h) {
+        if (h.left == null) {
+            // h 节点必为红色
+            return null;
+        }
+        // 这里没有判断 h.right, 因为在左倾红黑树中右子节点永远为 [黑色]
+        if (!isRed(h.left) && !isRed(h.left.left)) {
+            // 进入这个分支, h.left.color = black, 则必有 h.color = red
+            h = moveRedLeft(h);
+        }
+        h.left = deleteMin(h.left);
+        return balance(h);
+    }
+
+    private RedBlackNode<Key, Value> moveRedLeft(RedBlackNode<Key, Value> h) {
+        // assert (h != null);
+        // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
+
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            // 如果右节点为 3-节点, 则借一个节点到左节点上
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+        }
+        return h;
+    }
+
+    private RedBlackNode<Key, Value> balance(RedBlackNode<Key, Value> h) {
+        // assert (h != null);
+        if (isRed(h.right)) {
+            h = rotateLeft(h);
+        }
+        if (isRed(h.left) && isRed(h.left.left)) {
+            // 右旋
+            h = rotateRight(h);
+        }
+        if (isRed(h.left) && isRed(h.right)) {
+            flipColors(h);
+        }
+        h.N = size(h.left) + size(h.right) + 1;
+        return h;
     }
 
     /**
@@ -219,9 +287,13 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
      * 翻转会改变2-3树的结构
      */
     private void flipColors(RedBlackNode<Key, Value> node) {
-        node.color = RED;
-        node.left.color = BLACK;
-        node.right.color = BLACK;
+        node.color = !node.color;
+        node.left.color = !node.left.color;
+        node.right.color = !node.right.color;
     }
 
+
+    private boolean isEmpty() {
+        return root == null;
+    }
 }
