@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class TreePrinter {
 
-    public static <T extends Comparable<? super T>, V> void printNode(Tree.Node<T, V> root) {
+    public static <T extends Comparable<? super T>, V> void printNode(INode<T, V> root) {
         int maxLevel = TreePrinter.maxLevel(root);
 
         printNodeInternal(Collections.singletonList(root), 1, maxLevel);
     }
 
-    private static <T extends Comparable<? super T>, V> void printNodeInternal(List<Tree.Node<T, V>> nodes, int level, int maxLevel) {
+    private static <T extends Comparable<? super T>, V> void printNodeInternal(List<INode<T, V>> nodes, int level, int maxLevel) {
         if (nodes.isEmpty() || TreePrinter.isAllElementsNull(nodes)) {
             return;
         }
@@ -30,12 +30,12 @@ public class TreePrinter {
 
         TreePrinter.printWhitespaces(firstSpaces);
 
-        List<Tree.Node<T, V>> newNodes = new ArrayList<>();
-        for (Tree.Node<T, V> node : nodes) {
+        List<INode<T, V>> newNodes = new ArrayList<>();
+        for (INode<T, V> node : nodes) {
             if (node != null) {
-                System.out.print(node.key);
-                newNodes.add(node.left);
-                newNodes.add(node.right);
+                System.out.print(node.getKey());
+                newNodes.add(node.left());
+                newNodes.add(node.right());
             } else {
                 newNodes.add(null);
                 newNodes.add(null);
@@ -54,7 +54,7 @@ public class TreePrinter {
                     continue;
                 }
 
-                if (nodes.get(j).left != null) {
+                if (nodes.get(j).left() != null) {
                     System.out.print("/");
                 } else {
                     TreePrinter.printWhitespaces(1);
@@ -62,7 +62,7 @@ public class TreePrinter {
 
                 TreePrinter.printWhitespaces(i + i - 1);
 
-                if (nodes.get(j).right != null) {
+                if (nodes.get(j).right() != null) {
                     System.out.print("\\");
                 } else {
                     TreePrinter.printWhitespaces(1);
@@ -83,11 +83,11 @@ public class TreePrinter {
         }
     }
 
-    private static <T extends Comparable<? super T>, V> int maxLevel(Tree.Node<T, V> node) {
+    private static <T extends Comparable<? super T>, V> int maxLevel(INode<T, V> node) {
         if (node == null) {
             return 0;
         }
-        return Math.max(TreePrinter.maxLevel(node.left), TreePrinter.maxLevel(node.right)) + 1;
+        return Math.max(TreePrinter.maxLevel(node.left()), TreePrinter.maxLevel(node.right())) + 1;
     }
 
     private static <T> boolean isAllElementsNull(List<T> list) {
@@ -101,11 +101,11 @@ public class TreePrinter {
     }
 
 
-    public static <KEY extends Comparable<? super KEY>, VALUE> void print(Tree.Node<KEY, VALUE> root) {
+    public static <KEY extends Comparable<? super KEY>, VALUE> void print(INode<KEY, VALUE> root) {
         List<List<String>> lines = new ArrayList<>();
 
-        List<Tree.Node> level = new ArrayList<>();
-        List<Tree.Node> next = new ArrayList<>();
+        List<INode> level = new ArrayList<>();
+        List<INode> next = new ArrayList<>();
 
         level.add(root);
         int nn = 1;
@@ -117,7 +117,7 @@ public class TreePrinter {
 
             nn = 0;
 
-            for (Tree.Node n : level) {
+            for (INode n : level) {
                 if (n == null) {
                     line.add(null);
 
@@ -125,20 +125,20 @@ public class TreePrinter {
                     next.add(null);
                 } else {
 //                    String aa = n.key + (n.color ? ":R" : "");
-                    String aa = n.key.toString();
+                    String aa = n.toString();
 
                     line.add(aa);
                     if (aa.length() > widest) {
                         widest = aa.length();
                     }
 
-                    next.add(n.left);
-                    next.add(n.right);
+                    next.add(n.left());
+                    next.add(n.right());
 
-                    if (n.left != null) {
+                    if (n.left() != null) {
                         nn++;
                     }
-                    if (n.right != null) {
+                    if (n.right() != null) {
                         nn++;
                     }
                 }
@@ -150,7 +150,7 @@ public class TreePrinter {
 
             lines.add(line);
 
-            List<Tree.Node> tmp = level;
+            List<INode> tmp = level;
             level = next;
             next = tmp;
             next.clear();

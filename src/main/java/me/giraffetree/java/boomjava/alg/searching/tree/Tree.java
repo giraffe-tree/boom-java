@@ -21,7 +21,7 @@ public interface Tree<Key extends Comparable<? super Key>, Value> {
     /**
      * 普通树节点
      */
-    class Node<Key extends Comparable<? super Key>, Value> {
+    class Node<Key extends Comparable<? super Key>, Value> implements INode<Key, Value> {
 
         /**
          * 为了进行通用的访问, 我这里使用 public
@@ -37,12 +37,38 @@ public interface Tree<Key extends Comparable<? super Key>, Value> {
             this.value = value;
             this.N = n;
         }
+
+
+        @Override
+        public Key getKey() {
+            return key;
+        }
+
+        @Override
+        public Value getValue() {
+            return value;
+        }
+
+        @Override
+        public INode<Key, Value> left() {
+            return left;
+        }
+
+        @Override
+        public INode<Key, Value> right() {
+            return right;
+        }
+
+        @Override
+        public String toString() {
+            return key.toString();
+        }
     }
 
     /**
      * 红黑树节点
      */
-    class RedBlackNode<Key extends Comparable<? super Key>, Value> {
+    class RedBlackNode<Key extends Comparable<? super Key>, Value> implements INode<Key, Value> {
         public Key key;
         public Value value;
         public boolean color;
@@ -57,6 +83,32 @@ public interface Tree<Key extends Comparable<? super Key>, Value> {
             this.right = right;
             N = n;
         }
+
+        @Override
+        public Key getKey() {
+            return key;
+        }
+
+        @Override
+        public Value getValue() {
+            return value;
+        }
+
+        @Override
+        public INode<Key, Value> left() {
+            return left;
+        }
+
+        @Override
+        public INode<Key, Value> right() {
+            return right;
+        }
+
+        @Override
+        public String toString() {
+            return key.toString() + ":" + (this.color ? "R" : "B");
+        }
+
     }
 
 }

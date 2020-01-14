@@ -3,7 +3,7 @@ package me.giraffetree.java.boomjava.alg.searching.rbt;
 import me.giraffetree.java.boomjava.alg.searching.tree.OrderedTree;
 
 /**
- * 红黑树
+ * 左倾红黑树
  *
  * @author GiraffeTree
  * @date 2020-01-09
@@ -27,16 +27,40 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
         return node.N;
     }
 
+    /**
+     * get 方法的思路和 bst 是一样的
+     * 红黑树是2-3树, 也是二叉树
+     */
     @Override
     public Value get(Key key) {
-        return null;
+        RedBlackNode<Key, Value> node = get(root, key);
+        return node == null ? null : node.value;
+    }
+
+    private RedBlackNode<Key, Value> get(RedBlackNode<Key, Value> node, Key key) {
+        if (node == null) {
+            return null;
+        }
+        int compare = key.compareTo(node.key);
+        if (compare > 0) {
+            return get(node.right, key);
+        } else if (compare < 0) {
+            return get(node.left, key);
+        } else {
+            return node;
+        }
     }
 
     @Override
     public void put(Key key, Value value) {
-
+        root = put(root, key, value);
+        root.color = BLACK;
     }
 
+    /**
+     * put 方法主要是用好 左旋,右旋,翻转
+     * 要注意判断的顺序
+     */
     private RedBlackNode<Key, Value> put(RedBlackNode<Key, Value> node, Key key, Value value) {
         if (node == null) {
             node = new RedBlackNode<>(key, value, RED, null, null, 1);
@@ -50,8 +74,17 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
             node.value = value;
         }
         // 什么情况下需要进行旋转或者翻转
-
-
+        // 参见: https://www.processon.com/view/link/5cfb1b11e4b0591fc0d94564
+        if (isRed(node.right)) {
+            node = rotateLeft(node);
+        }
+        if (isRed(node.left) && isRed(node.left.left)) {
+            node = rotateRight(node);
+        }
+        if (isRed(node.left) && isRed(node.right)) {
+            flipColors(node);
+        }
+        return node;
     }
 
     @Override
@@ -64,19 +97,52 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
 
     }
 
+    /**
+     * 删除最大的元素
+     * 删除的节点必须是 红色, 只有这样才能保证: 在删除这个节点之后, 整棵树仍然保持平衡
+     * 为了确保这个条件, 必须从根节点开始保证有一个红色节点在右子树上
+     */
     @Override
     public void deleteMax() {
 
     }
 
+    private RedBlackNode<Key, Value> deleteMax(RedBlackNode<Key, Value> node) {
+
+
+        return null;
+    }
+
+    /**
+     * 可能 NPE
+     */
     @Override
     public Key max() {
-        return null;
+        return max(root).key;
+    }
+
+    /**
+     * max(),min() 的思路和 bst 中一样
+     */
+    private RedBlackNode<Key, Value> max(RedBlackNode<Key, Value> node) {
+        RedBlackNode<Key, Value> tmp = node;
+        while (tmp.right != null) {
+            tmp = tmp.right;
+        }
+        return tmp;
     }
 
     @Override
     public Key min() {
-        return null;
+        return min(root).key;
+    }
+
+    private RedBlackNode<Key, Value> min(RedBlackNode<Key, Value> node) {
+        RedBlackNode<Key, Value> tmp = node;
+        while (tmp.left != null) {
+            tmp = tmp.left;
+        }
+        return tmp;
     }
 
     @Override
@@ -142,11 +208,15 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
     }
 
     private boolean isRed(RedBlackNode node) {
+        if (node == null) {
+            return false;
+        }
         return node.color == RED;
     }
 
     /**
      * 翻转颜色
+     * 翻转会改变2-3树的结构
      */
     private void flipColors(RedBlackNode<Key, Value> node) {
         node.color = RED;
