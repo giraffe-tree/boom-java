@@ -5,6 +5,9 @@ import me.giraffetree.java.boomjava.alg.searching.tree.TreePrinter;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * 红黑树测试
+ * 使用 `-ea` 加入 VM options 打开断言
+ *
  * @author GiraffeTree
  * @date 2020-01-13
  */
@@ -16,16 +19,19 @@ public class RedBlackTreeTest {
     }
 
     private static void testDeleteMin() {
-        RedBlackTree<Integer, String> generate = generate(20,50);
-        for (int i = 0; i < generate.size(); i++) {
-            TreePrinter.print(generate.root);
+        RedBlackTree<Integer, String> generate = generate(10, 30);
+        TreePrinter.print(generate.root);
+        int size = generate.size();
+        for (int i = 0; i < size; i++) {
+            System.out.println(String.format("try to delete min:%d", generate.min()));
             generate.deleteMin();
+            TreePrinter.print(generate.root);
         }
 
     }
 
     private static void testPut() {
-        RedBlackTree<Integer, String> redBlackTree = generate(20, 30);
+        RedBlackTree<Integer, String> redBlackTree = generate(10, 30);
         TreePrinter.print(redBlackTree.root);
 
     }
