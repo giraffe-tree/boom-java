@@ -15,7 +15,18 @@ public class RedBlackTreeTest {
 
     public static void main(String[] args) {
 
-        testDeleteMin();
+        testDeleteMax();
+    }
+
+    private static void testDeleteMax() {
+        RedBlackTree<Integer, String> generate = generate(10, 30);
+        TreePrinter.print(generate.root);
+        int size = generate.size();
+        for (int i = 0; i < size; i++) {
+            System.out.println(String.format("try to delete max:%d", generate.max()));
+            generate.deleteMax();
+            TreePrinter.print(generate.root);
+        }
     }
 
     private static void testDeleteMin() {

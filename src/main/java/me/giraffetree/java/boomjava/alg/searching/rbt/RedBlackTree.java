@@ -183,12 +183,51 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
      */
     @Override
     public void deleteMax() {
+        if (!isRed(root.left)) {
+            root.color = RED;
+        }
+        root = deleteMax(root);
+        if (isRed(root)) {
+            root.color = BLACK;
+        }
 
     }
 
+    /**
+     * 删除最大的节点
+     * 2-3 树的右子节点为 3-节点
+     * 有以下几种情况
+     * 1. 左右节点均为 2-节点, 翻转当前节点
+     * 2. 左节点为 3-节点, 右节点为 2-节点, 借一个节点到 右边
+     * 3. 右节点为 3-节点, 则直接进入 deleteMax(右子节点)
+     */
     private RedBlackNode<Key, Value> deleteMax(RedBlackNode<Key, Value> node) {
+        if (node.right == null) {
+            return node.left;
+        }
+        if (isRed(node.right.left) ) {
+            // 情况3, 右节点为 3-节点, 直接进入 deleteMax(右子节点)
+            node.right = deleteMax(node.right);
+        } else if (!isRed(node.left) || (isRed(node.left) && !isRed(node.left.left))) {
+            // 由于前面已经判定过右节点不为 3-节点, 则只要判断左节点为2-节点就可以了
+            // 情况1, 左右节点均为 2-节点
+            assert (!isRed(node.right)) || (isRed(node.right) && !isRed(node.right.left));
+            flipColors(node);
+            node.right = deleteMax(node.right);
+        } else if (isRed(node.left)) {
+            // 情况2,
+            // 当前节点为 3-节点
+            node = rotateRight(node);
+            node.right = deleteMax(node.right);
+        } else if (!isRed(node.left) && isRed(node.left.left)) {
+            // 情况2,
+            // 2-3树 左子节点 为 3-节点, 右子节点为 2-节点
+            flipColors(node);
+            node = rotateRight(node);
+            node.right = deleteMax(node.right);
+        }
 
-        return null;
+        return balance(node);
     }
 
     /**
