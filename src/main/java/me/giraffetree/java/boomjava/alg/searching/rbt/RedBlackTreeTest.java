@@ -15,25 +15,150 @@ public class RedBlackTreeTest {
 
     public static void main(String[] args) {
 
-        testDeleteMax();
+        int count = 20;
+
+        for (int i = 0; i < count; i++) {
+            testDelete(i, 100);
+            testDeleteMax(i, 100);
+            testDeleteMin(i, 100);
+        }
     }
 
-    private static void testDeleteMax() {
-        RedBlackTree<Integer, String> generate = generate(10, 30);
+    /**
+     * #                   36:4
+     * #           ┌─────────┴─────────┐
+     * #          5:1                63:2
+     * #                         ┌────┘
+     * #                       58:R:1
+     */
+    private static void testDeleteMax63() {
+        RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
+        rbt.put(36, "");
+        rbt.put(5, "");
+        rbt.put(63, "");
+        rbt.put(58, "");
+        TreePrinter.print(rbt.root);
+        System.out.println("try to delete max");
+        rbt.deleteMax();
+        TreePrinter.print(rbt.root);
+    }
+
+    /**
+     * #                                       18:6
+     * #                     ┌───────────────────┴───────────────────┐
+     * #                   5:R:4                                   19:1
+     * #            ┌─────────┴─────────┐
+     * #           2:2                12:1
+     * #    ┌──────┘
+     * # 1:R:1
+     */
+    private static void testDelete5() {
+        RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
+        rbt.put(18, "");
+        rbt.put(12, "");
+        rbt.put(19, "");
+        rbt.put(5, "");
+        rbt.put(2, "");
+        rbt.put(1, "");
+        TreePrinter.print(rbt.root);
+        System.out.println("try to delete 5");
+        rbt.delete(5);
+        TreePrinter.print(rbt.root);
+    }
+
+    /**
+     * #                 18:4
+     * #         ┌─────────┴─────────┐
+     * #       2:R:2               19:1
+     * #         └────┐
+     * #           12:1
+     */
+    private static void testDelete12() {
+        RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
+        rbt.put(18, "");
+        rbt.put(2, "");
+        rbt.put(19, "");
+        rbt.put(1, "");
+        TreePrinter.print(rbt.root);
+        rbt.delete(17);
+        TreePrinter.print(rbt.root);
+    }
+
+    /**
+     * 第1行       12
+     * 第2行     5     17
+     * 第3行 1
+     */
+    private static void testDelete17() {
+
+        RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
+        rbt.put(12, "");
+        rbt.put(5, "");
+        rbt.put(17, "");
+        rbt.put(1, "");
+        TreePrinter.print(rbt.root);
+        rbt.delete(17);
+        TreePrinter.print(rbt.root);
+    }
+
+
+    /**
+     * 第1行       11
+     * 第2行    6     15
+     * 第3行 5
+     */
+    private static void testDelete11() {
+
+        RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
+        rbt.put(11, "");
+        rbt.put(6, "");
+        rbt.put(15, "");
+        rbt.put(5, "");
+        TreePrinter.print(rbt.root);
+        rbt.delete(11);
+        TreePrinter.print(rbt.root);
+
+    }
+
+    private static void testDelete(int size, int max) {
+        RedBlackTree<Integer, String> rbt = generate(size, max);
+        TreePrinter.print(rbt.root);
+
+        int n = rbt.size();
+        ThreadLocalRandom tlr = ThreadLocalRandom.current();
+        for (int i = 0; i < n; i++) {
+            int cur = rbt.size();
+            int rank = tlr.nextInt(1, cur + 1);
+
+            Integer key = rbt.select(rank);
+            System.out.println(String.format("try to delete: %d", key));
+
+            rbt.delete(key);
+            TreePrinter.print(rbt.root);
+            boolean is23 = rbt.is23();
+            if (!is23) {
+                System.out.println("test error ...");
+                break;
+            }
+        }
+    }
+
+    private static void testDeleteMax(int size, int max) {
+        RedBlackTree<Integer, String> generate = generate(size, max);
         TreePrinter.print(generate.root);
-        int size = generate.size();
-        for (int i = 0; i < size; i++) {
+        int n = generate.size();
+        for (int i = 0; i < n; i++) {
             System.out.println(String.format("try to delete max:%d", generate.max()));
             generate.deleteMax();
             TreePrinter.print(generate.root);
         }
     }
 
-    private static void testDeleteMin() {
-        RedBlackTree<Integer, String> generate = generate(10, 30);
+    private static void testDeleteMin(int size, int max) {
+        RedBlackTree<Integer, String> generate = generate(size, max);
         TreePrinter.print(generate.root);
-        int size = generate.size();
-        for (int i = 0; i < size; i++) {
+        int n = generate.size();
+        for (int i = 0; i < n; i++) {
             System.out.println(String.format("try to delete min:%d", generate.min()));
             generate.deleteMin();
             TreePrinter.print(generate.root);
@@ -47,11 +172,11 @@ public class RedBlackTreeTest {
 
     }
 
-    private static RedBlackTree<Integer, String> generate() {
+     static RedBlackTree<Integer, String> generate() {
         return generate(10, 30);
     }
 
-    private static RedBlackTree<Integer, String> generate(int size, int max) {
+    static RedBlackTree<Integer, String> generate(int size, int max) {
         RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
 
         ThreadLocalRandom current = ThreadLocalRandom.current();
@@ -62,11 +187,11 @@ public class RedBlackTreeTest {
         return rbt;
     }
 
-    private static RedBlackTree<Integer, String> generateBeginSmall() {
+    static RedBlackTree<Integer, String> generateBeginSmall() {
         return generateBeginSmall(10, 100);
     }
 
-    private static RedBlackTree<Integer, String> generateBeginSmall(int size, int max) {
+    static RedBlackTree<Integer, String> generateBeginSmall(int size, int max) {
         RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
 
         ThreadLocalRandom current = ThreadLocalRandom.current();
@@ -80,11 +205,11 @@ public class RedBlackTreeTest {
         return rbt;
     }
 
-    private static RedBlackTree<Integer, String> generateBeginMax() {
+    static RedBlackTree<Integer, String> generateBeginMax() {
         return generateBeginMax(10, 100);
     }
 
-    private static RedBlackTree<Integer, String> generateBeginMax(int size, int max) {
+    static RedBlackTree<Integer, String> generateBeginMax(int size, int max) {
         RedBlackTree<Integer, String> rbt = new RedBlackTree<>();
 
         ThreadLocalRandom current = ThreadLocalRandom.current();

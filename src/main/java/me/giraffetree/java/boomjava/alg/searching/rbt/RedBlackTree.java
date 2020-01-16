@@ -100,84 +100,35 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
         }
     }
 
-    private RedBlackNode<Key, Value> delete(RedBlackNode<Key, Value> node, Key key) {
-        // node, node.left , node.left.left 必定有一个红色节点
-        int compare = key.compareTo(node.key);
-        if (compare > 0) {
-            if (node.right != null && isRed(node.right.left)) {
-                // 由于红黑树的两个红色节点不会连在一起
-                // 2-3树的右节点为 3-节点
-                // 继续 delete 右节点
-                node.right = delete(node.right, key);
-            } else if (isRed(node.left)) {
-                // node为 3-节点, 转换成另一种表达方式
-                node = rotateRight(node);
-                node.right = delete(node.right, key);
-            } else if (node.left != null && isRed(node.left.left)) {
-                // 2-3树的左节点为 3-节点
-                // 将左边的节点移到右子树上
-                flipColors(node);
-                node = rotateRight(node);
-                node.right = rotateLeft(node.right);
-                node.right = delete(node.right, key);
-            } else if (!isRed(node.left)) {
-                // 左右都是 2-节点
-                // 由于前面已经把 右节点是3-节点的情况排除了, 直接判断左节点是不是
-                flipColors(node);
-                node.right = delete(node.right, key);
+    private RedBlackNode<Key, Value> delete(RedBlackNode<Key, Value> h, Key key) {
+
+        if (key.compareTo(h.key) < 0) {
+            if (!isRed(h.left) && !isRed(h.left.left)) {
+                h = moveRedLeft(h);
             }
-        } else if (compare < 0) {
-            if (isRed(node.left)) {
-                // node为 3-节点, 转换成另一种表达方式
-                node.left = delete(node.left, key);
-            } else if (node.left != null && isRed(node.left.left)) {
-                // 2-3 树的左节点为 3-节点
-                node.left = delete(node.left, key);
-            } else if (node.right != null && isRed(node.right.left)) {
-                // 2-3树的右节点为 3-节点
-                flipColors(node);
-                node = rotateLeft(node);
-                node.left = delete(node.left, key);
-            } else {
-                // 2-3 树的左右节点均为2-节点
-                flipColors(node);
-                node.left = delete(node.left, key);
-            }
+            h.left = delete(h.left, key);
         } else {
-            if (isRed(node.left)) {
-                // 当前节点为 3-节点
-                RedBlackNode<Key, Value> maxNode = max(node.left);
-                node.left = deleteMax(node.left);
-                // 这里颜色不改变
-                node.key = maxNode.key;
-                node.value = maxNode.value;
-
-            } else if (node.left != null && isRed(node.left.left)) {
-                // 2-3树的左节点为 3-节点
-                RedBlackNode<Key, Value> maxNode = max(node.left);
-                node.left = deleteMax(node.left);
-                // 这里颜色不改变
-                node.key = maxNode.key;
-                node.value = maxNode.value;
-
-            } else if (node.right != null && isRed(node.right.left)) {
-                // 2-3树的右节点为3-节点
-                // 左移
-                flipColors(node);
-                node.right = rotateRight(node.right);
-                node = rotateLeft(node);
-                node.left = delete(node.left, key);
-            } else if (node.left != null && node.right != null) {
-                // 2-3 树左右节点都是2-节点, 且当前也是2-节点
-                flipColors(node);
-                node = rotateLeft(node);
-                node.left = delete(node.left, key);
-            } else {
+            if (isRed(h.left)) {
+                h = rotateRight(h);
+            }
+            if (key.compareTo(h.key) == 0 && (h.right == null)) {
                 return null;
             }
+            if (!isRed(h.right) && !isRed(h.right.left)) {
+                h = moveRedRight(h);
+            }
+            if (key.compareTo(h.key) == 0) {
+                RedBlackNode<Key, Value> x = min(h.right);
+                h.key = x.key;
+                h.value = x.value;
+                // h.val = get(h.right, min(h.right).key);
+                // h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            } else {
+                h.right = delete(h.right, key);
+            }
         }
-
-        return balance(node);
+        return balance(h);
     }
 
     /**
@@ -211,43 +162,15 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
      */
     private RedBlackNode<Key, Value> deleteMin(RedBlackNode<Key, Value> h) {
         if (h.left == null) {
-            // h 节点必为红色
-            assert isRed(h) : "key: " + h.key;
-            return h.right;
+            return null;
         }
-        if (isRed(h.left) || isRed(h.left.left)) {
-            // 左子节点不是 2-节点, 则进入左子节点
-            h.left = deleteMin(h.left);
-        } else if ((!isRed(h.left) || !isRed(h.left.left)) && isRed(h.right.left)) {
-            // 左子节点是 2-节点, 且它的右子节点是 3-节点
-            assert !isRed(h.right) : "key: " + h.key;
-            flipColors(h);
-            h.right = rotateRight(h.right);
-            h = rotateLeft(h);
-            h.left = deleteMin(h.left);
-        } else if (!isRed(h.left) || !isRed(h.left.left)) {
-            // 左右子节点均为 2-节点
-            // 翻转, 合并成 4-节点
-            flipColors(h);
-            h.left = deleteMin(h.left);
-        }
-        return balance(h);
-    }
 
-    private RedBlackNode<Key, Value> balance(RedBlackNode<Key, Value> h) {
-        assert (h != null);
-        if (isRed(h.right)) {
-            h = rotateLeft(h);
+        if (!isRed(h.left) && !isRed(h.left.left)) {
+            h = moveRedLeft(h);
         }
-        if (isRed(h.left) && isRed(h.left.left)) {
-            // 右旋
-            h = rotateRight(h);
-        }
-        if (isRed(h.left) && isRed(h.right)) {
-            flipColors(h);
-        }
-        h.N = size(h.left) + size(h.right) + 1;
-        return h;
+
+        h.left = deleteMin(h.left);
+        return balance(h);
     }
 
     /**
@@ -277,34 +200,62 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
      */
     private RedBlackNode<Key, Value> deleteMax(RedBlackNode<Key, Value> node) {
 
+        if (isRed(node.left)) {
+            node = rotateRight(node);
+        }
         if (node.right == null) {
-            return node.left;
+            return null;
         }
-        if (isRed(node.right.left)) {
-            // 情况3, 右节点为 3-节点, 直接进入 deleteMax(右子节点)
-            node.right = deleteMax(node.right);
-        } else if (isRed(node.left)) {
-            // 情况2,
-            // 当前节点为 3-节点
-            node = rotateRight(node);
-            node.right = deleteMax(node.right);
-        } else if (node.left != null && isRed(node.left.left)) {
-            // 情况2,
-            // 2-3树 左子节点 为 3-节点, 右子节点为 2-节点, 借一个节点
-            flipColors(node);
-            node = rotateRight(node);
-            node.right = rotateLeft(node.right);
-            node.right = deleteMax(node.right);
-
-        } else {
-            // 情况1, 左右节点均为 2-节点
-            assert !isRed(node.left) && !isRed(node.right) : "key=" + node.key;
-            flipColors(node);
-            node.right = deleteMax(node.right);
+        if (!isRed(node.right) && !isRed(node.right.left)) {
+            // 23树的 右节点为 2-节点
+            node = moveRedRight(node);
         }
+        // 到这里的右节点 h = node.right
+        // 有 h 的每个叶子节点到 h 经过的 黑色链接数都相同
+        node.right = deleteMax(node.right);
 
         return balance(node);
     }
+
+    private RedBlackNode<Key, Value> balance(RedBlackNode<Key, Value> h) {
+        assert (h != null);
+        if (isRed(h.right)) {
+            h = rotateLeft(h);
+        }
+        if (isRed(h.left) && isRed(h.left.left)) {
+            // 右旋
+            h = rotateRight(h);
+        }
+        if (isRed(h.left) && isRed(h.right)) {
+            flipColors(h);
+        }
+        h.N = size(h.left) + size(h.right) + 1;
+        return h;
+    }
+
+
+    RedBlackNode<Key, Value> moveRedRight(RedBlackNode<Key, Value> h) {
+        // 若 h.color = red 且 h.right 和 h.right.left 均为黑色 -> 则将 h.right 或 h.right 的子节点之一变红
+        flipColors(h);
+        if (isRed(h.left.left)) {
+            h = rotateRight(h);
+//            flipColors(h);
+        }
+        return h;
+    }
+
+    RedBlackNode<Key, Value> moveRedLeft(RedBlackNode<Key, Value> h) {
+        //      R
+        //  B       B
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+//            flipColors(h);
+        }
+        return h;
+    }
+
 
     /**
      *
@@ -404,7 +355,7 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
      * 第2层   B2      R3          ==>     R1         B5
      * 第3层         B4   B5            B2    B4
      */
-    private RedBlackNode<Key, Value> rotateLeft(RedBlackNode<Key, Value> node) {
+    RedBlackNode<Key, Value> rotateLeft(RedBlackNode<Key, Value> node) {
         assert isRed(node.right) : "key:" + node.key;
         RedBlackNode<Key, Value> right = node.right;
         node.right = right.left;
@@ -428,7 +379,7 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
      * 第2层   R2      B3     ==>  B4      R1
      * 第3层 B4   B5                     B5  B3
      */
-    private RedBlackNode<Key, Value> rotateRight(RedBlackNode<Key, Value> node) {
+    RedBlackNode<Key, Value> rotateRight(RedBlackNode<Key, Value> node) {
         assert isRed(node.left) : "key:" + node.key;
         RedBlackNode<Key, Value> left = node.left;
         node.left = left.right;
@@ -441,7 +392,7 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
         return left;
     }
 
-    private boolean isRed(RedBlackNode node) {
+    boolean isRed(RedBlackNode node) {
         if (node == null) {
             return false;
         }
@@ -452,7 +403,7 @@ public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements
      * 翻转颜色
      * 不能改变2-3树的结构
      */
-    private void flipColors(RedBlackNode<Key, Value> node) {
+    void flipColors(RedBlackNode<Key, Value> node) {
         assert (isRed(node) && !isRed(node.left) && !isRed(node.right)) || (!isRed(node) && isRed(node.left) && isRed(node.right)) : "key:" + node.key;
         node.color = !node.color;
         node.left.color = !node.left.color;

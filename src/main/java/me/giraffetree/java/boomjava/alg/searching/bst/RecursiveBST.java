@@ -135,7 +135,7 @@ public class RecursiveBST<Key extends Comparable<? super Key>, Value> implements
                 // 右子树为空时, 将它的左子树作为 node 返回
                 return node.left;
             }
-            // 如果右子树不为空, 找出 max() 替换到当前 node 的位置
+            // 如果右子树不为空, 找出 min() 替换到当前 node 的位置
             Node<Key, Value> minNode = min(node.right);
             minNode.right = deleteMin(node.right);
             minNode.left = node.left;
