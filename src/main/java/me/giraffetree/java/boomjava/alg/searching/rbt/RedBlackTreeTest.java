@@ -17,9 +17,9 @@ public class RedBlackTreeTest {
 
         int count = 20;
 
-        for (int i = 0; i < count; i++) {
-            testDelete(i, 100);
-            testDeleteMax(i, 100);
+        for (int i = 1; i <= count; i++) {
+//            testDelete(i, 100);
+//            testDeleteMax(i, 100);
             testDeleteMin(i, 100);
         }
     }
@@ -172,7 +172,7 @@ public class RedBlackTreeTest {
 
     }
 
-     static RedBlackTree<Integer, String> generate() {
+    static RedBlackTree<Integer, String> generate() {
         return generate(10, 30);
     }
 

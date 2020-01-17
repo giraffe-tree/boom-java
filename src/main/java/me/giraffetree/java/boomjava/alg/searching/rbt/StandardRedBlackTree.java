@@ -8,7 +8,7 @@ import me.giraffetree.java.boomjava.alg.searching.tree.OrderedTree;
  * @author GiraffeTree
  * @date 2020-01-09
  */
-public class RedBlackTree<Key extends Comparable<? super Key>, Value> implements OrderedTree<Key, Value> {
+public class StandardRedBlackTree<Key extends Comparable<? super Key>, Value> implements OrderedTree<Key, Value> {
 
     private final static boolean RED = true;
     private final static boolean BLACK = false;
