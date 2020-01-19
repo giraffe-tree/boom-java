@@ -1,4 +1,6 @@
-package me.giraffetree.java.boomjava.alg.searching.leetcode.tree;
+package me.giraffetree.java.boomjava.alg.searching.leetcode.tree.easy;
+
+import me.giraffetree.java.boomjava.alg.searching.leetcode.tree.TreeNode;
 
 /**
  * // 给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。
@@ -60,7 +62,6 @@ public class IsSubtree {
         boolean subtree = isSubtree.isSubtree(root, root2);
         System.out.println(subtree);
     }
-
 
     private boolean isSub = false;
 

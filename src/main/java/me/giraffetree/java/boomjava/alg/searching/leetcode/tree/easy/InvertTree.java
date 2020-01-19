@@ -1,4 +1,6 @@
-package me.giraffetree.java.boomjava.alg.searching.leetcode.tree;
+package me.giraffetree.java.boomjava.alg.searching.leetcode.tree.easy;
+
+import me.giraffetree.java.boomjava.alg.searching.leetcode.tree.TreeNode;
 
 /**
  * 翻转一棵二叉树。

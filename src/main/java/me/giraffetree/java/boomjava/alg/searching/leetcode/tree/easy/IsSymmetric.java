@@ -1,4 +1,6 @@
-package me.giraffetree.java.boomjava.alg.searching.leetcode.tree;
+package me.giraffetree.java.boomjava.alg.searching.leetcode.tree.easy;
+
+import me.giraffetree.java.boomjava.alg.searching.leetcode.tree.TreeNode;
 
 /**
  * 给定一个二叉树，检查它是否是镜像对称的。
