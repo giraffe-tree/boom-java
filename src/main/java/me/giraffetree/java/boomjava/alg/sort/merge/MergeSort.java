@@ -2,7 +2,7 @@ package me.giraffetree.java.boomjava.alg.sort.merge;
 
 import java.util.Arrays;
 
-import static me.giraffetree.java.boomjava.alg.sort.SortUtils.*;
+import static me.giraffetree.java.boomjava.alg.sort.SortUtils.generate;
 
 /**
  * @author GiraffeTree
@@ -33,6 +33,7 @@ public class MergeSort {
         if (hi <= lo) {
             return;
         }
+        // 防止溢出
         int mid = lo + (hi - lo) / 2;
 
         sort(a, aux, lo, mid);
@@ -61,7 +62,6 @@ public class MergeSort {
         }
         System.arraycopy(aux, lo, a, lo, hi - lo + 1);
     }
-
 
 
 }
