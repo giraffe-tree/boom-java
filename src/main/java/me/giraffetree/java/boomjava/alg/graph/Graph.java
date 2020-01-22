@@ -8,11 +8,13 @@ public interface Graph {
 
     /**
      * 顶点数
+     * vertex count
      */
     int V();
 
     /**
      * 边数
+     * edge count
      */
     int E();
 
