@@ -3,6 +3,9 @@ package me.giraffetree.java.boomjava.alg.graph.undirected.problem;
 import me.giraffetree.java.boomjava.alg.graph.Graph;
 
 /**
+ * 双色问题
+ * 二分图
+ *
  * @author GiraffeTree
  * @date 2020/1/22
  */

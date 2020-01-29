@@ -7,6 +7,9 @@ import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
+ * 广度优先
+ * 这里使用 迭代法
+ *
  * @author GiraffeTree
  * @date 2020/1/22
  */
@@ -45,7 +48,7 @@ public class BreadthFirstSearch {
     }
 
     /**
-     * 同 深度优先中的路径搜索
+     * 同深度优先中的路径搜索
      */
     public Iterable<Integer> pathTo(int v) {
         if (!hasPathTo(v)) {
