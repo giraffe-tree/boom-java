@@ -6,6 +6,8 @@ import java.util.Queue;
 
 /**
  * 最小生成树的Prim 算法的延时实现
+ * 空间复杂度: O(E)
+ * 时间复杂度: O(ElogE)
  *
  * @author GiraffeTree
  * @date 2020/1/30
