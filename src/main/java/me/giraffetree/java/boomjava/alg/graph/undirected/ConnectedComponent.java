@@ -1,6 +1,6 @@
 package me.giraffetree.java.boomjava.alg.graph.undirected;
 
-import me.giraffetree.java.boomjava.alg.graph.Graph;
+import me.giraffetree.java.boomjava.alg.graph.IGraph;
 
 /**
  * @author GiraffeTree
@@ -18,7 +18,7 @@ public class ConnectedComponent {
 
     private int count;
 
-    public ConnectedComponent(Graph graph) {
+    public ConnectedComponent(IGraph graph) {
         marked = new boolean[graph.V()];
         id = new int[graph.V()];
         for (int s = 0; s < graph.V(); s++) {
@@ -29,7 +29,7 @@ public class ConnectedComponent {
         }
     }
 
-    private void dfs(Graph graph, int v) {
+    private void dfs(IGraph graph, int v) {
         marked[v] = true;
         id[v] = count;
         for (int w : graph.adj(v)) {

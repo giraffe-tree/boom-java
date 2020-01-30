@@ -1,12 +1,12 @@
 package me.giraffetree.java.boomjava.alg.graph.directed;
 
-import me.giraffetree.java.boomjava.alg.graph.Graph;
+import me.giraffetree.java.boomjava.alg.graph.IGraph;
 
 /**
  * @author GiraffeTree
  * @date 2020/1/24
  */
-public interface Digraph extends Graph {
+public interface Digraph extends IGraph {
 
     /**
      * 该图的反向图

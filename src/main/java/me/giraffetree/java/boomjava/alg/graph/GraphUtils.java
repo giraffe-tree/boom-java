@@ -10,7 +10,7 @@ public class GraphUtils {
 
     public static void main(String[] args) {
 
-        Graph g = generate(10, 5);
+        IGraph g = generate(10, 5);
         int v = g.V();
         System.out.println(String.format("v:%d", v));
 
@@ -20,17 +20,17 @@ public class GraphUtils {
         }
     }
 
-    public static Graph generate() {
+    public static IGraph generate() {
         return generate(10);
     }
 
-    public static Graph generate(int vertexCount) {
+    public static IGraph generate(int vertexCount) {
         // 冗余一倍空间, 方便测试时候添加 edge
         return generate(vertexCount, vertexCount);
     }
 
-    public static Graph generate(int vertexCount, int edgeCount) {
-        StandardGraph graph = new StandardGraph(vertexCount);
+    public static IGraph generate(int vertexCount, int edgeCount) {
+        StandardIGraph graph = new StandardIGraph(vertexCount);
         ThreadLocalRandom current = ThreadLocalRandom.current();
         for (int i = 0; i < edgeCount; i++) {
             int x1 = current.nextInt(vertexCount);
@@ -40,8 +40,8 @@ public class GraphUtils {
         return graph;
     }
 
-    public static Graph generate123456() {
-        StandardGraph graph = new StandardGraph(6);
+    public static IGraph generate123456() {
+        StandardIGraph graph = new StandardIGraph(6);
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);
         graph.addEdge(2, 3);

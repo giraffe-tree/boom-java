@@ -1,6 +1,6 @@
 package me.giraffetree.java.boomjava.alg.graph.undirected;
 
-import me.giraffetree.java.boomjava.alg.graph.Graph;
+import me.giraffetree.java.boomjava.alg.graph.IGraph;
 
 import java.util.Queue;
 import java.util.Stack;
@@ -21,14 +21,14 @@ public class BreadthFirstSearch {
 
     private final int s;
 
-    public BreadthFirstSearch(Graph graph, int s) {
+    public BreadthFirstSearch(IGraph graph, int s) {
         marked = new boolean[graph.V()];
         edgeTo = new int[graph.V()];
         this.s = s;
         bfs(graph, s);
     }
 
-    private void bfs(Graph graph, int s) {
+    private void bfs(IGraph graph, int s) {
         Queue<Integer> queue = new LinkedBlockingQueue<>();
 
         marked[s] = true;

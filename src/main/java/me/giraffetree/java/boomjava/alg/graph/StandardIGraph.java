@@ -1,6 +1,7 @@
 package me.giraffetree.java.boomjava.alg.graph;
 
-import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 采用邻接表实现
@@ -8,19 +9,19 @@ import java.util.LinkedList;
  * @author GiraffeTree
  * @date 2020/1/22
  */
-public class StandardGraph implements Graph {
+public class StandardIGraph implements IGraph {
 
     private final int V;
     private int E;
-    private LinkedList<Integer>[] adj;
+    private Set<Integer>[] adj;
 
     @SuppressWarnings("unchecked")
-    public StandardGraph(int V) {
+    public StandardIGraph(int V) {
         this.V = V;
         this.E = 0;
-        adj = (LinkedList<Integer>[]) new LinkedList[V];
+        adj = (HashSet<Integer>[]) new HashSet[V];
         for (int i = 0; i < V; i++) {
-            adj[i] = new LinkedList<>();
+            adj[i] = new HashSet<>();
         }
     }
 

@@ -1,6 +1,6 @@
 package me.giraffetree.java.boomjava.alg.graph.undirected.problem;
 
-import me.giraffetree.java.boomjava.alg.graph.Graph;
+import me.giraffetree.java.boomjava.alg.graph.IGraph;
 
 /**
  * 双色问题
@@ -16,7 +16,7 @@ public class TwoColorCheck {
 
     private boolean isTwoColorable = true;
 
-    public TwoColorCheck(Graph graph) {
+    public TwoColorCheck(IGraph graph) {
         marked = new boolean[graph.V()];
         color = new boolean[graph.V()];
         for (int s = 0; s < graph.V(); s++) {
@@ -26,7 +26,7 @@ public class TwoColorCheck {
         }
     }
 
-    private void dfs(Graph graph, int v) {
+    private void dfs(IGraph graph, int v) {
         marked[v] = true;
         for (int w : graph.adj(v)) {
             if (!marked[w]) {

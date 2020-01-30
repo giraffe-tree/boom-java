@@ -1,6 +1,6 @@
 package me.giraffetree.java.boomjava.alg.graph.undirected.problem;
 
-import me.giraffetree.java.boomjava.alg.graph.Graph;
+import me.giraffetree.java.boomjava.alg.graph.IGraph;
 
 /**
  * 无环图检查
@@ -19,7 +19,7 @@ public class CycleCheck {
 
     }
 
-    private boolean check(Graph graph) {
+    private boolean check(IGraph graph) {
         marked = new boolean[graph.V()];
         for (int s = 0; s < graph.V(); s++) {
             if (!marked[s]) {
@@ -36,7 +36,7 @@ public class CycleCheck {
      * @param v     当前深度优先搜索到的点
      * @param u     检查的环的起点
      */
-    private void dfs(Graph graph, int v, int u) {
+    private void dfs(IGraph graph, int v, int u) {
         marked[v] = true;
         for (int w : graph.adj(v)) {
             if (!marked[w]) {

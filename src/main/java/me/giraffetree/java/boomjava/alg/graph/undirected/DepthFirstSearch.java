@@ -1,6 +1,6 @@
 package me.giraffetree.java.boomjava.alg.graph.undirected;
 
-import me.giraffetree.java.boomjava.alg.graph.Graph;
+import me.giraffetree.java.boomjava.alg.graph.IGraph;
 
 import java.util.Stack;
 
@@ -18,14 +18,14 @@ public class DepthFirstSearch {
 
     private final int s;
 
-    public DepthFirstSearch(Graph graph, int s) {
+    public DepthFirstSearch(IGraph graph, int s) {
         marked = new boolean[graph.V()];
         edgeTo = new int[graph.V()];
         this.s = s;
         dfs(graph, s);
     }
 
-    private void dfs(Graph graph, int v) {
+    private void dfs(IGraph graph, int v) {
         marked[v] = true;
         count++;
         for (int w : graph.adj(v)) {

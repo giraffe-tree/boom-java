@@ -1,7 +1,7 @@
 package me.giraffetree.java.boomjava.alg.graph.undirected;
 
-import me.giraffetree.java.boomjava.alg.graph.Graph;
 import me.giraffetree.java.boomjava.alg.graph.GraphUtils;
+import me.giraffetree.java.boomjava.alg.graph.IGraph;
 
 /**
  * @author GiraffeTree
@@ -16,7 +16,7 @@ public class DFSTest {
     }
 
     private static void testDFS() {
-        Graph graph = GraphUtils.generate(10, 20);
+        IGraph graph = GraphUtils.generate(10, 20);
         DepthFirstSearch search = new DepthFirstSearch(graph, 2);
         System.out.println(search.count());
         System.out.println(search.connected(4));
@@ -25,7 +25,7 @@ public class DFSTest {
     }
 
     private static void testDFS1_6() {
-        Graph graph = GraphUtils.generate123456();
+        IGraph graph = GraphUtils.generate123456();
         DepthFirstSearch search = new DepthFirstSearch(graph, 1);
         System.out.println(search.hasPathTo(4));
         System.out.println(search.pathTo(4));
