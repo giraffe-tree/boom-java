@@ -8,6 +8,7 @@ import java.util.Stack;
 /**
  * tarjan 算法
  * 用于解决有向图连通性
+ * https://blog.csdn.net/hurmishine/article/details/75248876
  * 伪代码:
  * tarjan(u){
  * 　　DFN[u]=Low[u]=++Index // 为节点u设定次序编号和Low初值

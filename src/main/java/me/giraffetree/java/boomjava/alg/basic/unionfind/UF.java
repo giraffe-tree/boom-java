@@ -1,6 +1,8 @@
 package me.giraffetree.java.boomjava.alg.basic.unionfind;
 
 /**
+ * todo: 实现
+ *
  * @author GiraffeTree
  * @date 2020/1/3
  */
@@ -30,7 +32,7 @@ public class UF {
         return false;
     }
 
-    int count () {
+    int count() {
         return 0;
     }
 

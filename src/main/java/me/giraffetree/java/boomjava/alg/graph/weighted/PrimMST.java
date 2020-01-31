@@ -1,12 +1,24 @@
 package me.giraffetree.java.boomjava.alg.graph.weighted;
 
+import java.util.HashSet;
+
 /**
+ * Prim 的即时实现
+ * 时间复杂度: O(ElogV) (最坏情况)
+ * 空间复杂度: O(V)
+ *
  * @author GiraffeTree
  * @date 2020/1/30
  */
 public class PrimMST {
 
+    /**
+     * edgeTo[v] 是 v 和树连接的最短边
+     */
     private Edge[] edgeTo;
+    /**
+     * distTo[v] 是 { edgeTo[v], v } 这条边的权值
+     */
     private double[] distTo;
     private boolean[] marked;
     private IndexMinPQ<Double> pq;
@@ -22,7 +34,7 @@ public class PrimMST {
         distTo[0] = 0.0;
         pq.insert(0, 0.0);
         while (!pq.isEmpty()) {
-            visit(g,pq.delMin());
+            visit(g, pq.delMin());
         }
     }
 
@@ -38,12 +50,24 @@ public class PrimMST {
                 distTo[w] = e.weight();
                 if (pq.contains(w)) {
                     pq.change(w, distTo[w]);
-                }else {
+                } else {
                     pq.insert(w, distTo[w]);
                 }
             }
         }
+    }
 
+    public Iterable<Edge> edges() {
+        HashSet<Edge> set = new HashSet<>();
+        for (int i = 1; i < edgeTo.length; i++) {
+            set.add(edgeTo[i]);
+        }
+        return set;
+    }
+
+    public double weight() {
+        // todo
+        return 0;
     }
 
 
