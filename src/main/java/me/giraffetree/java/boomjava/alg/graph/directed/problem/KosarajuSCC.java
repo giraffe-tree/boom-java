@@ -4,6 +4,7 @@ import me.giraffetree.java.boomjava.alg.graph.directed.Digraph;
 
 /**
  * 用于解决强连通分量问题
+ * 两个顶点是否在同一个强连通分量内
  * <p>
  * 使用 逆后序排序, 然后进行 dfs
  * 原理:
