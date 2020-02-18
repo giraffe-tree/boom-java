@@ -1,6 +1,6 @@
 package me.giraffetree.java.boomjava.alg.graph.directedWeighted;
 
-import me.giraffetree.java.boomjava.alg.graph.weighted.IndexMinPQ;
+import me.giraffetree.java.boomjava.alg.graph.undirectedweighted.IndexMinPQ;
 
 import java.util.Stack;
 

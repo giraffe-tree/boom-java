@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.alg.graph.weighted;
+package me.giraffetree.java.boomjava.alg.graph.undirectedweighted;
 
 /**
  * @author GiraffeTree

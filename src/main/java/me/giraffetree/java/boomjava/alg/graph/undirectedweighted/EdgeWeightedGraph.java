@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.alg.graph.weighted;
+package me.giraffetree.java.boomjava.alg.graph.undirectedweighted;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,5 +1,7 @@
 package me.giraffetree.java.boomjava.alg.graph.directedWeighted;
 
+import me.giraffetree.java.boomjava.alg.graph.directed.Digraph;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,7 +9,7 @@ import java.util.Set;
  * @author GiraffeTree
  * @date 2020/2/1
  */
-public class EdgeWeightedDigraph {
+public class EdgeWeightedDigraph  {
 
     private final int V;
     private int E;
@@ -38,6 +40,7 @@ public class EdgeWeightedDigraph {
     public Iterable<DirectedEdge> adj(int v) {
         return adj[v];
     }
+
     public Iterable<DirectedEdge> edges() {
         HashSet<DirectedEdge> set = new HashSet<>();
         for (int v = 0; v < V(); v++) {

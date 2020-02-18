@@ -16,7 +16,6 @@ public class CycleCheck {
 
     public static void main(String[] args) {
 
-
     }
 
     private boolean check(IGraph graph) {

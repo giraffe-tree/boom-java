@@ -1,6 +1,6 @@
-package me.giraffetree.java.boomjava.alg.graph.weighted;
+package me.giraffetree.java.boomjava.alg.graph.undirectedweighted;
 
-import me.giraffetree.java.boomjava.alg.basic.unionfind.UF;
+import me.giraffetree.java.boomjava.alg.basic.unionfind.UnionFind;
 
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -23,7 +23,7 @@ public class KruskalMST {
         for (Edge e : g.edges()) {
             pq.add(e);
         }
-        UF uf = new UF(g.V());
+        UnionFind uf = new UnionFind(g.V());
         while (!pq.isEmpty() && mst.size() < g.V() - 1) {
             Edge e = pq.remove();
             int v = e.either();
