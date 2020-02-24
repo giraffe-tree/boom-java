@@ -12,6 +12,9 @@ package me.giraffetree.java.boomjava.alg.basic.unionfind;
  */
 public class WeightedUnionFindQuickUnion extends UnionFind {
 
+    /**
+     * 如果当成树的话, 则 sz[p] 即以 点p 作为根节点的树的元素个数
+     */
     private int[] sz;
 
     public WeightedUnionFindQuickUnion(int n) {
