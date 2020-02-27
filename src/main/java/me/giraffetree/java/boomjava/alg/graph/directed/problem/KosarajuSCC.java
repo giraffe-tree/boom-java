@@ -71,4 +71,5 @@ public class KosarajuSCC {
     public int count() {
         return count;
     }
+
 }
