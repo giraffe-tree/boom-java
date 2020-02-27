@@ -1,10 +1,11 @@
 package me.giraffetree.java.boomjava.alg.graph.directed.problem;
 
+import me.giraffetree.java.boomjava.alg.basic.stack.ArrayBasedStack;
+import me.giraffetree.java.boomjava.alg.basic.stack.IStack;
 import me.giraffetree.java.boomjava.alg.graph.directed.Digraph;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 有向图中基于深度优先搜索的顶点排序
@@ -18,22 +19,22 @@ public class DepthFirstOrder {
     /**
      * 前序排序
      */
-    private Queue<Integer> pre;
+    private List<Integer> pre;
     /**
      * 后序排序
      */
-    private Queue<Integer> post;
+    private List<Integer> post;
     /**
      * 逆后序排序
      * 递归调用后, 将顶点压入栈
      * 一幅有向无环图的拓扑排序即为所有顶点的逆后序排序
      */
-    private Stack<Integer> reversePost;
+    private IStack<Integer> reversePost;
 
     public DepthFirstOrder(Digraph digraph) {
-        pre = new LinkedList<>();
-        post = new LinkedList<>();
-        reversePost = new Stack<>();
+        pre = new ArrayList<>();
+        post = new ArrayList<>();
+        reversePost = new ArrayBasedStack<>(digraph.V());
         marked = new boolean[digraph.V()];
         for (int v = 0; v < digraph.V(); v++) {
             if (!marked[v]) {
@@ -46,7 +47,7 @@ public class DepthFirstOrder {
         pre.add(v);
         marked[v] = true;
         for (int w : digraph.adj(v)) {
-            if (!marked[v]) {
+            if (!marked[w]) {
                 dfs(digraph, w);
             }
         }

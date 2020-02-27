@@ -22,6 +22,5 @@ public interface Digraph extends IGraph {
         return digraph;
     }
 
-    ;
 
 }
