@@ -43,24 +43,47 @@ public class TarjanSCC {
 
         TarjanSCC tarjanSCC = new TarjanSCC(g);
         System.out.println(tarjanSCC.count);
-        System.out.println(tarjanSCC.stronglyConnected(0,4));
+        System.out.println(tarjanSCC.stronglyConnected(0, 4));
     }
 
+    /**
+     *
+     */
     private boolean[] marked;
+    /**
+     * 连通分量id
+     */
     private int[] id;
+    /**
+     * 连通分量总数
+     */
     private int count;
 
     /**
      * 用于检查元素是否在 stack 中
      */
     private boolean[] vis;
+    /**
+     * 深度优先搜索遍历时节点i被搜索的次序。
+     */
     private int[] dfn;
+    /**
+     * 节点i能够回溯到的最早位于栈中的节点。
+     * 连通分量根节点
+     */
     private int[] low;
-    private int tot;
+    /**
+     * 遍历的节点数
+     */
+    private int tmp;
+    /**
+     * 存储
+     */
     private Stack<Integer> stack;
 
     public TarjanSCC(Digraph digraph) {
         int v = digraph.V();
+
         id = new int[v];
         dfn = new int[v];
         low = new int[v];
@@ -78,7 +101,7 @@ public class TarjanSCC {
     private void tarjan(Digraph g, int x) {
         vis[x] = true;
         marked[x] = true;
-        dfn[x] = low[x] = ++tot;
+        dfn[x] = low[x] = ++tmp;
         stack.push(x);
         for (int e : g.adj(x)) {
             if (!marked[e]) {
