@@ -41,6 +41,7 @@ public class KosarajuSCC {
     public KosarajuSCC(Digraph digraph) {
         marked = new boolean[digraph.V()];
         id = new int[digraph.V()];
+        // 反向图
         DepthFirstOrder depthFirstOrder = new DepthFirstOrder(digraph.reverse());
         for (int s : depthFirstOrder.reversePost()) {
             if (!marked[s]) {
