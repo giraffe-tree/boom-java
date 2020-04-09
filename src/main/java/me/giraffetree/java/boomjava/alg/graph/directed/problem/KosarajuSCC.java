@@ -7,6 +7,10 @@ import me.giraffetree.java.boomjava.alg.graph.directed.Digraph;
  * 两个顶点是否在同一个强连通分量内
  * <p>
  * 使用 逆后序排序, 然后进行 dfs
+ * <p>
+ * 2020.2.25
+ *
+ * <p>
  * 原理:
  * 使用dfs 查找 有向图的反向图,
  * 并得到所有顶点的逆后序,

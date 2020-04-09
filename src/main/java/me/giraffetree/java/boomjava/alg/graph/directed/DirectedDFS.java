@@ -1,6 +1,8 @@
 package me.giraffetree.java.boomjava.alg.graph.directed;
 
 /**
+ * 从顶点 s 出发的图, 计算 s 可达的所有顶点
+ *
  * @author GiraffeTree
  * @date 2020/1/24
  */

@@ -20,6 +20,9 @@ public class PrimMST {
      * distTo[v] 是 { edgeTo[v], v } 这条边的权值
      */
     private double[] distTo;
+    /**
+     * 如果 v 在最小生成树中, 则 marked[v]=true
+     */
     private boolean[] marked;
     private IndexMinPQ<Double> pq;
 

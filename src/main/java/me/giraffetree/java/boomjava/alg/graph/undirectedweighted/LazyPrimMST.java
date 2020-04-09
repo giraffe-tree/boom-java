@@ -20,7 +20,7 @@ public class LazyPrimMST {
     private boolean[] marked;
 
     /**
-     * 最小生成树的边
+     * 最小生成树的边的队列
      */
     private Queue<Edge> mst;
 
@@ -30,6 +30,11 @@ public class LazyPrimMST {
      */
     private PriorityQueue<Edge> pq;
 
+    /**
+     * g 为无向连通图
+     *
+     * @param g 无向连通图
+     */
     public LazyPrimMST(EdgeWeightedGraph g) {
         marked = new boolean[g.V()];
         mst = new LinkedList<>();

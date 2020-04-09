@@ -4,6 +4,8 @@ import me.giraffetree.java.boomjava.alg.graph.directed.Digraph;
 import me.giraffetree.java.boomjava.alg.graph.directed.DirectedDFS;
 
 /**
+ * 实际上就是从每个顶点出发遍历, 查找每个顶点可达的点
+ * <p>
  * 传递闭包
  * 用于解决顶点对的可达性问题
  * 空间复杂度: V^2

@@ -1,14 +1,16 @@
-package me.giraffetree.java.boomjava.alg.graph.undirectedweighted; /******************************************************************************
- *  Compilation:  javac IndexMinPQ.java
- *  Execution:    java IndexMinPQ
- *  Dependencies: StdOut.java
- *
- *  Minimum-oriented indexed PQ implementation using a binary heap.
- *
- ******************************************************************************/
+package me.giraffetree.java.boomjava.alg.graph.undirectedweighted;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+/*
+ Compilation:  javac IndexMinPQ.java
+ Execution:    java IndexMinPQ
+ Dependencies: StdOut.java
+
+ Minimum-oriented indexed PQ implementation using a binary heap.
+
+ */
 
 /**
  * The {@code IndexMinPQ} class represents an indexed priority queue of generic keys.
