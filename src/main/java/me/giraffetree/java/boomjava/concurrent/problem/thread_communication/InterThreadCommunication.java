@@ -1,5 +1,8 @@
 package me.giraffetree.java.boomjava.concurrent.problem.thread_communication;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -10,21 +13,33 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author GiraffeTree
  * @date 2020-04-09
  */
+@Slf4j
 public class InterThreadCommunication {
     private static ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 4, 1000L,
-            TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), Executors.defaultThreadFactory());
+            TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new ThreadFactoryBuilder().setNameFormat("thread-%d").build());
     private static AtomicInteger value = new AtomicInteger(0);
     private static volatile int m = 0;
 
     public static void main(String[] args) {
         // 1. 共享变量
 //        testWithAtomicInteger();
-        testWithVolatile();
+//        testWithVolatile();
+        testWithMain();
     }
 
-    public static void testWithVolatile() {
+    public static void testWithMain() {
+        while (true) {
+            if (m % 2 == 0) {
+                System.out.println(String.format("%s v:%d", Thread.currentThread().getName(), m));
+                m++;
+            }
+        }
+    }
 
-        executor.execute(() -> {
+
+    public static void testWithVolatile() {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        executorService.submit(() -> {
             while (true) {
                 if (value.get() % 2 == 0) {
                     System.out.println(String.format("%s v:%d", Thread.currentThread().getName(), m + 1));
@@ -32,9 +47,11 @@ public class InterThreadCommunication {
                 }
             }
         });
-        executor.execute(() -> {
+        executorService.submit(() -> {
+            int x = m + 1;
             while (true) {
                 if (value.get() % 2 == 1) {
+                    int y = x - 1;
                     System.out.println(String.format("%s v:%d", Thread.currentThread().getName(), m + 1));
                     m++;
                 }
@@ -47,7 +64,9 @@ public class InterThreadCommunication {
 
         executor.execute(() -> {
             while (true) {
+
                 if (value.get() % 2 == 0) {
+
                     System.out.println(String.format("%s v:%d", Thread.currentThread().getName(), value.get() + 1));
                     value.getAndIncrement();
                 }
