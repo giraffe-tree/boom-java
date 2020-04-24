@@ -1,0 +1,32 @@
+package me.giraffetree.java.boomjava.concurrent.utils;
+
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * @author GiraffeTree
+ * @date 2020/4/24
+ */
+public class ExecutorUtils {
+
+    public static ExecutorService getExecutorService() {
+        return getExecutorService(4, 10);
+    }
+
+    public static ExecutorService getExecutorService(int core, int max) {
+        return new ThreadPoolExecutor(
+                core, max, 100L, TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(1024), new ThreadFactory() {
+            private AtomicInteger count = new AtomicInteger();
+
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = new Thread(r);
+                thread.setName(String.format("thread-%d", count.getAndIncrement()));
+                return thread;
+            }
+        }
+        );
+    }
+
+}

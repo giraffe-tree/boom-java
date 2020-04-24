@@ -2,10 +2,15 @@ package me.giraffetree.java.boomjava.concurrent.problem.thread_communication;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-import java.util.concurrent.*;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 两个线程交替打印 0-100 奇偶数
+ * https://blog.csdn.net/u011514810/article/details/77131296
+ * <p>
  * 两个线程交替打印 奇偶数
  * https://stackoverflow.com/questions/25425130/loop-doesnt-see-value-changed-by-other-thread-without-a-print-statement
  *
@@ -37,11 +42,11 @@ public class InterThreadCommunication {
             while (true) {
                 synchronized (obj) {
                     if (check(m, max)) {
-                        if (m % 2 == 0 ) {
+                        if (m % 2 == 0) {
                             m++;
                             System.out.println(Thread.currentThread().getName() + " - " + m);
                         }
-                    }else {
+                    } else {
                         break;
                     }
 
@@ -52,11 +57,11 @@ public class InterThreadCommunication {
             while (true) {
                 synchronized (obj) {
                     if (check(m, max)) {
-                        if (m % 2 == 1 ) {
+                        if (m % 2 == 1) {
                             m++;
                             System.out.println(Thread.currentThread().getName() + " - " + m);
                         }
-                    }else {
+                    } else {
                         break;
                     }
 
@@ -92,7 +97,7 @@ public class InterThreadCommunication {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }else {
+                    } else {
                         break;
                     }
 
@@ -115,7 +120,7 @@ public class InterThreadCommunication {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }else {
+                    } else {
                         break;
                     }
 
