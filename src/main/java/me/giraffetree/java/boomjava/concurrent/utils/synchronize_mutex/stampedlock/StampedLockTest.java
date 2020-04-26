@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize.stampedlock;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.stampedlock;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 

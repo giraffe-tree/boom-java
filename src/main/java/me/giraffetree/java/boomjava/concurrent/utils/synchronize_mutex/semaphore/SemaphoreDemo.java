@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize.semaphore;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.semaphore;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -14,15 +14,19 @@ public class ExecutorUtils {
     }
 
     public static ExecutorService getExecutorService(int core, int max) {
+        return getExecutorService(core, max, 1024, "thread-%d");
+    }
+
+    public static ExecutorService getExecutorService(int core, int max, int queueSize, String nameFormat) {
         return new ThreadPoolExecutor(
                 core, max, 100L, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<>(1024), new ThreadFactory() {
+                new ArrayBlockingQueue<>(queueSize), new ThreadFactory() {
             private AtomicInteger count = new AtomicInteger();
 
             @Override
             public Thread newThread(Runnable r) {
                 Thread thread = new Thread(r);
-                thread.setName(String.format("thread-%d", count.getAndIncrement()));
+                thread.setName(String.format(nameFormat, count.getAndIncrement()));
                 return thread;
             }
         }

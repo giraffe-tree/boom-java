@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize.cyclicbarrier;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.cyclicbarrier;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 
@@ -18,7 +18,7 @@ public class CyclicBarrierTest {
     /**
      * 用于异步串行执行
      */
-    private final static ExecutorService oneThread = Executors.newFixedThreadPool(1);
+    private final static ExecutorService ONE_THREAD = ExecutorUtils.getExecutorService(1, 1);
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -27,7 +27,7 @@ public class CyclicBarrierTest {
         Task task = new Task(taskCount,
                 () -> {
                     // 这里为了保证并发, 使用额外的一个线程进程操作
-                    oneThread.execute(() -> {
+                    ONE_THREAD.execute(() -> {
                         int all = 0;
                         for (int i = 0; i < taskCount; i++) {
                             all += vector.remove(0);

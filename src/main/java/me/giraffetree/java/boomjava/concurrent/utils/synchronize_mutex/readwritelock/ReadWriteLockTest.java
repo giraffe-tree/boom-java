@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize.readwritelock;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.readwritelock;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 import org.apache.commons.lang3.StringUtils;

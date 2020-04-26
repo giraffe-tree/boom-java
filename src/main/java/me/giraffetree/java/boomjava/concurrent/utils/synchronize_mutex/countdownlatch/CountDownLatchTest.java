@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize.countdownlatch;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.countdownlatch;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 
