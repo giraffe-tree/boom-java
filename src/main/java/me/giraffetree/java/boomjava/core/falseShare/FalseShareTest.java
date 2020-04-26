@@ -18,6 +18,19 @@ import java.util.concurrent.ExecutorService;
  * !!!!!!!!!!!!!!!! 注意 !!!!!!!!!!!!!!!!!!!!!
  * 我使用 java 8 需要加上虚拟机选项 -XX:-RestrictContended
  * 如果你在 Java 9 以上版本试验的话，在使用 javac 编译时需要添加 --add-exports java.base/jdk.internal.vm.annotation=ALL-UNNAME
+ * 参考:
+ * false sharing
+ * https://www.cnblogs.com/cyfonly/p/5800758.html
+ * <p>
+ * 高速缓存行的大小
+ * Intel i7 64 Byte
+ * https://stackoverflow.com/questions/14707803/line-size-of-l1-and-l2-caches
+ * <p>
+ * 如何查看 cpu L1, L2 cache line size?
+ * https://www.iteye.com/blog/coderplay-1486649
+ * https://www.iteye.com/blog/coderplay-1485760
+ * windows: cpuz 查看缓存行大小
+ * linux: cat /sys/devices/system/cpu/cpu0/cache/index0/coherency_line_size
  *
  * @author GiraffeTree
  * @date 2020/4/26
@@ -25,16 +38,16 @@ import java.util.concurrent.ExecutorService;
 public class FalseShareTest {
 
     private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService(2, 2);
+//    private final static ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
 
     public static void main(String[] args) {
 
-        int count = 100_000_000;
+        int count = 10_000_000;
         int retry = 10;
         testNormalVolatile(count, retry);
         testContentedVolatile(count, retry);
         testPaddingVolatile(count, retry);
         EXECUTOR_SERVICE.shutdown();
-
     }
 
     private static void testNormalVolatile(final int count, final int retry) {
@@ -69,8 +82,7 @@ public class FalseShareTest {
                 e.printStackTrace();
             }
         }
-        System.out.println(String.format("normal volatile:%dms %s", all / retry, Arrays.toString(record)));
-
+        System.out.println(String.format("normal volatile average:%dms %s", all / retry, Arrays.toString(record)));
     }
 
     private static void testContentedVolatile(final int count, int retry) {
@@ -107,7 +119,7 @@ public class FalseShareTest {
                 e.printStackTrace();
             }
         }
-        System.out.println(String.format("contented volatile:%dms %s", all / retry, Arrays.toString(record)));
+        System.out.println(String.format("contented volatile average:%dms %s", all / retry, Arrays.toString(record)));
     }
 
     private static void testPaddingVolatile(final int count, int retry) {
@@ -144,7 +156,7 @@ public class FalseShareTest {
                 e.printStackTrace();
             }
         }
-        System.out.println(String.format("padding volatile:%dms %s", all / retry, Arrays.toString(record)));
+        System.out.println(String.format("padding volatile average:%dms %s", all / retry, Arrays.toString(record)));
     }
 
 
