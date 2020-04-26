@@ -20,10 +20,10 @@ public class ConditionSolution {
 
 
     public static void main(String[] args) {
-        BlockOddEven blockOddEven = new BlockOddEven();
+        BlockOddEven blockOddEven = new BlockOddEven(100);
         executor.execute(blockOddEven::printEven);
         executor.execute(blockOddEven::printOdd);
-
+        executor.shutdown();
     }
 
     private static class BlockOddEven {
@@ -32,6 +32,11 @@ public class ConditionSolution {
          * count 值
          */
         private int count = 0;
+        /**
+         * 最大值
+         * exclude
+         */
+        private int max;
 
         private final Lock lock = new ReentrantLock();
         /**
@@ -43,14 +48,20 @@ public class ConditionSolution {
          */
         private final Condition even = lock.newCondition();
 
+        public BlockOddEven(int max) {
+            this.max = max;
+        }
+
         void printOdd() {
             lock.lock();
             try {
-                while (true) {
+                while (count < max) {
                     if (count % 2 == 0) {
                         System.out.println(String.format("%s - %d", Thread.currentThread().getName(), count++));
                         even.signalAll();
                     } else {
+                        // 当线程被唤醒后，是从await命令后开始执行的
+                        System.out.println(String.format("%s - await", Thread.currentThread().getName()));
                         odd.await();
                     }
                 }
@@ -64,11 +75,12 @@ public class ConditionSolution {
         void printEven() {
             lock.lock();
             try {
-                while (true) {
+                while (count < max) {
                     if (count % 2 == 1) {
                         System.out.println(String.format("%s - %d", Thread.currentThread().getName(), count++));
                         odd.signalAll();
                     } else {
+                        System.out.println(String.format("%s - await", Thread.currentThread().getName()));
                         even.await();
                     }
                 }

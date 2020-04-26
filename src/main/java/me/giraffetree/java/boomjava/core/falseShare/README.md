@@ -17,7 +17,7 @@
 
 ```
 normal volatile average:169ms [112, 43, 223, 214, 117, 258, 209, 226, 72, 224]
-contented volatile average:61ms [14, 13, 72, 73, 73, 75, 73, 73, 71, 74]
+contended volatile average:61ms [14, 13, 72, 73, 73, 75, 73, 73, 71, 74]
 padding volatile average:65ms [17, 14, 78, 73, 73, 83, 86, 78, 76, 72]
 ```
 
@@ -25,7 +25,7 @@ padding volatile average:65ms [17, 14, 78, 73, 73, 83, 86, 78, 76, 72]
 
 ```
 normal volatile average:449ms [328, 172, 638, 558, 447, 462, 494, 508, 476, 416]
-contented volatile average:138ms [35, 25, 177, 187, 186, 186, 187, 156, 124, 124]
+contended volatile average:138ms [35, 25, 177, 187, 186, 186, 187, 156, 124, 124]
 padding volatile average:121ms [31, 29, 123, 124, 124, 124, 124, 181, 187, 171]
 ```
 
@@ -33,15 +33,25 @@ padding volatile average:121ms [31, 29, 123, 124, 124, 124, 124, 181, 187, 171]
 
 ```
 normal volatile average:133ms [112, 34, 148, 149, 148, 149, 149, 148, 149, 148]
-contented volatile average:129ms [40, 93, 93, 148, 148, 149, 176, 149, 148, 148]
+contended volatile average:129ms [40, 93, 93, 148, 148, 149, 176, 149, 148, 148]
 padding volatile average:127ms [58, 29, 148, 148, 149, 148, 149, 148, 148, 149]
 ```
 
+### Ryzen 7 1700 3Ghz cache-line 64B
+
+```
+normal volatile average:187ms [118, 29, 227, 246, 260, 231, 242, 214, 66, 243]
+contended volatile average:60ms [13, 64, 64, 65, 67, 66, 65, 64, 66, 67]
+padding volatile average:55ms [16, 11, 65, 68, 67, 67, 66, 64, 66, 65]
+```
+
+
 ### 总结
 
-- 公司电脑(cpu i3 8100) 上测试出来, 对照组耗时最长, 大约为 contented/手动填充组的 3 倍
+- 公司电脑(cpu i3 8100) 上测试出来, 对照组耗时最长, 大约为 contended/手动填充组的 3 倍
 - 在自己搭建的物理 centos7 主机上的耗时情况和预测差不多, 对照组的耗时比 Contented组/手动填充组 长, 大约 3倍
 - 在阿里云 c5 主机 centOS 实例上, 三个组平均耗时都差不多
+- 另外还有一台电脑, 用的是 amd 锐龙 1700, 对照组的耗时明显比 contended/手动填充组快
 
 ## 问题
 

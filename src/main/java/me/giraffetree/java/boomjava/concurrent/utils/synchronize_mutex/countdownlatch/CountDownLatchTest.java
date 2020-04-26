@@ -7,6 +7,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * countdownLatch 不仅能用在线程结束的时候, 也能用在线程开始执行时,
+ * await 其他线程准备就绪, 然后一起执行(当然不是真正意义上的并发, 肯定有点先后顺序的, 但是相对来说比较精确)
+ *
  * @author GiraffeTree
  * @date 2020/3/27
  */

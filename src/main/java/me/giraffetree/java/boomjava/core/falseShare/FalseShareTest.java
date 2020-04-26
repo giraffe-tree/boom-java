@@ -6,6 +6,7 @@ import sun.misc.Contended;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Semaphore;
 
 /**
  * 这里的测试了两个 volatile 的写操作由于 false sharing 带来的性能影响
@@ -31,6 +32,8 @@ import java.util.concurrent.ExecutorService;
  * https://www.iteye.com/blog/coderplay-1485760
  * windows: cpuz 查看缓存行大小
  * linux: cat /sys/devices/system/cpu/cpu0/cache/index0/coherency_line_size
+ * 测试时候不准确的地方:
+ * 两个线程执行时, 其实不是同时开始的, 所以在运行的前一段时间内, 竞争可能较小
  *
  * @author GiraffeTree
  * @date 2020/4/26
@@ -56,25 +59,25 @@ public class FalseShareTest {
         long[] record = new long[retry];
         while (r-- > 0) {
             Foo foo = new Foo();
-            CountDownLatch countDownLatch = new CountDownLatch(2);
+            CountDownLatch endLatch = new CountDownLatch(2);
             long l1 = System.currentTimeMillis();
             EXECUTOR_SERVICE.execute(() -> {
                 int loop = count;
                 while (loop-- > 0) {
                     foo.a = loop;
                 }
-                countDownLatch.countDown();
+                endLatch.countDown();
             });
             EXECUTOR_SERVICE.execute(() -> {
                 int loop = count;
                 while (loop-- > 0) {
                     foo.b = loop;
                 }
-                countDownLatch.countDown();
+                endLatch.countDown();
             });
 
             try {
-                countDownLatch.await();
+                endLatch.await();
                 long l2 = System.currentTimeMillis();
                 all += (l2 - l1);
                 record[retry - 1 - r] = l2 - l1;
@@ -92,26 +95,27 @@ public class FalseShareTest {
         while (r-- > 0) {
 
             FooWithContented fooWithContented = new FooWithContented();
-            CountDownLatch countDownLatch = new CountDownLatch(2);
+            CountDownLatch endLatch = new CountDownLatch(2);
 
             long l1 = System.currentTimeMillis();
             EXECUTOR_SERVICE.execute(() -> {
                 int loop = count;
+
                 while (loop-- > 0) {
                     fooWithContented.a = loop;
                 }
-                countDownLatch.countDown();
+                endLatch.countDown();
             });
             EXECUTOR_SERVICE.execute(() -> {
                 int loop = count;
                 while (loop-- > 0) {
                     fooWithContented.b = loop;
                 }
-                countDownLatch.countDown();
+                endLatch.countDown();
             });
 
             try {
-                countDownLatch.await();
+                endLatch.await();
                 long l2 = System.currentTimeMillis();
                 all += (l2 - l1);
                 record[retry - 1 - r] = l2 - l1;
@@ -119,7 +123,7 @@ public class FalseShareTest {
                 e.printStackTrace();
             }
         }
-        System.out.println(String.format("contented volatile average:%dms %s", all / retry, Arrays.toString(record)));
+        System.out.println(String.format("contended volatile average:%dms %s", all / retry, Arrays.toString(record)));
     }
 
     private static void testPaddingVolatile(final int count, int retry) {
@@ -129,26 +133,27 @@ public class FalseShareTest {
         while (r-- > 0) {
 
             FooWithPadding fooWithPadding = new FooWithPadding();
-            CountDownLatch countDownLatch = new CountDownLatch(2);
+            CountDownLatch endLatch = new CountDownLatch(2);
 
             long l1 = System.currentTimeMillis();
             EXECUTOR_SERVICE.execute(() -> {
+
                 int loop = count;
                 while (loop-- > 0) {
                     fooWithPadding.a = loop;
                 }
-                countDownLatch.countDown();
+                endLatch.countDown();
             });
             EXECUTOR_SERVICE.execute(() -> {
                 int loop = count;
                 while (loop-- > 0) {
                     fooWithPadding.b = loop;
                 }
-                countDownLatch.countDown();
+                endLatch.countDown();
             });
 
             try {
-                countDownLatch.await();
+                endLatch.await();
                 long l2 = System.currentTimeMillis();
                 all += (l2 - l1);
                 record[retry - 1 - r] = l2 - l1;

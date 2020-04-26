@@ -31,8 +31,8 @@ public class InterThreadCommunication {
 //        testWithVolatile();
 //        testWithoutRead(100);
 //        testWithRead(100);
-//        testWaitAndNotify();
-        testOnlySynchronized();
+        testWaitAndNotify();
+//        testOnlySynchronized();
     }
 
     public static void testOnlySynchronized() {
@@ -123,7 +123,6 @@ public class InterThreadCommunication {
                     } else {
                         break;
                     }
-
                 }
             }
         });
