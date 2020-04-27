@@ -22,7 +22,7 @@ public class TernaryNPE {
             System.out.println(result);
         } catch (NullPointerException e) {
             // NPE的原因应该是三目运算符和自动拆箱导致了空指针异常。
-            System.out.println("oh! you catch a null pointer exception");
+            System.err.println("oh! you catch a null pointer exception");
         }
 
     }

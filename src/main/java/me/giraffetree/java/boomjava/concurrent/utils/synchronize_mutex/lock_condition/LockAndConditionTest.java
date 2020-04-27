@@ -71,7 +71,6 @@ public class LockAndConditionTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
