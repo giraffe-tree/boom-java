@@ -13,7 +13,12 @@ import java.util.concurrent.ExecutorService;
  * @date 2020-04-27
  */
 public class MemoryReorderingTest {
-    private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService();
+    /**
+     * 如果使用
+     * ExecutorUtils.getExecutorService(1,2);
+     * 竟然也会死锁??? => 探究一下?
+     */
+    private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService(1, 2);
 
     private static int x = 0, y = 0;
     private static int a = 0, b = 0;
