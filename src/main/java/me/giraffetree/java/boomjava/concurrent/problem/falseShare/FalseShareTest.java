@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.core.falseShare;
+package me.giraffetree.java.boomjava.concurrent.problem.falseShare;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 import sun.misc.Contended;
@@ -6,7 +6,6 @@ import sun.misc.Contended;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Semaphore;
 
 /**
  * 这里的测试了两个 volatile 的写操作由于 false sharing 带来的性能影响
