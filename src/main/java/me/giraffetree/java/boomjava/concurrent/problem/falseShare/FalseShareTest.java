@@ -178,13 +178,9 @@ public class FalseShareTest {
      */
     private static class FooWithPadding {
         volatile int a;
-        //        long p1;
-//        long p2;
-//        long p3;
-//        long p4;
-//        long p5;
-//        long p6;
         volatile int b;
+        // 你以为 p11 - p18 是放在 b 后面的, 所以 padding 实际上没有效果, false sharing 依然存在
+        // 实际上 p11 - p18 是放在 a 后面的, 所以这里的 padding 有效(至少在我的电脑上有效), false sharing 被解决
         long p11;
         long p12;
         long p13;
