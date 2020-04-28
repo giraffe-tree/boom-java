@@ -11,7 +11,7 @@ import java.util.stream.LongStream;
 /**
  * 不同 padding 对竞争的影响
  * 下面的表是某次我测试的结果, 注意测试的顺序
- * 可以看出 两个 volatile 的 padding 越小, 竞争越激烈
+ * 大致可以看出 两个 volatile 的 padding 越小, 竞争越激烈
  * <p>
  * {128}  -  average:22.80ms [15, 10, 25, 26, 25, 26, 25, 25, 25, 26]
  * {80}  -  average:26.90ms [39, 26, 25, 26, 25, 26, 25, 26, 26, 25]
@@ -55,6 +55,8 @@ import java.util.stream.LongStream;
  * {0}  -  average:84.80ms [78, 24, 104, 130, 82, 101, 93, 100, 26, 110]
  * {0}  -  average:101.90ms [163, 50, 122, 75, 89, 107, 114, 102, 109, 88]
  * {0}  -  average:85.50ms [76, 21, 78, 102, 115, 101, 111, 112, 26, 113]
+ * JIT 编译的影响
+ * 如果使用  -Xint 仅使用解释执行, 你会发现慢慢慢慢慢慢.....
  *
  * @author GiraffeTree
  * @date 2020/4/28
