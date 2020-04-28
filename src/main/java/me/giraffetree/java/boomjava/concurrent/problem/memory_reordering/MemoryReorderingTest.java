@@ -18,7 +18,7 @@ public class MemoryReorderingTest {
      * ExecutorUtils.getExecutorService(1,2);
      * 竟然也会死锁??? => 探究一下?
      */
-    private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService(1, 2);
+    private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService(2, 2);
 
     private static int x = 0, y = 0;
     private static int a = 0, b = 0;

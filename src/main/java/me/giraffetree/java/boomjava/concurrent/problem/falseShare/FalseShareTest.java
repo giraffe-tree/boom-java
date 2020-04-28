@@ -1,6 +1,7 @@
 package me.giraffetree.java.boomjava.concurrent.problem.falseShare;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
+import org.openjdk.jol.info.ClassLayout;
 import sun.misc.Contended;
 
 import java.util.Arrays;
@@ -43,6 +44,9 @@ public class FalseShareTest {
 //    private final static ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
 
     public static void main(String[] args) {
+        printClassStructure(new Foo());
+        printClassStructure(new FooWithPadding());
+        printClassStructure(new FooWithContented());
 
         int count = 10_000_000;
         int retry = 10;
@@ -50,6 +54,11 @@ public class FalseShareTest {
         testContentedVolatile(count, retry);
         testPaddingVolatile(count, retry);
         EXECUTOR_SERVICE.shutdown();
+    }
+
+    private static void printClassStructure(Object o) {
+        String s = ClassLayout.parseInstance(o).toPrintable();
+        System.out.println(s);
     }
 
     private static void testNormalVolatile(final int count, final int retry) {
@@ -169,12 +178,12 @@ public class FalseShareTest {
      */
     private static class FooWithPadding {
         volatile int a;
-        long p1;
-        long p2;
-        long p3;
-        long p4;
-        long p5;
-        long p6;
+        //        long p1;
+//        long p2;
+//        long p3;
+//        long p4;
+//        long p5;
+//        long p6;
         volatile int b;
         long p11;
         long p12;
@@ -183,6 +192,7 @@ public class FalseShareTest {
         long p15;
         long p16;
         long p17;
+        long p18;
     }
 
     private static class Foo {
