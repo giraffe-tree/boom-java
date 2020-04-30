@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.problem.memory_reordering;
+package me.giraffetree.java.boomjava.concurrent.problem.reordering;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 
@@ -47,7 +47,7 @@ public class AnotherReorderingTest {
     }
 
     private static void test() {
-        final int loop = 1_000_000;
+        final int loop = 10_000_000;
         CountDownLatch endLatch = new CountDownLatch(2);
         EXECUTOR_SERVICE.execute(() -> {
             int c = loop;
@@ -72,18 +72,20 @@ public class AnotherReorderingTest {
 
 
     private static void one() {
+        // load1 store1 load2 store2
+        // x86: load1 load2 store1 store2
         i++;
         j++;
     }
 
     private static void two() {
+
         if (!result[0] && i == j) {
             result[0] = true;
         } else if (!result[1] && i > j) {
             result[1] = true;
-        } else if (!result[2] && j > i) {
+        } else if (!result[2] && i < j) {
             result[2] = true;
         }
     }
-
 }

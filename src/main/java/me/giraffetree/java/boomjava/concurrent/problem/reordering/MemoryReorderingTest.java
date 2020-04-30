@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.problem.memory_reordering;
+package me.giraffetree.java.boomjava.concurrent.problem.reordering;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 
