@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs.share;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;

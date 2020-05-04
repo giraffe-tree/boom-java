@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs.share;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 
@@ -14,12 +14,11 @@ public class TwinsLockTest {
     private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService();
 
     public static void main(String[] args) {
-        test();
-
+        testTwinsLock();
     }
 
 
-    private static void test() {
+    private static void testTwinsLock() {
         TwinsLock twinsLock = new TwinsLock();
         int loop = 4;
         while (loop-- > 0) {
