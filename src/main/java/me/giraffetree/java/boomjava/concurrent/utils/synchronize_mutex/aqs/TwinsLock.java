@@ -17,32 +17,32 @@ public class TwinsLock implements Lock {
 
     @Override
     public void lock() {
-        sync.tryAcquireShared(1);
+        sync.acquireShared(1);
     }
 
     @Override
     public void lockInterruptibly() throws InterruptedException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean tryLock() {
-        return false;
+        return sync.tryAcquireShared(1) >= 0;
     }
 
     @Override
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
-        return false;
+        return sync.tryAcquireSharedNanos(1, unit.toNanos(time));
     }
 
     @Override
     public void unlock() {
-        sync.tryReleaseShared(1);
+        sync.releaseShared(1);
     }
 
     @Override
     public Condition newCondition() {
-        return null;
+        return sync.newCondition();
     }
 
     private static class Sync extends AbstractQueuedSynchronizer {
@@ -74,6 +74,12 @@ public class TwinsLock implements Lock {
                 }
             }
         }
+
+        final ConditionObject newCondition() {
+            return new ConditionObject();
+        }
+
+
     }
 
 
