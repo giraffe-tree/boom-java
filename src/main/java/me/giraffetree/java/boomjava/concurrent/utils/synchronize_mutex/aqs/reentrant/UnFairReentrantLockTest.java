@@ -1,6 +1,6 @@
 package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs.reentrant;
 
-import me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs.LockTestUtils;
+import me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs.utils.LockTestUtils;
 
 /**
  * @author GiraffeTree

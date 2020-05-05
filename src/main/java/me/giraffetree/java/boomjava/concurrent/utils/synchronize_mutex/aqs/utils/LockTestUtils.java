@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs;
+package me.giraffetree.java.boomjava.concurrent.utils.synchronize_mutex.aqs.utils;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 
@@ -36,24 +36,22 @@ public class LockTestUtils {
         CountDownLatch startLatch = new CountDownLatch(threadCount);
         while (threadCount-- > 0) {
             executorService.execute(() -> {
-                while (true) {
-                    startLatch.countDown();
-                    try {
-                        startLatch.await();
-                    } catch (InterruptedException ignored) {
-                    }
-                    int lockCount = curThreadLockCount;
-                    while (lockCount-- > 0) {
-                        lock(lock, sleepMills);
-                    }
-                    try {
-                        Thread.sleep(sleepMills);
-                    } catch (InterruptedException ignored) {
-                    }
-                    int unlockCount = curThreadLockCount;
-                    while (unlockCount-- > 0) {
-                        unlock(lock);
-                    }
+                startLatch.countDown();
+                try {
+                    startLatch.await();
+                } catch (InterruptedException ignored) {
+                }
+                int lockCount = curThreadLockCount;
+                while (lockCount-- > 0) {
+                    lock(lock, sleepMills);
+                }
+                try {
+                    Thread.sleep(sleepMills);
+                } catch (InterruptedException ignored) {
+                }
+                int unlockCount = curThreadLockCount;
+                while (unlockCount-- > 0) {
+                    unlock(lock);
                 }
             });
         }

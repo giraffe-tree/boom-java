@@ -15,6 +15,7 @@ public class AtomicNumberTest {
 
     public static void main(String[] args) {
         AtomicInteger num = new AtomicInteger(0);
+        num.lazySet(1);
         int loop = 10_000_000;
         EXECUTOR_SERVICE.execute(() -> {
             int c = loop;
