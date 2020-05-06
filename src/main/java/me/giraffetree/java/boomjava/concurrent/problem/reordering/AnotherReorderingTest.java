@@ -10,6 +10,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * 来自 java 规范
  * https://docs.oracle.com/javase/specs/jls/se8/html/jls-8.html#jls-8.3.1.4
+ * <p>
+ * 这里的重排序分为两种
+ * 1. i = j 可能是由于可见性导致的 "内存重排序" 导致的
+ * 2. i < j 可能是由于可见性导致的 "内存重排序", 也可能是由于编译重排序导致的, 但我倾向于 前一种, 由于可见性问题引起的
  *
  * @author GiraffeTree
  * @date 2020/4/28
@@ -40,6 +44,7 @@ public class AnotherReorderingTest {
         } catch (InterruptedException ignore) {
         }
 
+        System.out.println(String.format("i:%d j:%d", i, j));
         System.out.println(String.format("i=j %s", result[0] ? "存在" : "不存在"));
         System.out.println(String.format("i>j %s", result[1] ? "存在" : "不存在"));
         System.out.println(String.format("i<j %s", result[2] ? "存在" : "不存在"));

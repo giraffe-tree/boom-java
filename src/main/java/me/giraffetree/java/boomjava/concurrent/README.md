@@ -9,7 +9,6 @@
     - [dead lock 死锁](./problem/deadlock)
     - [live lock 活锁](./problem/livelock)
     - [false sharing 虚共享/伪共享](./problem/falseShare)
-    - [内存重排序](./problem/memory_reordering)
     - [重排序](./problem/reordering)
     - [线程间通讯](./problem/thread_communication)
     - [volatile](./problem/volatile_word)

@@ -17,6 +17,8 @@ public class MemoryReorderingTest {
      * 如果使用
      * ExecutorUtils.getExecutorService(1,2);
      * 竟然也会死锁??? => 探究一下?
+     * 是这样的, 由于 task 数小于 线程池队列长度, 导致 task2 一直在队列中,
+     * 而 task1 又在等待 task2 的启动, 导致死锁
      */
     private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService(2, 2);
 

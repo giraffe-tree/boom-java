@@ -7,6 +7,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * 测试编译重排序
+ * 没有测试出 x=1,y=2  的情况
+ * 其中一次的测试结果为
+ * [1, 99789, 210, 0]
+ * 其中有一次结果为 x=0, y=0, 表示在线程执行过程中发生了至少一次的线程切换
+ *
  * @author GiraffeTree
  * @date 2020/4/29
  */
@@ -20,7 +26,6 @@ public class CompileReorderingTest2 {
         EXECUTOR_SERVICE.shutdown();
 
     }
-
 
     private static void test() {
         int loop = 100_000;

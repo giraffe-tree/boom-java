@@ -25,7 +25,6 @@ public class LiveLockTest {
         ReentrantLock lock = new ReentrantLock();
         ReentrantLock lock2 = new ReentrantLock();
 
-
         executorService.execute(() -> {
             while (true) {
                 lock.lock();

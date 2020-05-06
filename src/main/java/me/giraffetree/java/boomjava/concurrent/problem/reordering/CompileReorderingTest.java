@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.problem.memory_reordering;
+package me.giraffetree.java.boomjava.concurrent.problem.reordering;
 
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
@@ -6,9 +6,9 @@ import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
+ * 测试失败!!
  * 编译重排序
  * https://docs.oracle.com/javase/specs/jls/se10/html/jls-17.html#jls-17.4
  * 没有重现 x=1, y=2

@@ -2,9 +2,18 @@ package me.giraffetree.java.boomjava.concurrent.problem.deadlock;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
+ * 死锁问题
+ * t1, t2 为线程 , A,B 为资源
+ * t1 get A
+ * t2 get B
+ * t1 get B && t2 get A 造成死锁
+ *
  * @author GiraffeTree
  * @date 2020-04-12
  */
@@ -24,7 +33,7 @@ public class DeadLockDemo {
         Object o1 = new Object();
         Object o2 = new Object();
 
-        executor.execute(()->{
+        executor.execute(() -> {
             while (true) {
                 synchronized (o2) {
                     try {
@@ -40,7 +49,7 @@ public class DeadLockDemo {
                 }
             }
         });
-        executor.execute(()->{
+        executor.execute(() -> {
             while (true) {
                 synchronized (o1) {
                     try {
