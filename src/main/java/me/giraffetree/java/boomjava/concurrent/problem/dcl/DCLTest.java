@@ -6,6 +6,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * 安全单例
+ *
  * @author GiraffeTree
  * @date 2020/4/30
  */
@@ -45,6 +47,9 @@ public class DCLTest {
     }
 
 
+    /**
+     * unsafe
+     */
     private static class Cap {
         private static Cap cap;
 
@@ -56,6 +61,9 @@ public class DCLTest {
         }
     }
 
+    /**
+     * unsafe
+     */
     private static class CapUnsafeDcl {
         private static CapUnsafeDcl capUnsafeDcl;
 

@@ -1,10 +1,8 @@
-package me.giraffetree.java.boomjava.concurrent.division.threadpool;
+package me.giraffetree.java.boomjava.concurrent.utils.dispatch.threadpool;
 
 import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 线程池测试
@@ -41,6 +39,7 @@ public class ThreadPoolTest {
                     t1.start();
                     // 这里如果不新建线程的话, 实际上是由 main 线程执行
                     // r.run();
+                    // 可以做一些处理, 比如发往消息队列, 转到其他服务进行存储
                 });
         while (loop-- > 0) {
             final int c = loop;

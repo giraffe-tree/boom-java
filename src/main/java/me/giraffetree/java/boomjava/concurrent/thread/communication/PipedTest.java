@@ -5,29 +5,31 @@ import java.io.PipedReader;
 import java.io.PipedWriter;
 
 /**
+ * 使用 管道
+ *
  * @author GiraffeTree
  * @date 2020-05-01
  */
 public class PipedTest {
 
-        public static void main(String[] args) throws IOException {
-            PipedWriter out = new PipedWriter();
-            PipedReader in = new PipedReader();
-            out.connect(in);
-            Thread t1 = new Thread(new Print(in), "in");
-            t1.start();
-            try {
+    public static void main(String[] args) throws IOException {
+        PipedWriter out = new PipedWriter();
+        PipedReader in = new PipedReader();
+        out.connect(in);
+        Thread t1 = new Thread(new Print(in), "in");
+        t1.start();
+        try {
 //            int receive;
 //            while ((receive = System.in.read()) != -1){
 //                out.write(receive);
 //            }
-                int loop = 100;
-                while (loop-- > 0) {
-                    out.write(loop);
-                }
-            } catch (IOException e) {
-
+            int loop = 100;
+            while (loop-- > 0) {
+                out.write(loop);
             }
+        } catch (IOException e) {
+
+        }
 
     }
 

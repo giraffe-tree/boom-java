@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.division.threadpool;
+package me.giraffetree.java.boomjava.concurrent.utils.dispatch.threadpool;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;

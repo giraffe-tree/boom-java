@@ -1,7 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.division.threadpool;
-
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.Delayed;
+package me.giraffetree.java.boomjava.concurrent.utils.dispatch.threadpool;
 
 /**
  * ScheduledThreadPool 基于 DelayQueue, DelayQueue 基于 PriorityQueue

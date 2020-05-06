@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.concurrent.division.forkjoin;
+package me.giraffetree.java.boomjava.concurrent.utils.dispatch.forkjoin;
 
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
