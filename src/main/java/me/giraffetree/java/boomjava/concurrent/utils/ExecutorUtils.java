@@ -18,6 +18,10 @@ public class ExecutorUtils {
     }
 
     public static ExecutorService getExecutorService(int core, int max, int queueSize, String nameFormat) {
+        return getExecutorService(core, max, queueSize, nameFormat, new ThreadPoolExecutor.AbortPolicy());
+    }
+
+    public static ExecutorService getExecutorService(int core, int max, int queueSize, String nameFormat, RejectedExecutionHandler handler) {
         return new ThreadPoolExecutor(
                 core, max, 100L, TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(queueSize), new ThreadFactory() {
@@ -29,7 +33,7 @@ public class ExecutorUtils {
                 thread.setName(String.format(nameFormat, count.getAndIncrement()));
                 return thread;
             }
-        }
+        }, handler
         );
     }
 
