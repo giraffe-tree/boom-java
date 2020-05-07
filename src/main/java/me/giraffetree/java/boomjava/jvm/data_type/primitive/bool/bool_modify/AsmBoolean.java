@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.jvm.asm.bool_modify;
+package me.giraffetree.java.boomjava.jvm.data_type.primitive.bool.bool_modify;
 
 /**
  * @author GiraffeTree
