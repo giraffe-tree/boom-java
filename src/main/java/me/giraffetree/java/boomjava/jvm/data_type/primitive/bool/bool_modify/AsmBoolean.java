@@ -24,5 +24,7 @@ public class AsmBoolean {
         if (!flag) {
             System.out.println("Hello, JVM! 2");
         }
+
     }
+
 }

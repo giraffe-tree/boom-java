@@ -59,7 +59,6 @@ asmified 能够将生成与源文件一致的字节码, 并且允许我们修改
 
 ![bytecode modify](./img/bytecode-modifier.png)
 
-
 #### 7. 覆盖原来的 class 文件, 再次运行 AsmBoolean
 
 ```java

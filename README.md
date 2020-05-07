@@ -2,7 +2,7 @@
 
 ## 前言
 
-本项目主要用来探究 java/jvm 中一些"奇怪"的现象, 及其背后的原因
+本项目主要用来探究 java/jvm 中一些有趣的现象, 及其背后的原因
 
 ## 目录
 
@@ -18,4 +18,5 @@
 ### 并发
 
 - [false sharing 虚共享/伪共享](./src/main/java/me/giraffetree/java/boomjava/concurrent/problem/falseShare)
+
 
