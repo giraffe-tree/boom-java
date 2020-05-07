@@ -1,7 +1,5 @@
 package me.giraffetree.java.boomjava.jvm.asm;
 
-import java.util.*;
-
 import jdk.internal.org.objectweb.asm.*;
 
 public class SourceDump implements Opcodes {
