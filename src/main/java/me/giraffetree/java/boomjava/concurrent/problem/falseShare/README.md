@@ -1,5 +1,14 @@
 # False Sharing
 
+## 定义
+
+False sharing occurs when different threads have data that is not shared in the program,
+ but this data gets mapped to a cache line that is shared. 
+
+不同的线程使用线程间未共享的数据，但是这些数据被映射到共享的缓存行时，就会发生错误共享。
+
+## 概述
+
 这里的测试了两个 volatile 的写操作由于 false sharing 带来的性能影响
 分成了以下3种情况
 

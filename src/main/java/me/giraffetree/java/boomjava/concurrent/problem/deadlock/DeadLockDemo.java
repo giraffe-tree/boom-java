@@ -26,7 +26,6 @@ public class DeadLockDemo {
 
     public static void main(String[] args) {
         deadLock();
-
     }
 
     private static void deadLock() {
