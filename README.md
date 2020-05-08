@@ -10,7 +10,24 @@
 
 #### 基础
 
-- [boolean 在操作数栈上/在堆中的不同表现](./src/main/java/me/giraffetree/java/boomjava/jvm/data_type/primitive/bool)
+[boolean 在操作数栈上/在堆中的不同表现](./src/main/java/me/giraffetree/java/boomjava/jvm/data_type/primitive/bool)
+
+<details>
+<summary>详细信息</summary>
+
+```
+// 通过修改字节码, 将flag的值改为2, 下面的程序会输出什么? 
+boolean flag = 2;
+if (flag) {
+    System.out.println("Hello, Java!");
+}
+if (flag == true) {
+    System.out.println("Hello, JVM!");
+} 
+```
+
+</details>
+
 - [查看Java 对象布局、大小](./src/main/java/me/giraffetree/java/boomjava/jvm/jol/JolTest.java)
 
 
