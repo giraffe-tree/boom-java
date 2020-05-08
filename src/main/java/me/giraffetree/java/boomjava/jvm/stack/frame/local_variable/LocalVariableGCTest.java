@@ -14,7 +14,6 @@ import java.lang.management.MemoryUsage;
 public class LocalVariableGCTest {
 
     public static void main(String[] args) {
-
         test01();
         test02();
         test03();
@@ -22,12 +21,12 @@ public class LocalVariableGCTest {
     }
 
     private static void test01() {
-
         {
             byte[] _64M = new byte[1024 * 1024 * 64];
         }
         printGCInfo("test01 before gc");
         System.gc();
+        // 未回收
         printGCInfo("test01 after gc");
     }
 
@@ -38,6 +37,7 @@ public class LocalVariableGCTest {
         printGCInfo("test02 before gc");
         int x = 1;
         System.gc();
+        // 回收了
         printGCInfo("test02 after gc");
     }
 
