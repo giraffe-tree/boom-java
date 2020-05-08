@@ -15,7 +15,7 @@
     <details>
     <summary>new Object() 在堆中占用多少个字节? </summary>
     
-    ```java
+    ```
         // 对象 obj 占用了 几个字节? 
         Object obj = new Object();
     ```
@@ -27,7 +27,7 @@
     <details>
     <summary>下面的程序会输出什么? </summary>
     
-    ```java
+    ```
         // 通过修改字节码, 将flag的值改为2, 下面的程序会输出什么? 
         boolean flag = 2;
         if (flag) {
@@ -46,7 +46,7 @@
     <details>
     <summary> 对象_64M 的空间是否能被回收? </summary>
     
-    ```java
+    ```
         {
             byte[] _64M = new byte[1024 * 1024 * 64];
         }
@@ -55,7 +55,34 @@
     
     </details>
 
+- [如何利用重载把 java 编译器弄晕?](./src/main/java/me/giraffetree/java/boomjava/jvm/method/overload)
 
+    <details>
+    <summary> add(1,1,1) </summary>
+    
+    ```
+        private static int add(int... x) {
+            return 5;
+        }
+        private static int add(Integer... x) {
+            return 6;
+        }
+        private static int add(int a, int... x) {
+            return 7;
+        }
+        private static int add(Integer a, int... x) {
+            return 8;
+        }
+        private static int add(int a, Integer... x) {
+            return 9;
+        }
+        private static int add(int a, Object... x) {
+            return 10;
+        }
+    ```
+    
+    </details>
+    
 ### 并发
 
 
@@ -69,7 +96,6 @@
             volatile int a;
             volatile int b;
         }
-    
     ```
     
     </details>
