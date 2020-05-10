@@ -2,6 +2,7 @@ package me.giraffetree.java.boomjava.jvm.method.overload;
 
 /**
  * 如何把 java 编译器弄晕?
+ * 需要注意的是 重载的概念 只在 java 中有效
  *
  * @author GiraffeTree
  * @date 2020/5/8
