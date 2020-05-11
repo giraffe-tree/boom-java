@@ -144,6 +144,10 @@ Normal instaniation took: 182ms
 
 这提升?? 太香了吧
 
+https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow
+
+https://stackoverflow.com/questions/435553/java-reflection-performance
+
 ## 参考
 
 - https://time.geekbang.org/column/article/12192
