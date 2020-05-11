@@ -126,6 +126,24 @@ https://www.iteye.com/blog/rednaxelafx-548536
     - 使用 Field.get/set(Object) 来访问字段的值。
     - 使用 Method.invoke(Object, Object[]) 来调用方法。
 
+### jdk11 中的反射性能提升
+
+[源代码 Test](./Test.java)
+
+wtf?????? jdk 1.8.0_161 下的结果
+
+Reflecting instantiation took:1826ms
+Normal instaniation took: 9232ms
+
+为什么 反射性能更好? 我惊了.... todo: why!!!
+
+jdk 11.0.7 下的结果
+
+Reflecting instantiation took:293ms
+Normal instaniation took: 182ms
+
+这提升?? 太香了吧
+
 ## 参考
 
 - https://time.geekbang.org/column/article/12192

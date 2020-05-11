@@ -1,46 +1,55 @@
 package me.giraffetree.java.boomjava.jvm.reflect;
-// v2版本
 
-import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
 
-
-// v5版本
-import java.lang.reflect.Method;
-
+/**
+ * 示例代码来自:
+ * https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow
+ * wtf?????? jdk 1.8.0_161
+ * Reflecting instantiation took:1826ms
+ * Normal instaniation took: 9232ms
+ * jdk 11.0.7
+ * Reflecting instantiation took:293ms
+ * Normal instaniation took: 182ms
+ *
+ * 这提升?? 太香了吧
+ */
 public class Test {
-    public static void target(int i) {
-        // 空方法
+
+    static class B {
+
     }
 
-    public static void main(String[] args) throws Exception {
-        Class<?> klass = Class.forName("me.giraffetree.java.boomjava.jvm.reflect.Test");
-        Method method = klass.getMethod("target", int.class);
-        // 关闭权限检查
-        method.setAccessible(true);
-        // 本质上使得 method.invoke 无法内联
-        polluteProfile();
-        Object[] v = new Object[1];
-        v[0] = 128;
-        long current = System.currentTimeMillis();
-        for (int i = 1; i <= 2_000_000_000; i++) {
-            if (i % 100_000_000 == 0) {
-                long temp = System.currentTimeMillis();
-                System.out.println(temp - current);
-                current = temp;
-            }
+    public static long timeDiff(long old) {
+        return System.nanoTime() - old;
+    }
 
-            method.invoke(null, v);
+    public static void main(String args[]) throws Exception {
+
+        int numTrials = 10000000;
+        B[] bees = new B[numTrials];
+        Class<B> c = B.class;
+        for (int i = 0; i < numTrials; i++) {
+            bees[i] = c.newInstance();
         }
+        for (int i = 0; i < numTrials; i++) {
+            bees[i] = new B();
+        }
+
+        long nanos;
+
+        nanos = System.nanoTime();
+        for (int i = 0; i < numTrials; i++) {
+            bees[i] = c.newInstance();
+        }
+        System.out.println("Reflecting instantiation took:" + TimeUnit.NANOSECONDS.toMillis(timeDiff(nanos)) + "ms");
+
+        nanos = System.nanoTime();
+        for (int i = 0; i < numTrials; i++) {
+            bees[i] = new B();
+        }
+        System.out.println("Normal instaniation took: " + TimeUnit.NANOSECONDS.toMillis(timeDiff(nanos)) + "ms");
     }
 
-    public static void polluteProfile() throws Exception {
-        Method method1 = Test.class.getMethod("target1", int.class);
-        Method method2 = Test.class.getMethod("target2", int.class);
-        for (int i = 0; i < 2000; i++) {
-            method1.invoke(null, 0);
-            method2.invoke(null, 0);
-        }
-    }
-    public static void target1(int i) { }
-    public static void target2(int i) { }
+
 }
