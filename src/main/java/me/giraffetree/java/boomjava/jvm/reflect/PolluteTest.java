@@ -3,7 +3,7 @@ package me.giraffetree.java.boomjava.jvm.reflect;
 import java.lang.reflect.Method;
 
 /**
- * 源码来自:
+ * 源码来自: https://time.geekbang.org/column/article/12192
  */
 public class PolluteTest {
     public static void target(int i) {

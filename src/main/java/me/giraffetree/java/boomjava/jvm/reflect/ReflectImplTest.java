@@ -23,6 +23,13 @@ public class ReflectImplTest {
     public static void main(String[] args) throws Exception {
         Class klass = Class.forName("me.giraffetree.java.boomjava.jvm.reflect.ReflectImplTest");
         Method method = klass.getMethod("target", int.class);
+        Method method1 = klass.getMethod("target", int.class);
+
+        // false
+        System.out.println(method == method1);
+        // true
+        System.out.println(method.equals(method1));
+
         int loop = 16;
         while (loop-- > 0) {
             // 默认 16 次后会动态生成字节码实现

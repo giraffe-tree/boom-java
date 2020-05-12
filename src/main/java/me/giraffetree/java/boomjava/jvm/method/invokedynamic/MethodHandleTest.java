@@ -5,11 +5,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 
 /**
+ * 使用 lookup 暴露方法
+ *
  * @author GiraffeTree
  * @date 2020/5/12
  */
 public class MethodHandleTest {
-
 
     static class Book {
         static void read() {
