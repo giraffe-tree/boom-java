@@ -19,7 +19,7 @@ https://github.com/qcrao/Go-Questions/blob/master/interface/Go%20%E8%AF%AD%E8%A8
 
 ## 问题与解答
 
-### invokedynamic的出现 与 动态类型语言
+### invokedynamic 的出现 与 动态类型语言
 
 想想这个问题, invokedynamic 是 jdk1.0 以来第一个新增加的字节码指令, 为什么要新增这个指令呢?
 
@@ -60,17 +60,18 @@ java class file 中有一部分为  [Constant Pool](https://docs.oracle.com/java
 > 相反，`CONSTANT_Dynamic_info` 和 `CONSTANT_InvokeDynamic_info` 结构通过指向 *动态计算实体
 > 的代码* 间接表示实体。
 >
-> 该代码被称为**引导方法**，这个引导方法会在 JAVA 虚拟机解析(resolution)时根据上面的数据结构调用((§5.1, §5.4.3.6)),
+> 该代码被称为**引导方法**，
+> 这个引导方法会在 JAVA 虚拟机解析(resolution)时根据上面的数据结构调用((§5.1, §5.4.3.6)),
 > 每个结构都指定一个引导方法以及表示要计算实体特征的辅助名称和类型。
 
 - CONSTANT_Dynamic_info
     - 用来表示一个动态计算的常量(a dynamically-computed constant)
-    - 这个常量由引导方法经过一系列的计算产生
-    - 结构指定的辅助类型限制了动态计算常量的类型
+    - 这个常量由引导方法(bootstrap method)经过一系列的计算产生
+    - 结构中指定的辅助类型限制了动态计算常量的类型
 - CONSTANT_InvokeDynamic_info
     - 用来表示一个动态计算的调用点 (a dynamically-computed call site)
     - 在 invokedynamic 指令过程中, 通过调用引导方法产生 `java.lang.invoke.CallSite` 的一个实例
-    - 结构指定的辅助类型限制了动态计算的调用站点的方法类型。
+    - 结构中指定的辅助类型限制了动态计算的调用站点的方法类型。
 
 ```
 CONSTANT_Dynamic_info {
@@ -99,11 +100,33 @@ CONSTANT_InvokeDynamic_info {
 
 [jvm 11 spec 5.4.3.6](https://docs.oracle.com/javase/specs/jvms/se11/html/jvms-5.html#jvms-5.4.3.6)
 
-- invokedynamic 的位置被称为动态调用点 dynamic call site
+为了将未解析的符号引用 `R` 解析为动态计算的常量或调用点，需要执行三个任务。
+
+1. 检查 `R` 以确定哪些代码将用作其引导方法(bootstrap method)，以及哪些参数将传递给该代码。
+2. 参数会被打包到一个Object数组中，并调用 bootstrap 方法。
+    - 该Object数组的前三个参数类型如下
+        1. `java.lang.invoke.MethodHandles.Lookup`
+        2. `String` 从R中解析出来的名称
+        3. 如果是 field descriptor -> 则为 `Class`; 如果是 method descriptor -> 则为 `java.lang.invoke.MethodType `
+3. bootstrap 方法的结果经过验证，被用作解析的结果 X
+    - 如果 `R` 为动态计算常量 (dynamically-computed constant), 则 X 为 field descriptor 中的类型
+    - 如果 `R` 为动态计算调用点(dynamically-computed call site), 则 X 为`java.lang.invoke.CallSite` 的实例, 或其子类的实例
+        - The type of the `java.lang.invoke.CallSite` is semantically equal to the method descriptor given by R.
+
+> 关于多线程竞争: 
+> 调用引导方法会有多线程竞争问题; 所以跟类加载一样, 要加锁;
+>
+> If several threads attempt resolution of R at the same time, the bootstrap method may be invoked concurrently. 
+> Therefore, bootstrap methods which access global application data must take precautions against race conditions.  
+
+
+#### invokedynamic 
+
 - invokedynamic 指令的第一个参数为 CONSTANT_InvokeDynamic_info 的常量
     - 包含如下信息:
         - 引导方法
-        - 方法类型 methodType 和名称
+        - 方法类型 methodType 
+        - 名称
 
 
 
@@ -164,4 +187,6 @@ CONSTANT_InvokeDynamic_info {
     - https://docs.oracle.com/javase/specs/jvms/se11/html/jvms-4.html#jvms-4.10.1.9.invokedynamic
 - 什么是 invokedynamic , 如何使用它?
     - https://stackoverflow.com/questions/6638735/whats-invokedynamic-and-how-do-i-use-it
+- https://stackoverflow.com/questions/49414207/what-is-call-site-in-java-when-calling-method
+- https://www.javaworld.com/article/2860079/invokedynamic-101.html
 
