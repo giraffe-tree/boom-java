@@ -47,6 +47,53 @@ https://github.com/qcrao/Go-Questions/blob/master/interface/Go%20%E8%AF%AD%E8%A8
 
 所以, 为了在 jvm 上提供动态类型的支持, 于是在 JDK 1.7 (JSR-292) 中出现了 invokedynamic
 
+### methodhandle
+
+#### 概念
+
+[Class MethodHandle](https://docs.oracle.com/javase/10/docs/api/java/lang/invoke/MethodHandle.html)
+
+> A method handle is a typed, directly executable reference to an underlying method
+> 
+> 方法句柄是一个强类型的、能够被直接执行的底层方法的引用
+
+1. 方法句柄可以指向常规的静态方法或者实例方法，也可以指向构造器或者字段
+2. 方法句柄
+
+
+#### methodhandle 与 invokevirtual/invokeinterface/invokestatic/invokespecial 的关联
+
+调用方法句柄，和原本对应的调用指令是一致的。
+也就是说，对于原本用 invokevirtual 调用的方法句柄，它也会采用动态绑定；
+而对于原本用 invkespecial 调用的方法句柄，它会采用静态绑定。
+
+如下面的示例[MethodHandleTest.java](./MethodHandleTest.java):
+
+```java
+public class MethodHandleTest {
+    static class Book {
+        static void read() {
+            System.out.println("read book...");
+        }
+        static MethodHandles.Lookup getLookup() {
+            // 方法句柄的访问权限不取决于方法句柄的创建位置，而是取决于 Lookup 对象的创建位置。
+            return MethodHandles.lookup();
+        }
+    }
+    public static void main(String[] args) throws Throwable {
+        MethodType methodType = MethodType.methodType(void.class);
+        MethodHandles.Lookup lookup = Book.getLookup();
+        MethodHandle read = lookup.findStatic(Book.class, "read", methodType);
+        read.invoke();
+    }
+}
+```
+
+
+
+参考:  https://zhuanlan.zhihu.com/p/26389041
+
+
 ### 从 jvm 11规范中讲讲 invokedynamic 的实现
 
 #### 讲讲 constant pool 中关于 invokedynamic 需要使用到的信息
@@ -132,6 +179,7 @@ CONSTANT_InvokeDynamic_info {
 
 ### invokedynamic 与 其他四条指令的区别
 
+
 除了我们之前提到的区别之外, invokedynamic 与其他四条方法指令最大的区别在于 **分派逻辑**
 
 我们可以自由指定, 我们调用父类的方法/父类的父类的方法, 而不是仅仅只能使用一个 `super`
@@ -153,9 +201,30 @@ CONSTANT_InvokeDynamic_info {
 
 ### methodHandle 为什么需要指定 class
 
+### Signature polymorphism
+
+```
+// java.lang.invoke.MethodHandle
+public final native @PolymorphicSignature Object invoke(Object... args) throws Throwable;
+
+public final native @PolymorphicSignature Object invokeExact(Object... args) throws Throwable;
+```
+
+[MethodHandle docs](https://docs.oracle.com/javase/10/docs/api/java/lang/invoke/MethodHandle.html)
+
+> a signature polymorphic method is one which can operate with any of a wide range of call signatures and return types.
+> 
+> In source code, a call to a signature polymorphic method will compile, regardless of the requested symbolic type descriptor. 
+> 
+> As usual, the Java compiler emits an invokevirtual instruction with the given symbolic type descriptor against the named method. 
+> The unusual part is that the symbolic type descriptor is derived from the actual argument and return types, not from the method declaration.
+
+签名多态性的方法可以操作各种各样的调用签名(方法参数)和返回类型
 
 
-#### 参考
+
+
+### 参考
 
 - 深入理解java虚拟机 8.3.3
 
@@ -177,16 +246,29 @@ CONSTANT_InvokeDynamic_info {
 
 `-Djava.lang.invoke.MethodHandle.DUMP_CLASS_FILES=true`
 
+### 关闭逃逸分析
+
+`-XX:-DoEscapeAnalysis`
+
+### gbk 不可映射字符
+
+`javac -encoding UTF-8  MethodHandleTest.java`
 
 ## 参考
 
-- https://time.geekbang.org/column/article/12564
+- 极客时间 jvm 专栏
+    - https://time.geekbang.org/column/article/12564
 - jvm spec CONSTANT_Dynamic_info CONSTANT_InvokeDynamic_info
     - https://docs.oracle.com/javase/specs/jvms/se11/html/jvms-4.html#jvms-4.4.10
 - jvm spec invokedynamic 
     - https://docs.oracle.com/javase/specs/jvms/se11/html/jvms-4.html#jvms-4.10.1.9.invokedynamic
 - 什么是 invokedynamic , 如何使用它?
     - https://stackoverflow.com/questions/6638735/whats-invokedynamic-and-how-do-i-use-it
-- https://stackoverflow.com/questions/49414207/what-is-call-site-in-java-when-calling-method
+- what-is-call-site-in-java-when-calling-method
+    - https://stackoverflow.com/questions/49414207/what-is-call-site-in-java-when-calling-method
 - https://www.javaworld.com/article/2860079/invokedynamic-101.html
+- Invokedynamic 和 MethodHandle的缘由
+    - https://zhuanlan.zhihu.com/p/26389041
+- JSR292: InvokeDynamic和MethodHandle的优化
+    - https://zhuanlan.zhihu.com/p/30936412
 

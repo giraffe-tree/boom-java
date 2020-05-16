@@ -11,11 +11,11 @@ import java.lang.invoke.MethodType;
  * @date 2020/5/12
  */
 public class MethodHandleTest {
-
     static class Book {
         static void read() {
             System.out.println("read book...");
         }
+
 
         static MethodHandles.Lookup getLookup() {
             // 方法句柄的访问权限不取决于方法句柄的创建位置，而是取决于 Lookup 对象的创建位置。
@@ -24,11 +24,14 @@ public class MethodHandleTest {
     }
 
     public static void main(String[] args) throws Throwable {
-
         MethodType methodType = MethodType.methodType(void.class);
         MethodHandles.Lookup lookup = Book.getLookup();
         MethodHandle read = lookup.findStatic(Book.class, "read", methodType);
-        read.invoke();
+        Object invoke = read.invoke();
+        // 返回 null
+        System.out.println(invoke);
+
+
     }
 
 }
