@@ -96,6 +96,10 @@ public class MethodHandleTest {
 
 ### 从 jvm 11规范中讲讲 invokedynamic 的实现
 
+invokedynamic: Invoke a dynamically-computed call site
+
+- https://docs.oracle.com/javase/specs/jvms/se12/html/jvms-6.html#jvms-6.5.invokedynamic
+
 #### 讲讲 constant pool 中关于 invokedynamic 需要使用到的信息
 
 java class file 中有一部分为  [Constant Pool](https://docs.oracle.com/javase/specs/jvms/se11/html/jvms-4.html#jvms-4.4) , 
@@ -155,7 +159,7 @@ CONSTANT_InvokeDynamic_info {
         1. `java.lang.invoke.MethodHandles.Lookup`
         2. `String` 从R中解析出来的名称
         3. 如果是 field descriptor -> 则为 `Class`; 如果是 method descriptor -> 则为 `java.lang.invoke.MethodType `
-3. bootstrap 方法的结果经过验证，被用作解析的结果 X
+3. bootstrap 方法的结果经过验证，返回解析的结果 X
     - 如果 `R` 为动态计算常量 (dynamically-computed constant), 则 X 为 field descriptor 中的类型
     - 如果 `R` 为动态计算调用点(dynamically-computed call site), 则 X 为`java.lang.invoke.CallSite` 的实例, 或其子类的实例
         - The type of the `java.lang.invoke.CallSite` is semantically equal to the method descriptor given by R.
