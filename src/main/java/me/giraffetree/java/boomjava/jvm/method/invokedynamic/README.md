@@ -7,6 +7,15 @@
 3. MethodHandle 与 反射的区别?
 4. invokedynamic 与 其他四条指令的区别
 
+todo:
+
+1. methodHandle 与 reflection 的性能差异
+    - https://stackoverflow.com/questions/15621434/methodhandle-performance
+    - with JMH
+2. 
+
+
+
 ## 引子
 
 ### 鸭子类型
