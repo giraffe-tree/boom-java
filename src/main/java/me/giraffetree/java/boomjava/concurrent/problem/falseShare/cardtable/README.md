@@ -36,5 +36,7 @@ CARD_TABLE [this address >> 9] = DIRTY;
 
 1. 极客时间 垃圾回收
     - https://time.geekbang.org/column/article/13137
-
-    
+2. Why use Conditional Card Marking, in a Concurrent System 
+    - http://robsjava.blogspot.com/2013/03/why-to-use-conditional-card-marking.html
+3. `-XX：+ UseCondCardMark` 可以在高度并行的应用程序中帮助您
+    - https://stackoverflow.com/questions/28568171/examples-for-code-that-is-surprisingly-affected-by-jvm-jvm-options

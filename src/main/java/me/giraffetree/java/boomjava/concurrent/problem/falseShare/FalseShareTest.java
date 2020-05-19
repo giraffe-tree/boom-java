@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
  * 2. 使用 @Contented 避免了 false sharing
  * 3. 使用手动的 padding 填充, 来避免 false sharing
  * <p>
- * 终于测试成功了 TT
+ * 终于测试成功了
  * !!!!!!!!!!!!!!!! 注意 !!!!!!!!!!!!!!!!!!!!!
  * 我使用 java 8 需要加上虚拟机选项 -XX:-RestrictContended
  * 如果你在 Java 9 以上版本试验的话，在使用 javac 编译时需要添加 --add-exports java.base/jdk.internal.vm.annotation=ALL-UNNAME
