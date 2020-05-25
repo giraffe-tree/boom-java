@@ -31,7 +31,9 @@ CARD_TABLE [this address >> 9] = DIRTY;
 
 ### UseCondCardMark
 
-`-XX:+UseCondCardMark` 通过以下操作来减少 card table 的写入, 从而提高性能 [1]
+原始: `CARD_TABLE [this address >> 9] = DIRTY;`
+
+`-XX:+UseCondCardMark` 通过事先判断了card 是否 dirty , 减少 card table 的写入, 从而提高性能, 减少false sharing [1]
 
 ```
 if (CARD_TABLE [this address >> 9] != DIRTY) 
@@ -40,10 +42,9 @@ if (CARD_TABLE [this address >> 9] != DIRTY)
 
 ### 测试
 
-重要的是, 要构造一个 老年代 -> eden 代的引用 [4]
+重要的是, 要构造一个 老年代 -> eden 代的引用, 我这里使用大对象直接进入老年代的机制来构造这个对象[4]
 
 [CardTableFalseSharingTest](./CardTableFalseSharingTest.java)
-
 
 ## 参考
 

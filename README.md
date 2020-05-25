@@ -85,7 +85,6 @@
     
 ### 并发
 
-
 - [false sharing 虚共享/伪共享](./src/main/java/me/giraffetree/java/boomjava/concurrent/problem/falseShare)
     
     <details>
@@ -100,3 +99,29 @@
     
     </details>
 
+- [卡表 card table 中的 false sharing 与 UseCondCardMark](./src/main/java/me/giraffetree/java/boomjava/concurrent/problem/falseShare/cardtable)
+    
+    <details>
+        <summary> 更新 年老代对象指向eden代对象的引用, 为什么会引起 false sharing 问题? </summary>
+
+    ```
+            // 使用 多线程更新 hugeObj 中的引用 x1, x2
+            private static class Obj64 {
+                long l1;
+                long l2, l3, l4, l5;
+            }
+        
+            private static class HugeObj {
+                private byte[] hugeArray;
+                private Obj64 x1;
+                private Obj64 x2;
+        
+                public HugeObj(int byteLen, Obj64 x1, Obj64 x2) {
+                    this.hugeArray = new byte[byteLen];
+                    this.x1 = x1;
+                    this.x2 = x2;
+                }
+            }
+    ```
+
+    </details>
