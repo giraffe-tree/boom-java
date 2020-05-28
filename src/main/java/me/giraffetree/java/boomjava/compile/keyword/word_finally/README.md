@@ -1,15 +1,22 @@
 # README.md
 
-官方文档: 
+- 官方文档: 
+    - https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.20.2
+- Why does the Java Compiler copy finally blocks?
+    - https://stackoverflow.com/questions/29061627/why-does-the-java-compiler-copy-finally-blocks
+    - 可能的原因是 JSR 指令实现比较复杂, 需要维护一系列的局部变量, 所以最后使用了 inline finally , 将 finally 块放入每个可能的出口中
+- 在JVM上编译Try / Catch / Finally 
+    - https://web.archive.org/web/20160407142041/http://devblog.guidewire.com/2009/10/22/compiling-trycatchfinally-on-the-jvm/
 
-- https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.20.2
 
 ## return 和 finally 是如何配合的
 
 java 编译器在 try 中遇到  `return` 时, 会将返回的变量放入一个局部变量中, 
 然后再去执行 finally 块中的代码, 当 finally 中也使用 `return` 时, 且没有其他的 finally , 则直接返回该值.
 
-### test1 中 finally 中有 return
+### test1:  finally 中有 return
+
+没错这就是 finally 截胡问题
 
 ```java
 public class FinallyTest {
@@ -26,9 +33,11 @@ public class FinallyTest {
 }
 ```
 
-### 字节码解析
+#### test1 字节码解析
 
 我这里使用 asm bytecode viewer  查看字节码
+
+你也可以通过 `javap -v FinallyTest.class` 来查看字节码
 
 ```
   public static test1(I)I
@@ -62,7 +71,13 @@ public class FinallyTest {
     MAXLOCALS = 3
 ```
 
-### try 中抛出了异常, finally 中 return 了
+### test2: 同 test1
+
+在 finally 执行之前, 要 return 的变量已经存到 局部变量表中了  
+
+### test4: try 中抛出了异常, finally 中 return 了
+
+finally 中 return 把异常给吃掉了 =.= 真恐怖
 
 ```
 public static int test4(int a) {
@@ -105,5 +120,16 @@ public static int test4(int a) {
     LOCALVARIABLE a I L0 L5 0
     MAXSTACK = 2
     MAXLOCALS = 2
-
 ```
+
+
+### testStr: 同 test1
+
+截胡
+
+### testStr2: 同 test2
+
+### testStr3: 在 finally 中 break
+
+这个比较有意思, 实际上 break 对应到字节码为 goto 指令, 所以 try 中的 return 直接被忽视了, 跳出了循环
+

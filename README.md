@@ -6,6 +6,39 @@
 
 ## 目录
 
+### java 
+
+- [java 中的 finally 是如何编译成字节码的](./src/main/java/me/giraffetree/java/boomjava/compile/keyword/word_finally)
+        
+    <details>
+        <summary> 下面的方法能运行的结果是什么? </summary>
+        
+        ```
+            // 如果 a = 3, 运行的结果是什么
+            public static int test4(int a) {
+                try {
+                    a += 10;
+                    a = a / 0;
+                } finally {
+                    a++;
+                    return a;
+                }
+            }
+            public static String testStr3() {
+                while (true) {
+                    try {
+                        return "foo";
+                    } finally {
+                        break;
+                    }
+                }
+                return "bar";
+            }
+        ```
+        
+    </details>
+
+
 ### JVM
 
 #### 基础
