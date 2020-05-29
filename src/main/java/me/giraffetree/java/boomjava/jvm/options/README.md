@@ -2,6 +2,10 @@
 
 ## 列表
 
+- `-XX:+TraceClassLoading`
+    - 打印 class 加载的信息, 等同于 `-verbose:class`
+- `-XX:+PrintCompilation`
+    - 打印即时编译相关的信息
 - `-XX:-TieredCompilation`
     - 分层编译
         - level 0 - interpreter

@@ -4,4 +4,7 @@ target
 
 log
 !./idea/workspace.xml
+tmp
 
+*.bin.gz
+results

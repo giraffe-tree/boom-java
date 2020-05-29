@@ -20,7 +20,9 @@
 
 在委派模式（Delegate）中，有两个或多个对象参与处理同一个请求，接受请求的对象将请求委派给其他对象来处理。
 
-委派模式参考: https://juejin.im/post/5aaf7bf8f265da23731441e0
+- 委派模式参考: 
+    - https://juejin.im/post/5aaf7bf8f265da23731441e0
+    - https://zhuanlan.zhihu.com/p/55541492
 
 - Method.invoke
 - DelegatingMethodAccessorImpl

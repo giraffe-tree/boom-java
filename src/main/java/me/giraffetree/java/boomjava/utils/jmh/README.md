@@ -15,6 +15,29 @@
 
 ### 使用
 
+#### pom 
+
+配置示例如下
+
+```xml
+        <jmh.version>1.23</jmh.version>
+
+        <!-- JMH-->
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${jmh.version}</version>
+            <scope>provided</scope>
+        </dependency>
+```
+
+#### 运行
+
 这里我使用 [StringBuilderBenchmark.java](./basic/StringBuilderBenchmark.java) 这个文件测试
 
 ![](./img/run.jpg)
@@ -34,7 +57,16 @@ ERROR: org.openjdk.jmh.runner.RunnerException: ERROR: Exception while trying to 
 - 参考解决方案: 
     - https://github.com/artyushov/idea-jmh-plugin/issues/19
 
+#### benchmark 的范围
+
+修改基准测试的范围, 可以更好的对比
+
+![](./img/benchmark_range.jpg)
+
+结果:
+
+![](./img/result.jpg)
 
 ## 其他
 
-关于 JMH 的注解解释可以参考: https://www.xncoding.com/2018/01/07/java/jmh.html , 这里我就不重复写了
+关于 JMH 的注解解释可以参考: [https://www.xncoding.com/2018/01/07/java/jmh.html](https://www.xncoding.com/2018/01/07/java/jmh.html) , 这里我就不重复写了

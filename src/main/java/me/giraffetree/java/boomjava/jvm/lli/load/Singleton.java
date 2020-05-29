@@ -18,8 +18,8 @@ public class Singleton {
         static final Singleton INSTANCE = new Singleton();
 
         static {
+            // clinit 方法在类加载的初始化阶段完成
             System.out.println("LazyHolder...");
-
         }
     }
 
