@@ -5,6 +5,9 @@ import me.giraffetree.java.boomjava.concurrent.utils.ExecutorUtils;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * 思路:
+ * 提前新建好对象, 然后两个线程, 同时去 调用不同对象的 System.identityHashCode
+ *
  * @author GiraffeTree
  * @date 2020/6/1
  */
