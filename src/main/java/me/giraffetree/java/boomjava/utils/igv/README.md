@@ -37,6 +37,8 @@ jdkhome="E:\environment\java"
 
 ## 使用
 
+### 示例1
+
 [CompilationTest](./CompilationTest.java) 该代码示例来自 [1]
 
 ```java
@@ -51,7 +53,8 @@ public class CompilationTest {
     public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i < 500000; i++) {
             hash(i);
-        }
+        }   
+        // 需要等待一段时间, 让后台线程将数据传给 igv
         Thread.sleep(2000);
     }
 }
@@ -80,6 +83,12 @@ Connected to the IGV on 127.0.0.1:4445
 ```
 
 ![](./img/result.jpg)
+
+### 示例2
+
+> 红色加粗线条为控制流，蓝色线条为数据流，而其他颜色的线条则是特殊的控制流或数据流。
+> 被控制流边所连接的是固定节点，其他的皆属于浮动节点
+
 
 ## 我遇到的一些坑
 
