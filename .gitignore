@@ -8,3 +8,4 @@ tmp
 
 *.bin.gz
 results
+graal_dumps

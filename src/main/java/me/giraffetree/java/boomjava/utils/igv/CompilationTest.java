@@ -1,8 +1,11 @@
 package me.giraffetree.java.boomjava.utils.igv;
 
 /**
- * java -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler -XX:CompileCommand='dontinline,CompilationTest::hash'
- * -Dgraal.Dump=:3 -Dgraal.MethodFilter='CompilationTest.hash' -Dgraal.OptDeoptimizationGrouping=false CompilationTest
+ * methodFilter: http://lafo.ssw.uni-linz.ac.at/javadoc/graalvm/all/com/oracle/graal/debug/MethodFilter.html
+ * <p>
+ * 目前在 idea 中测试可用的配置如下
+ * 1. -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler -XX:CompileCommand=dontinline,"CompilationTest::hash" -Dgraal.Dump=:3 -Dgraal.MethodFilter=me.giraffetree.java.boomjava.utils.igv.CompilationTest.hash -Dgraal.OptDeoptimizationGrouping=false
+ * 2. jre 为 11.0.7
  */
 public class CompilationTest {
 
@@ -18,6 +21,8 @@ public class CompilationTest {
         for (int i = 0; i < 500000; i++) {
             hash(i);
         }
+
         Thread.sleep(2000);
     }
+
 }

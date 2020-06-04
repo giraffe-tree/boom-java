@@ -1,4 +1,4 @@
-# jvm 配置参数
+# jvm配置参数
 
 ## 列表
 
@@ -31,5 +31,8 @@
     - Desired percentage of survivor space used after scavenge
     - 如果单个 Survivor 区已经被占用了 50%（对应虚拟机参数 -XX:TargetSurvivorRatio），那么较高复制次数的对象也会被晋升至老年代。
 
+### graal
 
-
+- `-Dgraal.MethodFilter='CompilationTest.hash'`
+    - 格式参考 http://lafo.ssw.uni-linz.ac.at/javadoc/graalvm/all/com/oracle/graal/debug/MethodFilter.html
+    
