@@ -32,6 +32,8 @@
     - 如果单个 Survivor 区已经被占用了 50%（对应虚拟机参数 -XX:TargetSurvivorRatio），那么较高复制次数的对象也会被晋升至老年代。
 - `-XX:-DoEscapeAnalysis`
     - 关闭默认开启的逃逸分析
+- `-XX:CompileCommand=dontinline,method` / `-XX:CompileCommand=exclude,method` / `@DontInline`
+    - 取消内联
 
 ### graal
 
