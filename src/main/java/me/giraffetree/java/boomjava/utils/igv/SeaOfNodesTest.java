@@ -41,12 +41,12 @@ public class SeaOfNodesTest {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        int c = 10_000_000;
+        int c = 1_000_000;
         loop(c);
         while (c-- > 0) {
             gvn(1, 2);
         }
         // 需要等待一段时间, 让后台线程将数据传给 igv
-        Thread.sleep(3000L);
+        Thread.sleep(5000L);
     }
 }

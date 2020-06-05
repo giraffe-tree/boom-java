@@ -66,7 +66,7 @@ public class CompilationTest {
 -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler -XX:CompileCommand=dontinline,"CompilationTest::hash" -Dgraal.Dump=:3 -Dgraal.MethodFilter=me.giraffetree.java.boomjava.utils.igv.CompilationTest.hash -Dgraal.OptDeoptimizationGrouping=false -Dgraal.PrintGraph=Network
 ```
 
-- `-Dgraal.PrintGraph=Network` 可以通过网络直接传给 igv , 而不是通过文件
+- `-Dgraal.PrintGraph=Network` 可以通过网络直接传给 igv , 而不是通过文件(在不同jdk版本中, 这个配置有差异, 比如在 jdk10.0.2中为 true/false , jdk11.0.7中为File, Network, Disable这三个选项)
 - `-Dgraal.MethodFilter=me.giraffetree.java.boomjava.utils.igv.CompilationTest.hash` 由于我是在 idea 项目中运行, 有包名, 实际运行时请根据自己的项目修改
     - 关于 MethodFilter 的规则参考文档 [4]
 - 我使用的 jre 为 jdk11.0.7
@@ -89,6 +89,9 @@ Connected to the IGV on 127.0.0.1:4445
 > 红色加粗线条为控制流，蓝色线条为数据流，而其他颜色的线条则是特殊的控制流或数据流。
 > 被控制流边所连接的是固定节点，其他的皆属于浮动节点
 
+1. 常量值:C(0)、C(1)。就是常量值1、2 (类型是i32)
+2. 参数值P(0)、P(1)。就是方法参数0和方法参数1=>上面int a,int b
+3. Phi(IR节点1,IR节点2,内存类型)。
 
 ## 我遇到的一些坑
 
