@@ -6,7 +6,7 @@
 
 maven 配置如下
 
-```xml
+```
         <dependency>
             <groupId>org.openjdk.jol</groupId>
             <artifactId>jol-core</artifactId>
@@ -24,10 +24,10 @@ maven 配置如下
 
 ## 内存布局的规则
 
-这里我讲的内存布局有1个前提
+这里我讲的内存布局有几个前提
 
 1. 基于 hotspot 虚拟机
-2. 默认使用 压缩指针, 也就是说, object header 占用 12个字节 (8byte mark word + 4byte class pointer) [2]
+2. 默认使用 压缩指针, 也就是说, object header 占用 12个字节 (8bytes mark word + 4bytes class pointer) (`-XX:+UseCompressedOops`)[2]
 3. 对象的内存对齐默认为 8 字节（对应虚拟机选项 -XX:ObjectAlignmentInBytes，默认值为 8）
 
 具体的规则有以下几点
@@ -164,9 +164,105 @@ Instance size: 40 bytes
 Space losses: 0 bytes internal + 3 bytes external = 3 bytes total
 ```
 
+## 常用工具类的内存布局
+
+### String
+
+```
+java.lang.String object internals:
+ OFFSET  SIZE     TYPE DESCRIPTION                               VALUE
+      0    12          (object header)                           N/A
+     12     4   char[] String.value                              N/A
+     16     4      int String.hash                               N/A
+     20     4          (loss due to the next object alignment)
+Instance size: 24 bytes
+Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
+```
+
+### long[]
+
+数组使用 header 中最后4个字节作为 length
+
+这里我新建了一个 长度为3的 long 数组
+
+```
+long[] arr = {1L, 2L, 3L};
+```
+
+```
+[J object internals:
+ OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
+      8     4        (object header)                           a9 01 00 f8 (10101001 00000001 00000000 11111000) (-134217303)
+     12     4        (object header)                           03 00 00 00 (00000011 00000000 00000000 00000000) (3)
+     16    24   long [J.<elements>                             N/A
+Instance size: 40 bytes
+Space losses: 0 bytes internal + 0 bytes external = 0 bytes total
+```
+
+### ArrayList
+
+可以看到, ArrayList 中继承了 AbstractList 中的 modCount 字段
+
+```
+java.util.ArrayList object internals:
+ OFFSET  SIZE                 TYPE DESCRIPTION                               VALUE
+      0    12                      (object header)                           N/A
+     12     4                  int AbstractList.modCount                     N/A
+     16     4                  int ArrayList.size                            N/A
+     20     4   java.lang.Object[] ArrayList.elementData                     N/A
+Instance size: 24 bytes
+Space losses: 0 bytes internal + 0 bytes external = 0 bytes total
+```
+
+### HashMap
+
+同样的, HashMap 中继承了 AbstractMap 中的 keySet, values 字段, 可以看到 hashMap 在和 ArrayList 存储相同多的元素下, 占用的空间更大一些;
+
+```
+java.util.HashMap object internals:
+ OFFSET  SIZE                       TYPE DESCRIPTION                               VALUE
+      0    12                            (object header)                           N/A
+     12     4              java.util.Set AbstractMap.keySet                        N/A
+     16     4       java.util.Collection AbstractMap.values                        N/A
+     20     4                        int HashMap.size                              N/A
+     24     4                        int HashMap.modCount                          N/A
+     28     4                        int HashMap.threshold                         N/A
+     32     4                      float HashMap.loadFactor                        N/A
+     36     4   java.util.HashMap.Node[] HashMap.table                             N/A
+     40     4              java.util.Set HashMap.entrySet                          N/A
+     44     4                            (loss due to the next object alignment)
+Instance size: 48 bytes
+Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
+```
+
+### ConcurrentHashMap
+
+```
+java.util.concurrent.ConcurrentHashMap object internals:
+ OFFSET  SIZE                                                   TYPE DESCRIPTION                               VALUE
+      0    12                                                        (object header)                           N/A
+     12     4                                          java.util.Set AbstractMap.keySet                        N/A
+     16     4                                   java.util.Collection AbstractMap.values                        N/A
+     20     4                                                    int ConcurrentHashMap.sizeCtl                 N/A
+     24     8                                                   long ConcurrentHashMap.baseCount               N/A
+     32     4                                                    int ConcurrentHashMap.transferIndex           N/A
+     36     4                                                    int ConcurrentHashMap.cellsBusy               N/A
+     40     4          java.util.concurrent.ConcurrentHashMap.Node[] ConcurrentHashMap.table                   N/A
+     44     4          java.util.concurrent.ConcurrentHashMap.Node[] ConcurrentHashMap.nextTable               N/A
+     48     4   java.util.concurrent.ConcurrentHashMap.CounterCell[] ConcurrentHashMap.counterCells            N/A
+     52     4      java.util.concurrent.ConcurrentHashMap.KeySetView ConcurrentHashMap.keySet                  N/A
+     56     4      java.util.concurrent.ConcurrentHashMap.ValuesView ConcurrentHashMap.values                  N/A
+     60     4    java.util.concurrent.ConcurrentHashMap.EntrySetView ConcurrentHashMap.entrySet                N/A
+Instance size: 64 bytes
+Space losses: 0 bytes internal + 0 bytes external = 0 bytes total
+```
+
+
 ## 参考
 
-1. 郑雨迪老师的这篇文章让我开始思考这个问题, 非常感谢!
+1. 郑雨迪老师的这篇文章让我重新开始思考这个问题, 非常感谢!
     - https://time.geekbang.org/column/article/13081
 2. mark word 
     - http://hg.openjdk.java.net/jdk8/jdk8/hotspot/file/87ee5ee27509/src/share/vm/oops/markOop.hpp
