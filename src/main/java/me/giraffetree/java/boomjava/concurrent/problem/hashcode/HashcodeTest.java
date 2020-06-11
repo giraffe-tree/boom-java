@@ -44,6 +44,21 @@ public class HashcodeTest {
 
         headerBytes = getObjectMarkWord(obj);
         System.out.println(String.format("%-10s%24s", "after:", bytesToHex(headerBytes, true, true)));
+
+        System.out.println("------------------------------------------");
+        Object obj2 = new Object();
+        headerBytes = getObjectMarkWord(obj2);
+        System.out.println(String.format("%-10s%24s", "before:", bytesToHex(headerBytes, true, true)));
+        System.out.println(String.format("hashcode: %d", obj2.hashCode()));
+
+        hashcodeByteArray = ByteBuffer.allocate(4).putInt(obj2.hashCode()).array();
+        // 这里注意 hashcode 的字节不需要逆序
+        System.out.println(String.format("%-10s%8s", "hashcode:", bytesToHex(hashcodeByteArray, true, false)));
+
+        headerBytes = getObjectMarkWord(obj2);
+        System.out.println(String.format("%-10s%24s", "after:", bytesToHex(headerBytes, true, true)));
+
+
     }
 
 

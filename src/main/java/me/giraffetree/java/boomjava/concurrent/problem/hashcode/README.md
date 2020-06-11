@@ -95,6 +95,7 @@ thread-0 get lock
 https://github.com/unofficial-openjdk/openjdk/blob/ec8284f6b5c2cfc626f1c07741675c33ec3c9601/src/hotspot/share/runtime/synchronizer.cpp
 
 FastHashCode
+
     
 ### System.identityHashcode 与JIT
 
@@ -108,7 +109,6 @@ FastHashCode
 我都不知道它在干什么, 那怎么进行优化呢. 所以当我们将一个对象作为一个 hash 表的key 时, 请一定记得实现 hashcode 方法.
 
 ![](./img/jit_identitycode.jpg)
-
 
 ## 参考
 

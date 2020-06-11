@@ -19,7 +19,7 @@ graal igv 的官方使用文档: [ideal-graph-visualizer](https://docs.oracle.co
 解压后, 修改下 etc 文件夹中的 idealgraphvisualizer.conf
 
 ```
-# 注意不要放在跟 idealgraphvisualizer 相同的目录下
+# default_userdir 注意不要放在跟 idealgraphvisualizer 相同的目录下
 default_userdir="E:\2020\June\igv\user"
 default_cachedir="E:\2020\June\igv\cache"
 # 写入你的 jdk 位置, 这里我用的 jdk8
