@@ -69,6 +69,8 @@ hashcode: 06 99 6D B8
 ```
 偏向锁可用:     00 00 00 00 00 00 00 05
 已进入同步块.....
+//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
+// 32位0 + 00000010 + 01100110 + 00111000 + 00000101
 偏向锁已经加锁:   00 00 00 00 02 66 38 05
 hashcode: 06 99 6D B8
 哈希code执行后: 00 00 00 00 1B CE ED 3A

@@ -172,18 +172,18 @@
 
     <Loggers>
         <!-- 开发环境使用 -->
-        <!--<Root level="${LOG_INFO_LEVEL}">
+        <Root level="${LOG_INFO_LEVEL}">
             <AppenderRef ref="STDOUT"/>
-        </Root>-->
+        </Root>
 
         <!-- 生产环境使用 -->
-        <Root level="${LOG_INFO_LEVEL}" includeLocation="false">
-            <AppenderRef ref="RoutingAppender"/>
-            <AppenderRef ref="OtherRoutingAppender"/>
-            <AppenderRef ref="BoyRoutingAppender"/>
-            <AppenderRef ref="GirlRoutingAppender"/>
-            <AppenderRef ref="RollingRandomAccessFileError"/>
-        </Root>
+        <!--        <Root level="${LOG_INFO_LEVEL}" includeLocation="false">-->
+        <!--            <AppenderRef ref="RoutingAppender"/>-->
+        <!--            <AppenderRef ref="OtherRoutingAppender"/>-->
+        <!--            <AppenderRef ref="BoyRoutingAppender"/>-->
+        <!--            <AppenderRef ref="GirlRoutingAppender"/>-->
+        <!--            <AppenderRef ref="RollingRandomAccessFileError"/>-->
+        <!--        </Root>-->
     </Loggers>
 
 </Configuration>
