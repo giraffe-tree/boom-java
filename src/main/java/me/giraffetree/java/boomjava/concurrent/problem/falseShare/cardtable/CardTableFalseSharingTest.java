@@ -16,28 +16,28 @@ import java.util.concurrent.TimeUnit;
  * 测试结果:
  * jdk1.8.0_161 上运行
  * 不使用
- * volatile average:158ms [257, 111, 116, 210, 164, 131, 187, 120, 146, 147]
- * volatile average:167ms [228, 188, 148, 133, 169, 180, 159, 130, 183, 154]
+ * average:158ms [257, 111, 116, 210, 164, 131, 187, 120, 146, 147]
+ * average:167ms [228, 188, 148, 133, 169, 180, 159, 130, 183, 154]
  * 使用  -XX:+UseCondCardMark
- * volatile average:26ms [116, 17, 12, 13, 12, 13, 27, 31, 12, 14]
- * volatile average:40ms [117, 23, 33, 33, 34, 32, 34, 33, 32, 33]
+ * average:26ms [116, 17, 12, 13, 12, 13, 27, 31, 12, 14]
+ * average:40ms [117, 23, 33, 33, 34, 32, 34, 33, 32, 33]
  * 使用 -XX:-TieredCompilation
- * volatile average:158ms [242, 146, 144, 137, 146, 178, 138, 159, 146, 145]
+ * average:158ms [242, 146, 144, 137, 146, 178, 138, 159, 146, 145]
  * 使用 -XX:-TieredCompilation -XX:+UseCondCardMark
- * volatile average:28ms [111, 18, 12, 13, 34, 13, 13, 13, 30, 28]
+ * average:28ms [111, 18, 12, 13, 34, 13, 13, 13, 30, 28]
  * 不多说, 使用/不使用 UseCondCardMark 差距明显
  * jdk11.0.7 上运行
  * 不使用
- * volatile average:32ms [103, 18, 32, 17, 12, 35, 34, 32, 31, 15]
+ * average:32ms [103, 18, 32, 17, 12, 35, 34, 32, 31, 15]
  * 使用 -XX:+UseCondCardMark
- * volatile average:28ms [73, 17, 13, 33, 33, 22, 13, 13, 33, 32]
- * volatile average:30ms [63, 35, 31, 13, 19, 36, 32, 13, 32, 33]
+ * average:28ms [73, 17, 13, 33, 33, 22, 13, 13, 33, 32]
+ * average:30ms [63, 35, 31, 13, 19, 36, 32, 13, 32, 33]
  * 使用 -XX:-TieredCompilation
- * volatile average:35ms [106, 22, 13, 34, 32, 34, 34, 34, 13, 33]
- * volatile average:29ms [108, 26, 33, 31, 31, 13, 13, 12, 13, 13]
+ * average:35ms [106, 22, 13, 34, 32, 34, 34, 34, 13, 33]
+ * average:29ms [108, 26, 33, 31, 31, 13, 13, 12, 13, 13]
  * 使用 -XX:-TieredCompilation -XX:+UseCondCardMark
- * volatile average:36ms [99, 22, 13, 34, 35, 33, 33, 32, 34, 32]
- * volatile average:20ms [71, 23, 13, 14, 14, 14, 14, 14, 13, 13]
+ * average:36ms [99, 22, 13, 34, 35, 33, 33, 32, 34, 32]
+ * average:20ms [71, 23, 13, 14, 14, 14, 14, 14, 13, 13]
  * jdk11 中可能有了其他的实现和优化手段, 两种差距并不大
  *
  * @author GiraffeTree
@@ -108,7 +108,7 @@ public class CardTableFalseSharingTest {
                 e.printStackTrace();
             }
         }
-        System.out.println(String.format("volatile average:%dms %s", all / retry, Arrays.toString(record)));
+        System.out.println(String.format("average:%dms %s", all / retry, Arrays.toString(record)));
 
     }
 

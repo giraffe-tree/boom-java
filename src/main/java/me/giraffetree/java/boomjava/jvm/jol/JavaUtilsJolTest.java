@@ -23,11 +23,11 @@ public class JavaUtilsJolTest {
 
     }
 
-    private static <T> void print(Class<T> clz) {
+    static <T> void print(Class<T> clz) {
         System.out.println(ClassLayout.parseClass(clz).toPrintable());
     }
 
-    private static void print(Object object) {
+    static void print(Object object) {
         System.out.println(ClassLayout.parseInstance(object).toPrintable());
     }
 
