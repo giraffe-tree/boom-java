@@ -99,7 +99,7 @@ public class Acceptor extends AbstractServerThread {
                                 processor = processors.get(currentProcessorIndex % processors.size());
                                 currentProcessorIndex++;
                                 // 当所有 processor 连接队列都满时, 进行阻塞排队
-                            } while (processor.accept(socketChannel, retriesLeft == 0));
+                            } while (!processor.accept(socketChannel, retriesLeft == 0));
                         }
                     }
                 }

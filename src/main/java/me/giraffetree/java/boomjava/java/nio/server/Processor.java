@@ -8,7 +8,6 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -101,16 +100,14 @@ public class Processor extends AbstractServerThread {
                     SelectionKey key = iterator.next();
                     iterator.remove();
                     SocketChannel channel = (SocketChannel) key.channel();
-                    // 固定长度, 使用前两位表示长度
-                    int bufSize = 4;
+                    // 固定长度, 表示最大包
+                    int bufSize = 1024;
                     ByteBuffer buffer = ByteBuffer.allocate(bufSize);
-                    while (buffer.hasRemaining()) {
-                        channel.read(buffer);
-                    }
-                    byte[] array = buffer.array();
-                    log.info("receive size:{} body:{} ", 4, Arrays.toString(array));
-                    ByteBuffer wrap = ByteBuffer.wrap("OK".getBytes());
-                    channel.write(wrap);
+                    int read = channel.read(buffer);
+                    // tcp 空报文  以此来维持长连接
+                    // [255,241] 是什么? telnet 为了保持心跳发送的 IAC NOP：255 241
+                    log.info("receive size:{} ", read);
+
                 }
             }
         } catch (IOException e) {
