@@ -70,7 +70,7 @@ CARD_TABLE [this address >> 9] = DIRTY;
 为了验证 false sharing 的存在, 
 我们需要构造一个 老年代 -> eden 代的引用, 我这里使用大对象直接进入老年代的机制来构造这个对象[4]
 
-其中两个对象
+其中两个新生代对象a,b的地址映射在 card table 的同一格中, 同时老年代对象 c 引用了 a 和 b .
 
 ### 另外介绍下 UseCondCardMark
 

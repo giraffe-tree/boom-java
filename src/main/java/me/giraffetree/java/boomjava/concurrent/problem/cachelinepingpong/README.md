@@ -12,6 +12,8 @@
 
 两个操作一直循环, 导致该缓存行在 多个CPU 之间不断快速传输
 
+该现象与 MESIF 有关!
+
 ## 参考
 
 - [cache-line-ping-pong and false-sharing](https://stackoverflow.com/questions/30684974/are-cache-line-ping-pong-and-false-sharing-the-same)
