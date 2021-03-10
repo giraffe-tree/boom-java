@@ -4,6 +4,7 @@ import org.openjdk.jcstress.annotations.*;
 import org.openjdk.jcstress.infra.results.II_Result;
 
 /**
+ *
  * run:
  * main class: org.openjdk.jcstress.Main
  * args: -v -t me.giraffetree.java.boomjava.jvm.jmm.JMMTest
