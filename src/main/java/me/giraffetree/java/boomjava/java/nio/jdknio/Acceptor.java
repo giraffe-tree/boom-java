@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.java.nio.server;
+package me.giraffetree.java.boomjava.java.nio.jdknio;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -84,7 +84,7 @@ public class Acceptor extends AbstractServerThread {
                             ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
                             // 对于非阻塞 io 而言, accept 方法会立即返回 null?
                             SocketChannel socketChannel = serverSocketChannel.accept();
-                            // todo: 什么含义
+                            // 直接发送, 而不是缓存一些一起发送
                             socketChannel.socket().setTcpNoDelay(true);
                             // 建立长连接
                             socketChannel.socket().setKeepAlive(true);

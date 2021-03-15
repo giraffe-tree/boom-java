@@ -1,9 +1,8 @@
 # volatile + LOCK + MESIF 
 
-java 底层实现 volatile 就是在指令前加 LOCK , 至于 CPU 怎么去完成 LOCK 的语义可能会有不同, 而CPU在底层实现上不同, 于是就产生了两种实现,  锁总线和锁缓存行
+java 由于需要跨平台, 在不同平台上实现 volatile 语义需要内存屏障的支持, 于是就在指令前加 LOCK , 但至于 CPU 怎么去完成 LOCK 的语义可能会有不同, 而CPU在底层实现上不同, 于是就产生了两种实现,  锁总线和锁缓存行
 
-在MESIF 出现之前, 读写操作都需要向 bus 
- MESIF 主要是降低了读操作的时延, 
+MESIF 主要是降低了读操作的时延
 
 ## Volatile 
 
@@ -55,5 +54,9 @@ Intel 64 位和 IA-32 架构开发人员手册：卷 3A 8.1.4 Effects of a LOCK 
         - https://www.intel.cn/content/www/cn/zh/architecture-and-technology/64-ia-32-architectures-software-developer-vol-3a-part-1-manual.html
 4. lock 和 MESIF 的区别
     - https://stackoverflow.com/questions/25476662/when-can-the-cpu-ignore-the-lock-prefix-and-use-cache-coherency
+5. 内存屏障与mesif
+    - https://zh.wikipedia.org/wiki/%E5%86%85%E5%AD%98%E5%B1%8F%E9%9A%9C
+
+
     
     

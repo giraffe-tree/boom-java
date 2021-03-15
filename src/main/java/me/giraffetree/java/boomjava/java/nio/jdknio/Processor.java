@@ -1,4 +1,4 @@
-package me.giraffetree.java.boomjava.java.nio.server;
+package me.giraffetree.java.boomjava.java.nio.jdknio;
 
 import lombok.extern.slf4j.Slf4j;
 
