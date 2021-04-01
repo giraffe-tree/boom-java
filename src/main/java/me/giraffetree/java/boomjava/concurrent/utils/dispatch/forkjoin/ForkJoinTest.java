@@ -38,8 +38,7 @@ public class ForkJoinTest {
         //创建分治任务线程池
         ForkJoinPool forkJoinPool = new ForkJoinPool(4);
         //创建分治任务
-        Fibonacci fibonacci =
-                new Fibonacci(30);
+        Fibonacci fibonacci = new Fibonacci(30);
         //启动分治任务
         Integer result = forkJoinPool.invoke(fibonacci);
         //输出结果
