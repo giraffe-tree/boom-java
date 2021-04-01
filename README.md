@@ -110,6 +110,21 @@
     ```
     
     </details>
+    
+- [safepoint 与 counted loop 的关系]()
+
+    <details>
+        <summary> 下面这段代码的 GC 是否会受到影响 ? </summary>
+        
+            public static void foo() {
+                System.out.println("start foo...");
+                int sum = 0;
+                for (int i = 0; i < Integer.MAX_VALUE; i++) {
+                    sum += Math.sqrt(i);
+                }
+            }
+    </details>
+
 
 - [如何利用重载把 java 编译器弄晕?](./src/main/java/me/giraffetree/java/boomjava/jvm/method/overload)
 
