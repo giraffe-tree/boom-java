@@ -37,6 +37,31 @@
         ```
         
     </details>
+    
+- [ try resource 块中的 close 方法 与 finally 方法哪个先执行](./src/main/java/me/giraffetree/java/boomjava/compile/problems/try_resource/README.md)
+    <details>
+        <summary>下面的方法执行结果是什么?</summary>
+        
+        ```
+        public static void main(String[] args) {
+            try (Car car = new Car()){
+                throw new RuntimeException("exception...");
+            } catch (Exception e) {
+                System.out.println("catch exception...");
+            }finally {
+                System.out.println("finally...");
+            }
+        }
+        private static class Car implements AutoCloseable {
+            @Override
+            public void close() throws Exception {
+                System.out.println("close...");
+            }
+        }
+        ```
+        
+    </details>
+
 
 
 ### JVM
