@@ -21,13 +21,7 @@ public class SafePointCountingLoopTest {
     private final static ExecutorService EXECUTOR_SERVICE = ExecutorUtils.getExecutorService(2, 2);
 
     public static void main(String[] args) {
-        EXECUTOR_SERVICE.execute(() -> {
             foo();
-        });
-        EXECUTOR_SERVICE.execute(() -> {
-            test();
-        });
-        EXECUTOR_SERVICE.shutdown();
     }
 
     private static void test() {
@@ -39,10 +33,10 @@ public class SafePointCountingLoopTest {
     }
 
     public static void foo() {
+        System.out.println("start foo...");
         int sum = 0;
-        for (int i = 0; i < 0x77777777; i++) {
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
             sum += Math.sqrt(i);
-//            new Object().hashCode();
         }
     }
 
