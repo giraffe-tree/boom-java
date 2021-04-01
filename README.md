@@ -4,7 +4,7 @@
 
 本项目主要用来探究 java/jvm 中一些有趣的现象, 及其背后的原因
 
-## 目录
+## Content
 
 ### java 
 
@@ -13,7 +13,6 @@
     <details>
         <summary> 下面的方法能运行的结果是什么? </summary>
         
-        ```
             // 如果 a = 3, 运行的结果是什么
             public static int test4(int a) {
                 try {
@@ -34,11 +33,10 @@
                 }
                 return "bar";
             }
-        ```
         
     </details>
     
-- [ try resource 块中的 close 方法 与 finally 方法哪个先执行](./src/main/java/me/giraffetree/java/boomjava/compile/problems/try_resource/README.md)
+- [ try resource 块中的 close 方法 与 finally 方法哪个先执行](./src/main/java/me/giraffetree/java/boomjava/compile/problems/try_resource)
     <details>
         <summary>下面的方法执行结果是什么?</summary>
         
@@ -183,3 +181,27 @@
     ```
 
     </details>
+    
+    
+### 工具使用
+
+#### asm 使用
+
+[使用 ASMifier 通过 原始字节码 生成 可以生成该字节码的 java code](./src/main/java/me/giraffetree/java/boomjava/jvm/asm)
+
+#### IR 可视化工具 igv 的使用
+
+ [Ideal Graph Visualizer 安装与使用](./src/main/java/me/giraffetree/java/boomjava/utils/igv)
+ 
+#### jcstress 的使用
+
+[并发测试工具 jcstress](./src/main/java/me/giraffetree/java/boomjava/utils/jcstress)
+
+#### jitwatch 的使用
+
+[关于如何打印 JIT 编译后的 汇编代码 - jitwatch 的使用](./src/main/java/me/giraffetree/java/boomjava/utils/jitwatch)
+
+#### Java Microbenchmark Harness JMH 的使用
+
+[JMH (Java Microbenchmark Harness) idea 使用指南](./src/main/java/me/giraffetree/java/boomjava/utils/jmh)
+ 

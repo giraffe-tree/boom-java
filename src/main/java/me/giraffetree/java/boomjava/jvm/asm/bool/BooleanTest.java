@@ -1,15 +1,16 @@
-package me.giraffetree.java.boomjava.jvm.asm;
+package me.giraffetree.java.boomjava.jvm.asm.bool;
 
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
 
 /**
+ * 这个案例的灵感来自于 极客时间jvm专栏
+ *
  * @author GiraffeTree
  * @date 2019/10/17
  */
 public class BooleanTest {
-
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
         Field f = Unsafe.class.getDeclaredField("theUnsafe");
         f.setAccessible(true);
@@ -31,6 +32,5 @@ public class BooleanTest {
     private static class A {
         boolean flag;
     }
-
 }
 

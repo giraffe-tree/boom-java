@@ -1,4 +1,4 @@
-# readme
+# ASMifier 的使用
 
 ## 使用 ASMifier 通过 原始字节码 生成 可以生成该字节码的 java code
 
@@ -29,7 +29,7 @@ public class Source {
 
 ### 编译
 
-java 
+asm 下载地址 https://mvnrepository.com/artifact/org.ow2.asm/asm-all
 
 ```
 java -cp /PATH/TO/asm-all-6.0_BETA.jar org.objectweb.asm.util.ASMifier Source.class
