@@ -5,10 +5,7 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.UntypedAbstractActor;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author GiraffeTree
@@ -28,6 +25,7 @@ public class ActorSolution {
 
     //累加器
     private static class CounterActor extends UntypedAbstractActor {
+
         private int counter = 0;
 
         @Override
@@ -53,7 +51,16 @@ public class ActorSolution {
 
         //4个线程生产消息
         ExecutorService es = new ThreadPoolExecutor(4, 10,
-                100L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(1024));
+                100L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(1024), new ThreadFactory() {
+            int c = 0;
+
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = new Thread();
+                thread.setName("thread-" + c++);
+                return thread;
+            }
+        });
         //创建CounterActor
         ActorRef counterActor = system.actorOf(Props.create(CounterActor.class));
         //生产4*100000个消息
