@@ -158,9 +158,9 @@
 
 - [ new Object() 与不安全发布](./src/main/java/me/giraffetree/java/boomjava/jvm/jmm/UnsafePublication.java)
     <details>
-        <summary> a!=null 时, a 中的 x00,x01,x02,x03 是否正确初始化了 ?</summary>
-        MyObject a = new MyObject(x);
+        <summary> a!=null 时, a 中的 x00,x01,x02,x03 是否正确初始化了? </summary>
         
+        MyObject a = new MyObject(x);
         static class MyObject {
             int x00, x01, x02, x03;
     
@@ -171,21 +171,19 @@
                 x03 = x;
             }
         }
-                
-
     </details>
 
 - [false sharing 虚共享/伪共享](./src/main/java/me/giraffetree/java/boomjava/concurrent/problem/falseShare)
     
     <details>
-    <summary> 相邻的 volatile 字段如何导致 false sharing ? </summary>
-    
-    ```java
-        private static class Foo {
-            volatile int a;
-            volatile int b;
-        }
-    ```
+        <summary> 相邻的 volatile 字段如何导致 false sharing ? </summary>
+        
+        ```java
+            private static class Foo {
+                volatile int a;
+                volatile int b;
+            }
+        ```
     
     </details>
 
@@ -193,8 +191,6 @@
     
     <details>
         <summary> 更新 年老代对象指向eden代对象的引用, 为什么会引起 false sharing 问题? </summary>
-
-    ```
             // 使用 多线程更新 hugeObj 中的引用 x1, x2
             private static class Obj64 {
                 long l1;
@@ -212,8 +208,6 @@
                     this.x2 = x2;
                 }
             }
-    ```
-
     </details>
     
     
