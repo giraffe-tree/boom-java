@@ -191,6 +191,7 @@
     
     <details>
         <summary> 更新 年老代对象指向eden代对象的引用, 为什么会引起 false sharing 问题? </summary>
+        
             // 使用 多线程更新 hugeObj 中的引用 x1, x2
             private static class Obj64 {
                 long l1;
@@ -208,6 +209,7 @@
                     this.x2 = x2;
                 }
             }
+            
     </details>
     
     
