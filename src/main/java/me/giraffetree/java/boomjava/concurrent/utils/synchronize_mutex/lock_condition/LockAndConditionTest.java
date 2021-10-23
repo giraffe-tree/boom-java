@@ -19,8 +19,8 @@ public class LockAndConditionTest {
     private final static ExecutorService POOL = ExecutorUtils.getExecutorService();
 
     public static void main(String[] args) {
-//        testProduceAndConsume();
-        testBlock();
+        testProduceAndConsume();
+//        testBlock();
 
     }
 

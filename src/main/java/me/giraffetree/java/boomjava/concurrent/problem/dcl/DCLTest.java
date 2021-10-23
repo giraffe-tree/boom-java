@@ -84,13 +84,17 @@ public class DCLTest {
      * 优点: 除了能对静态字段初始化, 也可以对实例字段初始化
      */
     private static class CapSafeDcl {
-        // after jdk 1.5
+        /**
+         * after jdk 1.5
+         */
         private volatile static CapSafeDcl capSafeDcl;
 
         public static CapSafeDcl getInstance() {
             if (capSafeDcl == null) {
                 synchronized (capSafeDcl) {
-                    capSafeDcl = new CapSafeDcl();
+                    if (capSafeDcl == null) {
+                        capSafeDcl = new CapSafeDcl();
+                    }
                     return capSafeDcl;
                 }
             }
@@ -112,7 +116,6 @@ public class DCLTest {
         public static CapBaseOnClassInit getInstance() {
             return Inner.capBaseOnClassInit;
         }
-
     }
 
 }

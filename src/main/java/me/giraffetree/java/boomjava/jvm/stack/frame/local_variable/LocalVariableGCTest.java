@@ -14,10 +14,19 @@ import java.lang.management.MemoryUsage;
 public class LocalVariableGCTest {
 
     public static void main(String[] args) {
-        test01();
-        test02();
-        test03();
-        test04();
+        double[] doubles = new double[10000];
+        while (true) {
+            int[] array = new int[10000];
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+//        test01();
+//        test02();
+//        test03();
+//        test04();
     }
 
     private static void test01() {

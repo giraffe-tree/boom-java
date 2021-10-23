@@ -29,7 +29,7 @@ public class SemaphoreDemo {
     private final static Semaphore semaphore = new Semaphore(1, false);
 
     public static void main(String[] args) {
-        testSemaphore(3, 100000000);
+        testSemaphore(3, 1000000);
         EXECUTOR_SERVICE.shutdown();
         try {
             EXECUTOR_SERVICE.awaitTermination(1L, TimeUnit.SECONDS);

@@ -82,7 +82,7 @@ public class StampedLockTest {
         }
 
         public String get() {
-            // 乐观读
+            // 乐观读, 实际上没有加锁, 所以不用释放
             long stamp = stampedLock.tryOptimisticRead();
             String cur = book;
             // other  operation
