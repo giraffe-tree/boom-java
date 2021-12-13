@@ -16,6 +16,10 @@ import lombok.NoArgsConstructor;
 public class TaskStatisticsDTO {
 
     /**
+     * 平均等待时间
+     */
+    private Double averageWaitCost;
+    /**
      * 放进线程池到实际执行完成所消耗的平均时间
      * 包含队列等待时间
      */

@@ -13,10 +13,12 @@ public class TaskUtils {
 
     public static TaskStatisticsDTO statistics() {
         int count = 0;
+        long totalWait = 0L;
         long totalCost = 0L;
         long totalRealCost = 0L;
         for (Map.Entry<Long, TimedTaskDTO> entry : CACHE.entrySet()) {
             TimedTaskDTO value = entry.getValue();
+            totalWait += value.getExecuteTimestamp() - value.getPutToThreadPoolTimestamp();
             totalCost += value.getExecuteCompleteTimestamp() - value.getPutToThreadPoolTimestamp();
             totalRealCost += value.getExecuteCompleteTimestamp() - value.getExecuteTimestamp();
             count++;
@@ -25,7 +27,7 @@ public class TaskUtils {
             return new TaskStatisticsDTO();
         }
 
-        return new TaskStatisticsDTO(totalCost / (double) count, totalRealCost / (double) count);
+        return new TaskStatisticsDTO(totalWait / (double) count, totalCost / (double) count, totalRealCost / (double) count);
     }
 
     /**
